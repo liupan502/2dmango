@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>file/qss_file/common.qss</file>
+    </qresource>
+</RCC>
