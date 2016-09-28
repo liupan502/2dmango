@@ -105,7 +105,7 @@ bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName,
   std::map<std::string,WallData*>::iterator it;
   for (it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
     WallData* wall_data = it->second;
-    if (wall_data->is_completed()) {
+    if (wall_data->status() == ROOM_WALL_DATA) {
       continue;
     }   
     CornerData* start_corner = wall_data->start_corner();
@@ -146,7 +146,7 @@ bool DesignData::is_connected_point(QPointF currentPoint, QVector2D vec, QPointF
   tmp_vec.normalize();
   vec.normalize();
   float abs_dot_product_value = abs(QVector2D::dotProduct(tmp_vec,vec));
-  if (abs_dot_product_value > cos(15.0f/180.0f*M_PI) && abs_dot_product_value <= 1.0) {
+  if (abs_dot_product_value > cos(5.0f/180.0f*M_PI) && abs_dot_product_value <= 1.0) {
     return true;
   }
   return false;

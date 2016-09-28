@@ -3,6 +3,7 @@
 #include "CornerData.h"
 #include "Util/PolygonUtil.h"
 #include "PointData.h"
+#include <assert.h>
 std::string RoomData::ToJson() {
   return " ";
 }
@@ -14,7 +15,7 @@ RoomData::RoomData():BaseData(){
 RoomData::RoomData(std::string name, std::vector<WallData*> walls) : BaseData(name) {
   walls_ = walls;
   for (int i = 0; i < walls_.size(); i++) {
-    walls_[i]->set_is_completed(true);
+    walls_[i]->set_status(ROOM_WALL_DATA);
   }
 }
 
@@ -114,4 +115,64 @@ void RoomData::GenerateLines() {
     wall->set_normal_vector(vector);
   }
 
+}
+
+std::vector<CornerData*> RoomData::GetCorners() {
+  std::vector<CornerData*> corners;
+  int size = walls_.size();
+  if (size < 3) {
+    return corners;
+  }  
+  CornerData* previous_corner = NULL;
+  
+  for (int i = 1; i < size; i++) {
+    if (walls_[i]->IsEndCorner(previous_corner)) {
+      previous_corner = walls_[i]->start_corner();      
+    }
+    else {
+      previous_corner = walls_[i]->end_corner();
+    }
+    corners.push_back(previous_corner);
+  }
+  return corners;
+}
+
+bool RoomData::IsIncludedIn(RoomData otherRoom) {
+  bool result = true;
+  std::vector<CornerData*> corners1 = GetCorners();
+  std::vector<CornerData*> corners2 = otherRoom.GetCorners();
+  std::set<CornerData*> corner_set1, corner_set2;
+  corner_set1.insert(corners1.begin(), corners1.end());
+  corner_set2.insert(corners2.begin(), corners2.end());
+  std::vector<CornerData*> extra_corners;
+  for (std::set<CornerData*>::iterator it = corner_set1.begin(); it != corner_set1.end(); it++) {
+    if (corner_set2.find(*it) != corner_set2.end()) {
+      extra_corners.push_back(*it);
+    }
+  }
+  std::vector<QPointF> polygon = get_points(corners2);
+  std::vector<QPointF> extra_points = get_points(extra_corners);
+  for (std::vector<QPointF>::iterator it = extra_points.begin(); it != extra_points.end(); it++) {
+    if (!IsPointInPolygon(*it, polygon)) {
+      result = false;
+      break;
+    }
+  }
+  return result;
+}
+
+std::vector<QPointF> RoomData::get_points(std::vector<CornerData*> corners) {
+  std::vector<QPointF> points;
+  for (std::set<CornerData*>::iterator it = corners.begin(); it != corners.end(); it++) {
+    CornerData* corner = *it;
+    assert(corner->RelateWalls().size() > 0);
+    WallData* wall = corner->RelateWalls()[0];
+    if (wall->IsStartCorner(corner)) {
+      points.push_back(corner->GetPoint(wall->start_corner_name())->point());
+    }
+    else {
+      points.push_back(corner->GetPoint(wall->end_corner_name())->point());
+    }
+  }
+  return points;
 }

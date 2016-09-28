@@ -30,20 +30,30 @@ typedef enum WALL_DATA_TYPE {
   WALL_OUTSIDE_DATA,
 } WALL_DATA_TYPE;
 
+typedef enum WALL_DATA_STATUS {	
+	NONE_STAUS_WALL_DATA,
+	DRAWING_WALL_DATA,
+	UNROOM_WALL_DATA,
+	ROOM_WALL_DATA,
+} WALL_DATA_STATUS;
+
 class CornerData;
 class RoomData;
 
 class WallData :public BaseGeometryData{
   public:
-    WallData():is_completed_(false){
-     //start_corner_name_ = "";
-     //end_corner_name_ = "";  
+    WallData(){     
      generated_line_.set_is_independent(false);
      start_corner_ = NULL;
      end_corner_ = NULL;
      normal_vector_ = QVector2D();
      set_width(12);
+	 status_ = NONE_STAUS_WALL_DATA;
    }
+
+	void set_status(WALL_DATA_STATUS status);
+
+	WALL_DATA_STATUS status();
 
     bool DoContainCorner(CornerData* corner);
 
@@ -146,13 +156,13 @@ class WallData :public BaseGeometryData{
       return end_corner_position_;
     }*/
 
-    void set_is_completed(bool isCompleted){
+    /*void set_is_completed(bool isCompleted){
       is_completed_ = isCompleted;
-    }
+    }*/
 
-    bool is_completed(){
+    /*bool is_completed(){
       return is_completed_;
-    }    
+    }  */  
 
     void set_start_corner(CornerData* corner);
 
@@ -192,6 +202,8 @@ class WallData :public BaseGeometryData{
     PointData* compute_connected_position(CornerData* corner,WallData* wall,std::string name1,std::string generateName1,
                                                                                std::string name2,std::string generateName2);
 
+	int compare_wall_path(std::vector<WallData*> path1, std::vector <WallData*> path2);
+
     // 按照逆时针方向的第一个点
     //std::string start_corner_name_;
 
@@ -207,8 +219,8 @@ class WallData :public BaseGeometryData{
     // 墙是否拥有结束点的数据，如果没有则说明结束点是通过corner计算出来的
     //bool own_end_corner_data_;
 
-    bool is_completed_;
-
+    //bool is_completed_;
+	WALL_DATA_STATUS status_;
     //QPointF start_corner_position_;
     //QPointF end_corner_position_;
     LineData line_;

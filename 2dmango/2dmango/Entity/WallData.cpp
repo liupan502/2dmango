@@ -171,13 +171,15 @@ RoomData* WallData::GetRoom(std::set<WallData*> excludeWalls) {
 
 std::vector<WallData*> WallData::GetRoom(std::set<WallData*> excludeWalls,std::vector<WallData*> currentPath ) {
   std::vector<WallData*> room = std::vector<WallData*>();
+  std::vector<std::vector<WallData*>> rooms;
   if (currentPath.size() == 0 && !IsUnsharedWall(excludeWalls)) {
     return room;
   }
   currentPath.push_back(this);
   if (is_room_path(currentPath)) {
-    room = currentPath;
+    //room = currentPath;
     //return room;
+	rooms.push_back(currentPath);
   }
   else if(is_available_path(currentPath)){
     CornerData* last_corner = find_last_corner(currentPath);
@@ -189,12 +191,23 @@ std::vector<WallData*> WallData::GetRoom(std::set<WallData*> excludeWalls,std::v
       }
       std::vector<WallData*> tmp_room = wall->GetRoom(excludeWalls,currentPath);
       if (tmp_room.size() > 0) {
-        room = tmp_room;
+        //room = tmp_room;
+		rooms.push_back(tmp_room);
         break;
       }
     }
   }
 
+  if (rooms.size() > 0) {
+	  RoomData room_data("",rooms[0]);
+    for (int i = 1; i < rooms.size(); i++) {
+      RoomData tmp_room_data("", rooms[i]);
+      if (tmp_room_data.IsIncludedIn(room_data)) {
+        room_data = tmp_room_data;
+      }      
+    }
+    room = room_data.walls();
+  }  
   return room;
 }
 
@@ -501,13 +514,20 @@ LineData WallData::GetLine(PointData* point) {
 
 
 
+  
+
+
+}
+
+
+
 void WallData::UpdateGeneratedLine(LineData line) {
 	generated_line_ = line;
 }
 
 WallGeometry WallData::GetGeometry() {
   std::vector<QPointF> points;
-  if (is_completed_) {
+  if (status_ == ROOM_WALL_DATA || status_ == UNROOM_WALL_DATA) {
     points.push_back(start_corner_->GetPoint(generated_line_.start_point_name())->point());
     points.push_back(QPointF(start_corner_->position().x(), start_corner_->position().y()));
     points.push_back(start_corner_->GetPoint(line_.start_point_name())->point());
@@ -521,6 +541,14 @@ WallGeometry WallData::GetGeometry() {
   }
   WallGeometry geometry(points);
   return geometry;
+}
+
+void WallData::set_status(WALL_DATA_STATUS status) {
+	status_ = status;
+}
+
+WALL_DATA_STATUS WallData::status() {
+	return status_;
 }
 
 

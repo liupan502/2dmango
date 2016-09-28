@@ -181,6 +181,9 @@ void CornerData::UpdateCornerPosition() {
   std::vector<WallData*> walls;//,generated_line2;
   for (it = related_wall_map_.begin(); it != related_wall_map_.end(); it++) {
     WallData* wall = it->second;
+	if(wall->status() != ROOM_WALL_DATA){
+      continue;
+	}
     LineData generated_line = wall->generate_line();
     if (wall->IsStartCorner(this) && generated_line.start_point_name() == "") {
 		walls.push_back(wall);

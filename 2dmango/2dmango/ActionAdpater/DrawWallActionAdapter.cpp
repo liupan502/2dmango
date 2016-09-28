@@ -122,6 +122,7 @@ void DrawWallActionAdapter::initilizing_mouse_move(QMouseEvent* event) {
   }
   else {
     tmp_wall_ = DesignDataWrapper::GetInstance()->AddWall();
+	tmp_wall_->set_status(DRAWING_WALL_DATA);
     if (previous_corner_ == NULL) {
       //tmp_wall_->set_own_start_corner_data(true);
     }

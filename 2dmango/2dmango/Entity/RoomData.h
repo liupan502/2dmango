@@ -12,6 +12,8 @@ class PointData;
 class RoomData :public BaseData {
   public:
 
+    bool IsIncludedIn(RoomData otherRoom);
+
     RoomData();
 
     RoomData(std::string name,std::vector<WallData*> walls);
@@ -58,6 +60,8 @@ class RoomData :public BaseData {
 
     void GenerateLines();
 
+    std::vector<CornerData*> GetCorners();
+
     std::string virtual ToJson();
   private:
     std::string func_name_;
@@ -82,7 +86,7 @@ class RoomData :public BaseData {
 
     std::vector<PointData*> polygon();
 
-    
+    std::vector<QPointF> get_points(std::vector<CornerData*> corners);
 };
 
 #endif // !MANGO_2D_ROOM_DATA_H_

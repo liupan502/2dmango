@@ -61,6 +61,14 @@ void DesignData::reset_geometry() {
 }
 
 void DesignData::update_wall_geometrys() {
+  std::map<std::string, WallData*>::iterator it;
+  for (it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
+	  if (it->second->status() == DRAWING_WALL_DATA) {
+		  it->second->set_status(UNROOM_WALL_DATA);
+
+	  }
+  }
+
   std::set<RoomData*> exclude_rooms;
   std::set<WallData*> exclude_walls;
   while (true) {
