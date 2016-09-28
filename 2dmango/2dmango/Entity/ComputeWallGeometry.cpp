@@ -47,7 +47,7 @@ RoomData* DesignData::find_available_room(std::set<RoomData*> excludeRooms, std:
   return room;
 }
 
-void DesignData::update_geometry() {
+void DesignData::UpdateGeometry() {
   reset_geometry();
   update_wall_geometrys();
   update_corner_positions();
@@ -121,20 +121,20 @@ void DesignData::sort_wall(std::vector<WallData*>& wall_datas){
 
 void DesignData::update_wall_geometry(WallData* wall) {
   PointData* point1 = wall->start_corner()->GetPoint(wall->line().start_point_name());
-  if (!point1->has_point_data()) {
+  if (point1 && !point1->has_point_data()) {
     wall->ComputePoint(point1);
   }
      
   PointData* point2 = wall->start_corner()->GetPoint(wall->line().end_point_name());
-  if (!point2->has_point_data()) {
+  if (point2 && !point2->has_point_data()) {
     wall->ComputePoint(point2);
   }
   PointData* point3 = wall->end_corner()->GetPoint(wall->generate_line().start_point_name());
-  if (!point3->has_point_data()) {
+  if (point3 && !point3->has_point_data()) {
     wall->ComputePoint(point3);
   }
   PointData* point4 = wall->end_corner()->GetPoint(wall->generate_line().end_point_name());
-  if (!point4->has_point_data()) {
+  if (point4 && !point4->has_point_data()) {
     wall->ComputePoint(point4);
   }
 }

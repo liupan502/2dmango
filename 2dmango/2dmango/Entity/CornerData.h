@@ -39,6 +39,8 @@ class CornerData :public BaseGeometryData{
 
     
   private:
+	 void update_wall_generated_line_info(WallData* wall, std::string point_name);
+
     bool has_position_data_;
     std::map<std::string,PointData*> point_data_map_;
     std::map<std::string,WallData*> related_wall_map_;

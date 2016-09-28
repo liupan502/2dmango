@@ -15,7 +15,7 @@ bool IsCounterclockwisePolygon(std::vector<QPointF> polygon) {
     }
   }
 
-  int previous_index = (index-1)%point_size;
+  int previous_index = (point_size+index-1)%point_size;
   QPointF previous_point = polygon[previous_index];
   int next_index = (index+1)%point_size;
   QPointF next_point = polygon[next_index];
@@ -30,6 +30,6 @@ bool IsCounterclockwisePolygon(std::vector<QPointF> polygon) {
 void PolygonFlipY(std::vector<QPointF>& polygon) {
   std::vector<QPointF>::iterator it;
   for (it = polygon.begin(); it != polygon.end(); it++) {
-    it->setY(it->y());
+    it->setY(-it->y());
   }
 }

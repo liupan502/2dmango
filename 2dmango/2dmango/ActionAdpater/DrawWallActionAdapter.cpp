@@ -123,20 +123,20 @@ void DrawWallActionAdapter::initilizing_mouse_move(QMouseEvent* event) {
   else {
     tmp_wall_ = DesignDataWrapper::GetInstance()->AddWall();
     if (previous_corner_ == NULL) {
-      tmp_wall_->set_own_start_corner_data(true);
+      //tmp_wall_->set_own_start_corner_data(true);
     }
     previous_corner_ = current_corner_;
     previous_point_ = current_point_;
     current_corner_ = DesignDataWrapper::GetInstance()->AddCorner();
     current_point_ = pos;
     tmp_wall_->set_start_corner(previous_corner_);
-    tmp_wall_->set_start_corner_name(previous_corner_->name());
+    //tmp_wall_->set_start_corner_name(previous_corner_->name());
     tmp_wall_->set_start_corner_position(previous_point_);
     
     tmp_wall_->set_end_corner(current_corner_);
-    tmp_wall_->set_end_corner_name(current_corner_->name());
+    //tmp_wall_->set_end_corner_name(current_corner_->name());
     tmp_wall_->set_end_corner_position(QPointF(pos));
-    tmp_wall_->set_own_end_corner_data(true);
+    //tmp_wall_->set_own_end_corner_data(true);
     tmp_wall_->set_end_corner(current_corner_);
   }
 }
@@ -155,7 +155,7 @@ void DrawWallActionAdapter::drawing_mouse_move(QMouseEvent* event) {
         pos = compute_connected_position(tmp_wall_, points[0]);
         instance->AddAuxiliaryLine(pos,points[0]);        
         tmp_wall_->set_end_corner_position(pos);   
-        is_fixed = true;
+        is_fixed = true;		
       }
       points.clear();
       std::vector<CornerData*> corners;
@@ -165,6 +165,8 @@ void DrawWallActionAdapter::drawing_mouse_move(QMouseEvent* event) {
         tmp_wall_->set_end_corner(corner);
         tmp_wall_->set_end_corner_position(pos);
         //is_fixed = true;
+		is_current_room_completed_ = true;
+		draw_status_ = draw_ready;
       }
       is_fixed_ = is_fixed;
       current_point_ = pos;      
@@ -189,8 +191,18 @@ void DrawWallActionAdapter::ready_left_mouse_press(QMouseEvent* event) {
     instance->ShowHotRegion(true);
   }
   else if(instance->IsPointInHotRegion(pos)){
-    instance->HotRegionMoveTo(event->pos());
-    instance->ShowHotRegion(true);
+	  if (!is_current_room_completed_) {
+		  instance->HotRegionMoveTo(event->pos());
+		  instance->ShowHotRegion(true);
+	  }
+	  else {
+		  instance->HotRegionMoveTo(event->pos());
+		  instance->ShowHotRegion(true);
+		  instance->UpdateRoomInfo();
+		  instance->UpdateGeometry();
+		  is_current_room_completed_ = false;
+	  }
+    
   }  
   draw_status_ = draw_initilizing;
 }

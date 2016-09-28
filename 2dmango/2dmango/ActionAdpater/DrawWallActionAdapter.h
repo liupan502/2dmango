@@ -48,6 +48,7 @@ class  DrawWallActionAdapter : public BaseActionAdapter {
     bool left_mouse_down_;
     bool bdrawing_;
     bool is_fixed_;
+	
     bool is_current_room_completed_;
     WallData* tmp_wall_;   
     int draw_status_;

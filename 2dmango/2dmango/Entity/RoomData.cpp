@@ -44,7 +44,7 @@ bool RoomData::CanComputeWallGeometry(std::set<WallData*>excludeWalls) {
 
 CornerData* RoomData::find_previous_corner(int currentIndex) {
   int size = walls_.size();
-  int previous_index = (currentIndex-1)%size;
+  int previous_index = (size+currentIndex-1)%size;
   WallData* current_wall = walls_[currentIndex];
   WallData* previous_wall = walls_[previous_index];
   CornerData* previous_corner = current_wall->GetConnectedCorner(previous_wall);
@@ -108,7 +108,7 @@ void RoomData::GenerateLines() {
     QLineF vector_line = wall->line().Line().normalVector();
     QVector2D vector = QVector2D(vector_line.p2() - vector_line.p1());
     // end to start 
-    if (wall->IsStartCorner(corner)) {      
+    if (is_counterclockwise) {
       vector = -vector;     
     }    
     wall->set_normal_vector(vector);

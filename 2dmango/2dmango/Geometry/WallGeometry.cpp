@@ -16,6 +16,15 @@ WallGeometry::WallGeometry(std::vector<QPointF> points) {
   }
 
   if (size == 6) {
-    ;
+	  QPolygonF polygon;
+	  for (int i = 0; i <= size; i++) {
+		  int index = i%size;
+		  QPointF point = points[index];
+		  polygon << point;
+	  }
+	  PolygonPath* polygon_path = new PolygonPath(polygon);
+	  polygon_path->set_pen(QPen(Qt::black, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin));
+	  polygon_path->set_brush(QBrush(Qt::yellow));
+	  paths_.push_back(polygon_path);
   }
 }

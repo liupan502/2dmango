@@ -34,6 +34,8 @@ class DesignData :public BaseData {
 
     void UpdateRoomInfo();
 
+	void UpdateGeometry();
+
   private:
 
     void clear_rooms();
@@ -44,7 +46,7 @@ class DesignData :public BaseData {
 
     bool is_attached_corner(QPointF currentPoint,std::string wallName,std::string cornerName, std::set<std::string> cornersName);
 
-    void update_geometry();
+    
 
     void reset_geometry();
 

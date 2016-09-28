@@ -86,6 +86,8 @@ void WallData::set_start_corner_position(QPointF point) {
     line_.set_start_point_name(point_name);
   }
   start_corner_->UpdatePoint(line_.start_point_name(),point);
+  QLineF line = line_.Line();
+  line_.set_line(QLineF(point, line.p2()));
 }
 
 void WallData::set_end_corner_position(QPointF point) {
@@ -97,6 +99,8 @@ void WallData::set_end_corner_position(QPointF point) {
     line_.set_end_point_name(point_name);
   }
   end_corner_->UpdatePoint(line_.end_point_name(), point);
+  QLineF line = line_.Line();
+  line_.set_line(QLineF(line.p1(), point));
 }
 
 QPointF WallData::start_corner_position() {
@@ -277,12 +281,18 @@ void WallData::ResetGeometry(){
   normal_vector_ = QVector2D();  
   if (true) {
     PointData* point = start_corner_->GetPoint(generated_line_.start_point_name());
-    point->Reset();
+	if (point != NULL) {
+      point->Reset();
+	}
+    
   }
 
   if (true) {
     PointData* point = end_corner_->GetPoint(generated_line_.end_point_name());
-    point->Reset();
+	if (point != NULL) {
+		point->Reset();
+	}
+    
   }
 }
 
@@ -293,22 +303,19 @@ PointData* WallData::GetConnectedPoint(WallData* wall) {
     return point;
   }
   if (IsStartCorner(corner)) {
-    if (wall->IsStartCorner(corner)) {
-      if (line().start_point_name() == wall->line().start_point_name()) {
-        //position = corner->GetPoint(line().start_point_name())->point();
-      }      
-
+    if (wall->IsStartCorner(corner)) {      
+      point = start_start_connected_position(wall, corner);	  
     }
     else {
-      
+      point = start_end_connected_position(wall, corner);
     }
   }
   else {
     if (wall->IsEndCorner(corner)) {
-
+		point = end_end_connected_position(wall, corner);
     }
     else {
-
+		point = end_start_connected_position(wall, corner);
     }
   }
   return point;
@@ -410,7 +417,8 @@ void WallData::set_normal_vector(QVector2D vector) {
   PointData* start_point = start_corner()->GetPoint(line_.start_point_name());
   PointData* end_point = end_corner()->GetPoint(line_.end_point_name());
   QVector2D line_vector = QVector2D(start_point->point() - end_point->point());
-  if ((line_vector.x()*vector.y() + line_vector.y()*vector.x()) == 0) {
+  qreal value = line_vector.x()*vector.x() + line_vector.y()*vector.y();
+  if (value == 0) {
     vector.normalize();
     vector = vector*width();
     normal_vector_ = vector;    
@@ -489,6 +497,12 @@ LineData WallData::GetLine(PointData* point) {
     line = generated_line_;
   }
   return line;
+}
+
+
+
+void WallData::UpdateGeneratedLine(LineData line) {
+	generated_line_ = line;
 }
 
 WallGeometry WallData::GetGeometry() {

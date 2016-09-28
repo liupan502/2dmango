@@ -68,6 +68,7 @@ QPointF DesignDataWrapper::CornerPosition(std::string cornerName) {
 
 void DesignDataWrapper::UpdateRoomInfo() {
   design_data_->UpdateRoomInfo();
+  design_data_->UpdateGeometry();
 }
 
 

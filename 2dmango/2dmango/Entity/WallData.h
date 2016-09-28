@@ -8,7 +8,7 @@ date:    2016.9.15
 
 
 #include "BaseData.h"
-//#include "CornerData.h"
+
 #include "LineData.h"
 
 #include <string>
@@ -35,11 +35,9 @@ class RoomData;
 
 class WallData :public BaseGeometryData{
   public:
-    WallData():own_end_corner_data_(false),
-                  own_start_corner_data_(false),
-                  is_completed_(false){
-     start_corner_name_ = "";
-     end_corner_name_ = "";  
+    WallData():is_completed_(false){
+     //start_corner_name_ = "";
+     //end_corner_name_ = "";  
      generated_line_.set_is_independent(false);
      start_corner_ = NULL;
      end_corner_ = NULL;
@@ -57,11 +55,12 @@ class WallData :public BaseGeometryData{
 
     bool IsInsideConnected(WallData* wall);
 
+	/*
 	  void set_start_corner_name(std::string name){
       start_corner_name_ = name;
       own_start_corner_data_ = true;
     } 
-
+	*/
     void ResetGeometry();
 
     WallGeometry GetGeometry();
@@ -95,16 +94,18 @@ class WallData :public BaseGeometryData{
 
     CornerData* GetConnectedCorner(WallData* wall);
 
+	/*
     void set_end_corner_name(std::string name){
       end_corner_name_ = name;
       own_end_corner_data_ = true;
-    }
+    }*/
 
     std::string end_corner_name();
     /*{
       return end_corner_name_;
     }*/
     
+	/*
     void set_own_start_corner_data(bool bown){
       own_start_corner_data_ = bown;
     }
@@ -120,7 +121,7 @@ class WallData :public BaseGeometryData{
 
     bool own_end_corner_data(){
       return own_end_corner_data_;
-    }
+    }*/
 
     void set_start_corner_position(QPointF position);
     /*{
@@ -167,6 +168,10 @@ class WallData :public BaseGeometryData{
 
     LineData GetLine(PointData* point);
 
+	//LineData generated_line();
+
+	void UpdateGeneratedLine(LineData line);
+
     virtual std::string ToJson();
   private:
     
@@ -188,24 +193,24 @@ class WallData :public BaseGeometryData{
                                                                                std::string name2,std::string generateName2);
 
     // 按照逆时针方向的第一个点
-    std::string start_corner_name_;
+    //std::string start_corner_name_;
 
     // 按照逆时针方向的第二个点
-    std::string end_corner_name_;
+    //std::string end_corner_name_;
     
     // 墙的位置数据解析方式（墙中线 or 内墙线 or 外墙线） 
     WALL_DATA_TYPE data_type_;
 
     // 墙是否拥有开始点的数据，如果没有则说明开始点是通过corner计算出来的
-    bool own_start_corner_data_;
+    //bool own_start_corner_data_;
 
     // 墙是否拥有结束点的数据，如果没有则说明结束点是通过corner计算出来的
-    bool own_end_corner_data_;
+    //bool own_end_corner_data_;
 
     bool is_completed_;
 
-    QPointF start_corner_position_;
-    QPointF end_corner_position_;
+    //QPointF start_corner_position_;
+    //QPointF end_corner_position_;
     LineData line_;
     LineData generated_line_;
     CornerData* start_corner_;
