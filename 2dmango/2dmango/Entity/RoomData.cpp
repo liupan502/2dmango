@@ -146,12 +146,13 @@ bool RoomData::IsIncludedIn(RoomData otherRoom) {
   corner_set2.insert(corners2.begin(), corners2.end());
   std::vector<CornerData*> extra_corners;
   for (std::set<CornerData*>::iterator it = corner_set1.begin(); it != corner_set1.end(); it++) {
-    if (corner_set2.find(*it) != corner_set2.end()) {
+    if (corner_set2.find(*it) == corner_set2.end()) {
       extra_corners.push_back(*it);
     }
   }
   std::vector<QPointF> polygon = get_points(corners2);
   std::vector<QPointF> extra_points = get_points(extra_corners);
+  //for(int i=0;i<extra_corners.siz)
   for (std::vector<QPointF>::iterator it = extra_points.begin(); it != extra_points.end(); it++) {
     if (!IsPointInPolygon(*it, polygon)) {
       result = false;
@@ -163,7 +164,7 @@ bool RoomData::IsIncludedIn(RoomData otherRoom) {
 
 std::vector<QPointF> RoomData::get_points(std::vector<CornerData*> corners) {
   std::vector<QPointF> points;
-  for (std::set<CornerData*>::iterator it = corners.begin(); it != corners.end(); it++) {
+  for (std::vector<CornerData*>::iterator it = corners.begin(); it != corners.end(); it++) {
     CornerData* corner = *it;
     assert(corner->RelateWalls().size() > 0);
     WallData* wall = corner->RelateWalls()[0];

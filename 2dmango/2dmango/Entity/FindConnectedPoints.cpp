@@ -1,9 +1,10 @@
 #include "DesignData.h"
-
-bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& points) {
+#include <assert.h>
+#include "Util/PolygonUtil.h"
+bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& outputPoints) {
   WallData* wall_data = wall_data_map_[wallName];
   QVector2D vec = wall_data->WallPerpendicularVector();
-  points.clear();
+  outputPoints.clear();
   std::vector<CornerData*> corners;
   std::vector<WallData*> walls;
   std::vector<QPointF> points;
@@ -106,17 +107,12 @@ bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName,
     }
   }
 
-
-
-
-
-
-  
-
-  return false;
+  QPointF point = compute_connected_point(wall_data, corners[index], currentPoint);  
+  outputPoints.push_back(point);
+  return true;
 }
 
-QPointF DesignData::compute_connected_point(WallData* wall, CornerData* corner) {
+QPointF DesignData::compute_connected_point(WallData* wall, CornerData* corner,QPointF currentPoint) {
   QPointF point;
   CornerData* first_corner = NULL;
   if (wall->start_corner()->RelateWalls().size() == 1) {
@@ -127,6 +123,50 @@ QPointF DesignData::compute_connected_point(WallData* wall, CornerData* corner) 
   }
   if (first_corner == NULL || corner == NULL) {
     return point;
+  }
+
+  std::vector<CornerData*> path = first_corner->FindPathTo(corner);
+  std::vector<QPointF> polygon;
+  for (int i = 0; i < path.size(); i++) {
+    QPointF point = path[i]->LikePosition();
+    assert(!point.isNull());
+    polygon.push_back(point);
+  }
+  PolygonFlipY(polygon);
+  bool is_counterclockwise = IsCounterclockwisePolygon(polygon);
+  int size = path.size();
+  CornerData* corner1 = path[size - 1];
+  CornerData* corner2 = path[size - 2];
+  WallData* wall = NULL;
+  for (std::map<std::string, WallData*>::iterator it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
+    WallData* tmp_wall = it->second;
+    if (wall->DoContainCorner(corner1) && wall->DoContainCorner(corner2)) {
+      wall = tmp_wall;
+      break;
+    }
+  }
+  
+  if (wall->status() == DRAWING_WALL_DATA) {
+    point = wall->IsStartCorner(corner) ? wall->start_corner_position() : wall->end_corner_position();
+  }
+  else {
+    QVector2D vec = wall->WallPerpendicularVector();
+    vec.normalize();
+    QLineF line1 = QLineF(currentPoint,currentPoint+ vec.toPointF());
+    QLineF line2 = wall->WallLine();
+    QPointF point1;
+    line1.intersect(line2, &point1);
+    QVector2D vec2 = QVector2D(currentPoint - point1);
+    qreal length = vec2.length();
+    QPointF point3  = wall->IsStartCorner(corner) ? wall->start_corner_position() : wall->end_corner_position();
+    QPointF point4 = point3 + vec2.toPointF();
+    QLineF line3(point4, point3);
+    QPointF point5, point6;
+    line3.intersect(wall->line().Line(), &point5);
+    line3.intersect(wall->generate_line().Line(), &point6);
+    QVector2D vec3(point5 - point4);
+    QVector2D vec4(point6 - point4);
+    point = vec3.length() < vec4.length() ? point5 : point6;
   }
   return point;
 }

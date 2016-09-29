@@ -36,8 +36,12 @@ class CornerData :public BaseGeometryData{
     std::vector<WallData*> RelateWalls();
     bool DoContainPoint(PointData* point);
     void UpdateCornerPosition();
-    std::vector<CornerData*> FindPathTo(CornerData* corner, std::vector<CornerData> previousPath);
+    std::vector<CornerData*> FindPathTo(CornerData* corner, std::vector<CornerData*> previousPath = std::vector<CornerData*>());
     std::vector<CornerData*> NextCorners();
+    bool path_included_in(std::vector<CornerData*> path1, std::vector<CornerData*> path2);
+    std::vector<QPointF> get_points(std::vector<CornerData*> corners);
+
+    QPointF LikePosition();
     
   private:
 	  void update_wall_generated_line_info(WallData* wall, std::string point_name);

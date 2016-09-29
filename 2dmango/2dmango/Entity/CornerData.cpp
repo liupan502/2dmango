@@ -3,6 +3,8 @@
 #include <set>
 #include <assert.h>
 
+#include "Util/PolygonUtil.h"
+
 CornerData::CornerData(): has_position_data_(false){
 
 }
@@ -232,9 +234,43 @@ void CornerData::update_wall_generated_line_info(WallData* wall, std::string poi
 	}
 }
 
-std::vector<CornerData*> CornerData::FindPathTo(CornerData* corner) {
-  
+std::vector<CornerData*> CornerData::FindPathTo(CornerData* corner, std::vector<CornerData*> previousPath) {
+  std::vector<CornerData*> path;
+  if (corner == this) {
+    previousPath.push_back(this);
+    return previousPath;
+  }
 
+  for (int i = 0; i < previousPath.size(); i++) {
+    CornerData* tmp_corner = previousPath[i];
+    if (tmp_corner == corner) {
+      return path;
+    }
+  }
+
+  previousPath.push_back(this);
+  std::vector<std::vector<CornerData*>> paths;
+  std::vector<CornerData*> next_corners = NextCorners();
+  for (int i = 0; i < next_corners.size(); i++) {
+    CornerData* next_corner = next_corners[i];
+    std::vector<CornerData*> tmp_path = next_corner->FindPathTo(corner, previousPath);
+    if (tmp_path.size() > 0) {
+      paths.push_back(tmp_path);
+    }
+  }
+
+  if (paths.size() == 0) {
+    return path;
+  }
+
+  path = paths[0];
+  for (int i = 1; i < paths.size(); i++) {
+    std::vector<CornerData*> tmp_path = paths[i];
+    if (path_included_in(tmp_path, path)) {
+      path = tmp_path;
+    }
+  }
+  return path;
 }
 
 std::vector<CornerData*> CornerData::NextCorners() {
@@ -249,5 +285,58 @@ std::vector<CornerData*> CornerData::NextCorners() {
     }
   }
   return next_corners;
+}
+
+std::vector<QPointF> CornerData::get_points(std::vector<CornerData*> corners) {
+  std::vector<QPointF> points;
+  for (std::vector<CornerData*>::iterator it = corners.begin(); it != corners.end(); it++) {
+    CornerData* corner = *it;
+    assert(corner->RelateWalls().size() > 0);
+    WallData* wall = corner->RelateWalls()[0];
+    if (wall->IsStartCorner(corner)) {
+      points.push_back(corner->GetPoint(wall->start_corner_name())->point());
+    }
+    else {
+      points.push_back(corner->GetPoint(wall->end_corner_name())->point());
+    }
+  }
+  return points;
+}
+
+bool CornerData::path_included_in(std::vector<CornerData*> path1, std::vector<CornerData*> path2) {
+  std::set<CornerData*> set1, set2,extra_set;
+  std::vector<CornerData*> extra_corners;
+  set1.insert(path1.begin(), path1.end());
+  set2.insert(path2.begin(), path2.end());
+  for (std::set<CornerData*>::iterator it = set1.begin(); it != set1.end(); it++) {
+    if (set2.find(*it) == set2.end()) {
+      extra_corners.push_back(*it);
+    }
+  }
+
+  std::vector<QPointF> points2 = get_points(path2);
+  std::vector<QPointF> extra_points = get_points(extra_corners);
+  for (int i = 0; i < extra_points.size();i++) {
+    QPointF extra_point = extra_points[i];
+    if (!IsPointInPolygon(extra_point, points2)) {
+      false;
+    }
+  }
+  return true;
+}
+
+QPointF CornerData::LikePosition() {
+  QPointF position;
+  if (related_wall_map_.size() == 0) {
+    return position;
+  }
+  WallData* wall = related_wall_map_.begin()->second;
+  if (wall->IsStartCorner(this)) {
+    position = wall->start_corner_position();
+  }
+  else {
+    position = wall->end_corner_position();
+  }
+  return position;
 }
 
