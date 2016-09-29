@@ -82,6 +82,7 @@
     <ClCompile Include="Entity\CornerData.cpp" />
     <ClCompile Include="Entity\DesignData.cpp" />
     <ClCompile Include="Entity\DesignDataWrapper.cpp" />
+    <ClCompile Include="Entity\FindConnectedPoints.cpp" />
     <ClCompile Include="Entity\HotRegionImpl.cpp" />
     <ClCompile Include="Entity\LineData.cpp" />
     <ClCompile Include="Entity\PointData.cpp" />

@@ -243,16 +243,22 @@ std::vector<CornerData*> CornerData::FindPathTo(CornerData* corner, std::vector<
 
   for (int i = 0; i < previousPath.size(); i++) {
     CornerData* tmp_corner = previousPath[i];
-    if (tmp_corner == corner) {
+    if (tmp_corner == this) {
       return path;
     }
   }
-
+  CornerData* previous_corner = NULL;
+  if (previousPath.size() > 0) {
+    previous_corner = previousPath[previousPath.size() - 1];
+  }
   previousPath.push_back(this);
   std::vector<std::vector<CornerData*>> paths;
   std::vector<CornerData*> next_corners = NextCorners();
   for (int i = 0; i < next_corners.size(); i++) {
     CornerData* next_corner = next_corners[i];
+    if (next_corner == previous_corner) {
+      continue;
+    }
     std::vector<CornerData*> tmp_path = next_corner->FindPathTo(corner, previousPath);
     if (tmp_path.size() > 0) {
       paths.push_back(tmp_path);

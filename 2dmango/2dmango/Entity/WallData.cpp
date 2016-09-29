@@ -512,15 +512,6 @@ LineData WallData::GetLine(PointData* point) {
   return line;
 }
 
-
-
-  
-
-
-}
-
-
-
 void WallData::UpdateGeneratedLine(LineData line) {
 	generated_line_ = line;
 }
