@@ -97,7 +97,7 @@ std::string DesignData::generate_name(std::vector<std::string> used_names){
   return std::string(buf);
 }
 
-bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& points) {
+/*bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& points) {
   WallData* wall_data = wall_data_map_[wallName];
   QVector2D vec = wall_data->WallPerpendicularVector();
   points.clear();
@@ -136,9 +136,9 @@ bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName,
     }
   }
   return (points.size() != 0);
-}
+}*/
 
-bool DesignData::is_connected_point(QPointF currentPoint, QVector2D vec, QPointF testPoint) {
+/*bool DesignData::is_connected_point(QPointF currentPoint, QVector2D vec, QPointF testPoint) {
   QVector2D tmp_vec(testPoint-currentPoint);
   if (tmp_vec.length() < 1|| vec.length() < 1) {
     return false;
@@ -150,7 +150,7 @@ bool DesignData::is_connected_point(QPointF currentPoint, QVector2D vec, QPointF
     return true;
   }
   return false;
-}
+}*/
 
 bool DesignData::is_valid_connected_point(std::string pointName, std::string wallName,std::set<std::string>cornersSet) {
   if (cornersSet.find(pointName) != cornersSet.end()) {

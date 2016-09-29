@@ -40,7 +40,10 @@ class DesignData :public BaseData {
 
     void clear_rooms();
 
-    bool is_connected_point(QPointF currentPoint,QVector2D vec ,QPointF testPoint);
+    //bool is_connected_point(QPointF currentPoint,QVector2D vec ,QPointF testPoint);
+    bool is_connected_corner(CornerData);
+
+    QPointF compute_connected_point(WallData* wall, CornerData* corner);
 
     bool is_valid_connected_point(std::string pointName,std::string wallName, std::set<std::string>cornersSet);
 

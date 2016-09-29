@@ -232,3 +232,22 @@ void CornerData::update_wall_generated_line_info(WallData* wall, std::string poi
 	}
 }
 
+std::vector<CornerData*> CornerData::FindPathTo(CornerData* corner) {
+  
+
+}
+
+std::vector<CornerData*> CornerData::NextCorners() {
+  std::vector<CornerData*> next_corners;
+  for (std::map<std::string, WallData*>::iterator it = related_wall_map_.begin(); it != related_wall_map_.end(); it++) {
+    WallData* wall = it->second;
+    if (wall->IsStartCorner(this)) {
+      next_corners.push_back(wall->end_corner());
+    }
+    else {
+      next_corners.push_back(wall->start_corner());
+    }
+  }
+  return next_corners;
+}
+
