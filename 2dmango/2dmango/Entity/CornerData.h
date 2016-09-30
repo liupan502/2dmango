@@ -40,6 +40,9 @@ class CornerData :public BaseGeometryData{
     std::vector<CornerData*> NextCorners();
     bool path_included_in(std::vector<CornerData*> path1, std::vector<CornerData*> path2);
     std::vector<QPointF> get_points(std::vector<CornerData*> corners);
+    std::vector<QPointF> GetAvailableStartPoints();
+    PointData* find_point_with_position(QPointF position);
+    PointData* OutsidePoint();
 
     QPointF LikePosition();
     

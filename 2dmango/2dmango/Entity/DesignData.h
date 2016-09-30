@@ -30,6 +30,8 @@ class DesignData :public BaseData {
 
     bool FindAttachedCorner(QPointF currentPoint, std::string wallName, std::vector<CornerData*>& cornerNames);
 
+    bool FindStartPoint(QPointF currentPoint, QPointF& startPoint);
+
     QPointF CornerPosition(std::string cornerName);
 
     void UpdateRoomInfo();

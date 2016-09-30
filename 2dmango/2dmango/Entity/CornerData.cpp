@@ -346,3 +346,80 @@ QPointF CornerData::LikePosition() {
   return position;
 }
 
+std::vector<QPointF> CornerData::GetAvailableStartPoints() {
+  std::vector<QPointF> points;
+  WallData* first_wall = related_wall_map_.begin()->second;
+  for (std::map<std::string, WallData*>::iterator it = related_wall_map_.begin(); it != related_wall_map_.end(); it++) {
+    WallData* wall = it->second;
+    if (wall == first_wall) {
+      continue;
+    }
+    
+    QLineF line1 = first_wall->line().Line();
+    QLineF line2 = first_wall->generate_line().Line();
+    QLineF line3 = wall->line().Line();
+    QLineF line4 = wall->generate_line().Line();
+
+    QPointF point1;
+    if (line1.intersect(line4, &point1) != QLineF::NoIntersection) {
+      PointData* point_data = find_point_with_position(point1);
+      if (point_data == NULL) {
+        points.push_back(point1);
+      }
+    }
+
+    QPointF point2;
+    if (line2.intersect(line3, &point2) != QLineF::NoIntersection) {
+      PointData* point_data = find_point_with_position(point2);
+      if (point_data == NULL) {
+        points.push_back(point2);
+      }
+    }
+
+  }
+  
+  PointData* outside_point = OutsidePoint();
+  if (outside_point != NULL) {
+    points.push_back(outside_point->point());
+  }
+
+  return points;
+}
+
+PointData* CornerData::find_point_with_position(QPointF position) {
+  PointData* point = NULL;
+  for (std::map<std::string, PointData*>::iterator it = point_data_map_.begin(); it != point_data_map_.end(); it++) {
+    QPointF tmp_point = it->second->point();
+    if (QVector2D(position - tmp_point).length() < 0.01) {
+      point = it->second;
+      break;
+    }
+  }
+  return point;
+}
+
+PointData* CornerData::OutsidePoint() {
+  PointData* outside_point = NULL;
+  for (std::map<std::string, PointData*>::iterator it = point_data_map_.begin(); it != point_data_map_.end(); it++) {
+    std::string point_name = it->first;
+    int inside_index = 0;
+    int outside_index = 0;
+    for (std::map<std::string, WallData*>::iterator wall_it = related_wall_map_.begin(); wall_it != related_wall_map_.end(); wall_it++) {
+      WallData* wall = wall_it->second;
+      if (wall->line().start_point_name() == point_name || wall->line().end_point_name() == point_name) {
+        inside_index++;
+      }
+      if (wall->generate_line().start_point_name() == point_name || wall->generate_line().end_point_name() == point_name) {
+        outside_index++;
+      }
+    }
+  
+    if (inside_index == 0 && outside_index == 2) {
+      outside_point = it->second;
+      break;
+    }
+  }
+
+  return outside_point;
+}
+
