@@ -52,5 +52,8 @@ class  DrawWallActionAdapter : public BaseActionAdapter {
     bool is_current_room_completed_;
     WallData* tmp_wall_;   
     int draw_status_;
+
+    QPointF start_point_;
+    bool is_first_room_;
 };
 #endif

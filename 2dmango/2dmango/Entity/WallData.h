@@ -48,7 +48,7 @@ class WallData :public BaseGeometryData{
      end_corner_ = NULL;
      normal_vector_ = QVector2D();
      set_width(12);
-	 status_ = NONE_STAUS_WALL_DATA;
+	   status_ = NONE_STAUS_WALL_DATA;
    }
 
 	void set_status(WALL_DATA_STATUS status);
@@ -103,6 +103,12 @@ class WallData :public BaseGeometryData{
     PointData*  GetConnectedPoint(WallData* wall);
 
     CornerData* GetConnectedCorner(WallData* wall);
+
+    void set_line_start_name(std::string name);
+    void set_line_end_name(std::string name);
+    void set_generated_line_start_name(std::string name);
+    void set_generated_line_end_name(std::string name);
+
 
 	/*
     void set_end_corner_name(std::string name){

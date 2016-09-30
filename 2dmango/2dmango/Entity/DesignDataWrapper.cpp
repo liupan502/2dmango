@@ -71,4 +71,20 @@ void DesignDataWrapper::UpdateRoomInfo() {
   design_data_->UpdateGeometry();
 }
 
+bool DesignDataWrapper::FindStartPoint(QPointF currentPoint, QPointF& startPoint) {
+  return design_data_->FindStartPoint(currentPoint, startPoint);
+}
+
+bool DesignDataWrapper::IsEmpty() {
+  return design_data_->IsEmpty();
+}
+
+CornerData* DesignDataWrapper::FindCornerWithPosition(QPointF currentPosition) {
+  return design_data_->FindCornerWithPosition(currentPosition);
+}
+
+bool DesignDataWrapper::FindEndPoint(WallData* wall_data, CornerData* corner, QPointF currentPoint, QPointF& endPoint) {
+  return design_data_->FindEndPoint(wall_data,corner, currentPoint, endPoint);
+}
+
 

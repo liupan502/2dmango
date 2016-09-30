@@ -38,7 +38,7 @@ bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName,
           drawing_wall_num++;
         }       
       }
-      if (drawing_wall_num <= 1) {
+      if (drawing_wall_num <= 1 && !wall_data->DoContainCorner(wall->start_corner())) {
         corners.push_back(wall->start_corner());
         walls.push_back(wall);
         points.push_back(QPointF(tmp_vec.x()+start_position.x(), tmp_vec.y() + start_position.y()));
@@ -57,7 +57,7 @@ bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName,
           drawing_wall_num++;
         }
       }
-      if (drawing_wall_num <= 1) {
+      if (drawing_wall_num <= 1 && !wall_data->DoContainCorner(wall->start_corner())) {
         corners.push_back(wall->end_corner());
         walls.push_back(wall);
         points.push_back(QPointF(tmp_vec.x() + end_position.x(), tmp_vec.y() + end_position.y()));
@@ -114,9 +114,14 @@ bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName,
     }
   }
 
-  QPointF point = compute_connected_point(wall_data, corners[index], currentPoint);  
-  outputPoints.push_back(point);
-  return true;
+  QPointF point = compute_connected_point(wall_data, corners[index], currentPoint); 
+  if (!point.isNull()) {
+    outputPoints.push_back(point);
+    return true;
+  }
+  else {
+    return false;
+  }  
 }
 
 QPointF DesignData::compute_connected_point(WallData* wall, CornerData* corner,QPointF currentPoint) {

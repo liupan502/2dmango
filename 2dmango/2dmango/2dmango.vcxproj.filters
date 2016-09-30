@@ -152,11 +152,14 @@
     <ClCompile Include="Util\PolygonUtil.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="Util\LineUtil.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\FindConnectedPoints.cpp">
       <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\FindPoint.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\LineUtil.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +238,7 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="Util\LineUtil.h">
-      <Filter>Header Files</Filter>
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -81,6 +81,9 @@ std::vector<PointData*> RoomData::polygon() {
   for (int i = 0; i < wall_size; i++) {
     WallData* wall = walls_[i];
     WallData* next_wall = walls_[(i+1)%wall_size];
+    if (wall->name() == "7") {
+      int a = 0;
+    }
     PointData* point = wall->GetConnectedPoint(next_wall);
     polygon.push_back(point);
   }
@@ -169,10 +172,10 @@ std::vector<QPointF> RoomData::get_points(std::vector<CornerData*> corners) {
     assert(corner->RelateWalls().size() > 0);
     WallData* wall = corner->RelateWalls()[0];
     if (wall->IsStartCorner(corner)) {
-      points.push_back(corner->GetPoint(wall->start_corner_name())->point());
+      points.push_back(corner->GetPoint(wall->line().start_point_name())->point());
     }
     else {
-      points.push_back(corner->GetPoint(wall->end_corner_name())->point());
+      points.push_back(corner->GetPoint(wall->line().end_point_name())->point());
     }
   }
   return points;

@@ -32,9 +32,15 @@ class DesignData :public BaseData {
 
     bool FindStartPoint(QPointF currentPoint, QPointF& startPoint);
 
+    bool FindEndPoint(WallData* wall_data, CornerData* corner,QPointF currentPoint, QPointF& endPoint);
+
     QPointF CornerPosition(std::string cornerName);
 
+    CornerData* FindCornerWithPosition(QPointF currentPosition);
+
     void UpdateRoomInfo();
+
+    bool IsEmpty();
 
 	void UpdateGeometry();
 

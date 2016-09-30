@@ -41,6 +41,14 @@ class DesignDataWrapper {
 
     QPointF CornerPosition(std::string cornerName);
 
+    bool FindStartPoint(QPointF currentPoint, QPointF& startPoint);
+
+    CornerData* FindCornerWithPosition(QPointF currentPosition);
+
+    bool FindEndPoint(WallData* wall_data, CornerData* corner, QPointF currentPoint, QPointF& endPoint);
+
+    bool IsEmpty();
+
     void UpdateRoomInfo();
 
     static DesignDataWrapper* GetInstance();
@@ -58,6 +66,8 @@ class DesignDataWrapper {
    HotRegionGeometry hot_region_;
 
    std::vector<AuxiliaryLineGeometry> auxiliary_lines_;
+   
+   
 
 
 };

@@ -50,7 +50,7 @@ bool IsPointInPolygon(QPointF point, std::vector<QPointF> polygon) {
   }
 
   std::vector<QPointF> left_points, right_points;
-  int intersect_points_size;
+  int intersect_points_size = intersect_points.size();
   for (int i = 0; i < intersect_points_size; i++) {
 	if (intersect_points[i].x() < point.x()) {
 	  left_points.push_back(intersect_points[i]);

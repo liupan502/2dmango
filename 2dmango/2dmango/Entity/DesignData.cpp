@@ -262,6 +262,13 @@ QPointF DesignData::CornerPosition(std::string cornerName) {
 
 void DesignData::UpdateRoomInfo() {
   clear_rooms();
+
+  std::map<std::string, CornerData*>::iterator corner_it;
+  for (corner_it = corner_data_map_.begin(); corner_it != corner_data_map_.end(); corner_it++) {
+    CornerData* corner = corner_it->second;
+    corner->UpdateRelatedInfo();
+  }
+
   std::set<WallData*> exclude_walls;
   find_unclosed_walls(exclude_walls);
   std::map<std::string,WallData*>::iterator it;
@@ -310,4 +317,33 @@ void DesignData::clear_rooms() {
     }
   }
   room_data_map_.clear();
+}
+
+bool DesignData::IsEmpty() {
+  if (corner_data_map_.size() > 0) {
+    return false;
+  }
+
+  if (room_data_map_.size() > 0) {
+    return false;
+  }
+
+  if (wall_data_map_.size() > 0) {
+    return false;
+  }
+
+  return true;
+}
+
+CornerData* DesignData::FindCornerWithPosition(QPointF currentPosition) {
+  CornerData* corner = NULL;
+  for (std::map<std::string, CornerData*>::iterator it = corner_data_map_.begin();
+    it != corner_data_map_.end(); it++) {
+    QPointF corner_position = it->second->LikePosition();
+    if (QVector2D(currentPosition - corner_position).length() < 20) {
+      corner = it->second;
+      break;
+    }
+  }
+  return corner;
 }

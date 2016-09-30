@@ -53,6 +53,8 @@ std::vector<std::string> WallData::AllLineNames() {
 void WallData::set_start_corner(CornerData* corner) {
   if (start_corner_ != NULL) {
     start_corner_->RemoveRelatedWall(this);
+    line_.set_start_point_name("");
+    generated_line_.set_start_point_name("");
   }
   start_corner_ = corner;
   start_corner_->AddRelatedWall(this);
@@ -65,6 +67,8 @@ CornerData* WallData::start_corner() {
 void WallData::set_end_corner(CornerData* corner) {
   if (end_corner_ != NULL) {
     end_corner_->RemoveRelatedWall(this);
+    line_.set_end_point_name("");
+    generated_line_.set_end_point_name("");
   }
   end_corner_ = corner;
   end_corner_->AddRelatedWall(this);
@@ -80,6 +84,7 @@ void WallData::set_start_corner_position(QPointF point) {
   }
   if (line_.start_point_name() == "") {
     std::string point_name = start_corner_->GetPointName(point);
+    
     if (point_name == "") {
       point_name = start_corner_->AddPoint(point);
     }    
@@ -94,8 +99,12 @@ void WallData::set_end_corner_position(QPointF point) {
   if (end_corner_ == NULL) {
     return;
   }
+  
   if (line_.end_point_name() == "") {
-    std::string point_name = end_corner_->AddPoint(point);
+    std::string point_name = end_corner_->GetPointName(point);
+    if (point_name == "") {
+      point_name = end_corner_->AddPoint(point);      
+    }
     line_.set_end_point_name(point_name);
   }
   end_corner_->UpdatePoint(line_.end_point_name(), point);
@@ -540,6 +549,22 @@ void WallData::set_status(WALL_DATA_STATUS status) {
 
 WALL_DATA_STATUS WallData::status() {
 	return status_;
+}
+
+void WallData::set_line_start_name(std::string name) {
+  line_.set_start_point_name(name);
+}
+
+void WallData::set_line_end_name(std::string name) {
+  line_.set_end_point_name(name);
+}
+
+void WallData::set_generated_line_start_name(std::string name) {
+  generated_line_.set_start_point_name(name);  
+}
+
+void WallData::set_generated_line_end_name(std::string name) {
+  generated_line_.set_end_point_name(name);
 }
 
 

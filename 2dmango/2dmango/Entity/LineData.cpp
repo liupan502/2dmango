@@ -92,3 +92,15 @@ QPointF LineData::Intersect(LineData lineData) {
     return QPointF();
   }
 }
+
+bool LineData::IsAvailable() {
+  if (start_point_name_ == "") {
+    return false;
+  }
+
+  if (end_point_name_ == "") {
+    return false;
+  }
+
+  return true;
+}

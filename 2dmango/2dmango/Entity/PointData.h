@@ -14,6 +14,7 @@ class PointData :public BaseData {
   private:
    QPointF point_;
    
+   bool is_generated_;
    bool has_point_data_;
 };
 #endif

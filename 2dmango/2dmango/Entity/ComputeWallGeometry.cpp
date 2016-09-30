@@ -92,9 +92,10 @@ void DesignData::update_wall_geometrys() {
 }
 
 void DesignData::update_corner_positions() {
-  std::map<std::string,CornerData*>::iterator it;
+  std::map<std::string,CornerData*>::iterator it; 
+
   for (it = corner_data_map_.begin(); it != corner_data_map_.end(); it++) {
-    CornerData* corner = it->second;
+    CornerData* corner = it->second;    
     corner->UpdateCornerPosition();
   }
 }

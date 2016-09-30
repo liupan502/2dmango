@@ -43,16 +43,21 @@ class CornerData :public BaseGeometryData{
     std::vector<QPointF> GetAvailableStartPoints();
     PointData* find_point_with_position(QPointF position);
     PointData* OutsidePoint();
+    void UpdateRelatedInfo();
 
     QPointF LikePosition();
     
   private:
 	  void update_wall_generated_line_info(WallData* wall, std::string point_name);
 
+    void update_wall_relate_info(WallData* lineData,PointData* point);
+
     bool has_position_data_;
     std::map<std::string,PointData*> point_data_map_;
     std::map<std::string,WallData*> related_wall_map_;
     std::string generate_point_name();
+
+    PointData* generated_point_;
 
 };
 
