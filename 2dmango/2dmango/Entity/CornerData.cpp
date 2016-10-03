@@ -180,10 +180,33 @@ bool CornerData::DoContainPoint(PointData* point) {
 }
 
 void CornerData::UpdateCornerPosition() {
+  if (name() == "2" && related_wall_map_.size() == 3) {
+    int a = 0;
+  }
+  std::set<std::string> point_names;
   std::map<std::string,WallData*>::iterator it;
   std::vector<WallData*> walls;//,generated_line2;
   for (it = related_wall_map_.begin(); it != related_wall_map_.end(); it++) {
     WallData* wall = it->second;
+    if (wall->IsStartCorner(this)) {
+      if (wall->line().start_point_name() != "") {
+        point_names.insert(wall->line().start_point_name());
+      }
+
+      if (wall->generate_line().start_point_name() != "") {
+        point_names.insert(wall->generate_line().start_point_name());
+      }
+    }
+    else {
+      if (wall->line().end_point_name() != "") {
+        point_names.insert(wall->line().end_point_name());
+      }
+
+      if (wall->generate_line().end_point_name() != "") {
+        point_names.insert(wall->generate_line().end_point_name());
+      }
+    }
+
 	if(wall->status() != ROOM_WALL_DATA){
       continue;
 	}
@@ -191,33 +214,88 @@ void CornerData::UpdateCornerPosition() {
     if (wall->IsStartCorner(this) && generated_line.start_point_name() == "") {
 		walls.push_back(wall);
     }
-    else if(generated_line.end_point_name() == ""){
+    else if(wall->IsEndCorner(this) && generated_line.end_point_name() == ""){
 		walls.push_back(wall);
     }
   }
+
+  for (std::map<std::string, PointData*>::iterator it = point_data_map_.begin(); it != point_data_map_.end(); ) {
+    if (point_names.find(it->first) == point_names.end()) {
+      delete it->second;
+      it->second = NULL;
+      it = point_data_map_.erase(it);
+    }
+    else {
+      it++;
+    }
+  }
+
   int walls_size = walls.size();
-  assert(walls_size == 2 || walls_size == 0);
+  assert(walls_size == 2 || walls_size == 0); 
   if(walls_size == 2) {
 	LineData generate_line1 = walls[0]->generate_line();
 	LineData generate_line2 = walls[1]->generate_line();
     QPointF  position = generate_line1.Intersect(generate_line2);
+    assert(!position.isNull());
+    position = generate_line1.Intersect(generate_line2);
     std::string point_name = AddPoint(position);
+  point_names.insert(point_name);
   generated_point_ = GetPoint(point_name);
 	update_wall_generated_line_info(walls[0], point_name);
 	update_wall_generated_line_info(walls[1], point_name);
   }
 
-  std::map<std::string,PointData*>::iterator point_it;
+  for (std::map<std::string, WallData*>::iterator it = related_wall_map_.begin();
+    it != related_wall_map_.end(); it++) {
+    WallData* tmp_wall = it->second;
+    if (tmp_wall->name() == "2") {
+      int a = 0;
+    }
+
+    tmp_wall->UpdateGeneratedLine();
+    tmp_wall->UpdateLine();
+    //QLineF line1 = tmp_wall->line().Line();
+    /*
+    QLineF line2 = tmp_wall->generate_line().Line();
+    if (tmp_wall->IsStartCorner(this)) {      
+      std::string point_name = tmp_wall->generate_line().start_point_name();
+      QLineF tmp_line(GetPoint(point_name)->point(), line2.p2());
+      LineData tmp_line_data = tmp_wall->generate_line();
+      tmp_line_data.set_line(tmp_line);
+      tmp_wall->UpdateGeneratedLine(tmp_line_data);
+    }
+    else {
+      std::string point_name = tmp_wall->generate_line().end_point_name();
+      QLineF tmp_line(line2.p1(),GetPoint(point_name)->point());
+      LineData tmp_line_data = tmp_wall->generate_line();
+      tmp_line_data.set_line(tmp_line);
+      tmp_wall->UpdateGeneratedLine(tmp_line_data);
+    }
+    line2 = tmp_wall->generate_line().Line();
+    if (line2.p1() == line2.p2()) {
+      int a = 0;
+    }*/
+  }
+
+  //std::map<std::string,PointData*>::iterator point_it;
+  std::set<std::string>::iterator point_name_it;
   qreal x = 0;
   qreal y = 0;
-  for (point_it = point_data_map_.begin(); point_it != point_data_map_.end(); point_it++) {
-    QPointF position = point_it->second->point();
+  for (point_name_it = point_names.begin(); point_name_it != point_names.end(); point_name_it++) {
+    QPointF position = point_data_map_[*point_name_it]->point();
     x +=  position.x();
     y += position.y();
   }
-  x = x/point_data_map_.size();
-  y = y/point_data_map_.size();
- set_position(QVector3D(x,y,0));
+
+  if (point_names.size() > 0) {
+    x = x / point_names.size();
+    y = y / point_names.size();
+    set_position(QVector3D(x, y, 0));
+  }
+  else {
+    int a = 0;
+  }
+  
 }
 
 void CornerData::update_wall_generated_line_info(WallData* wall, std::string pointName) {
@@ -435,6 +513,7 @@ void CornerData::UpdateRelatedInfo() {
     WallData* wall = it->second;
     LineData line = wall->line();
     LineData generate_line = wall->generate_line();
+    
 
     for (std::map<std::string, PointData*>::iterator point_it = point_data_map_.begin(); point_it != point_data_map_.end(); point_it++) {
       PointData* point = point_it->second;
@@ -456,6 +535,7 @@ void CornerData::UpdateRelatedInfo() {
           }
         }
       }
+
       if (generate_line.IsAvailable()) {
         QPointF point_position = point->point();
         QLineF line_ = generate_line.Line();
@@ -474,6 +554,7 @@ void CornerData::UpdateRelatedInfo() {
           }
         }
       }
+
     }
   }
 
@@ -510,5 +591,11 @@ void CornerData::UpdateRelatedInfo() {
 void CornerData::update_wall_relate_info(WallData* wallData,PointData* point) {
   QPointF point_position = point->point();
   
+}
+
+PointData* CornerData::FindConnectPoint(WallData* wall1, WallData* wall2) {
+  PointData* point = NULL;
+  
+  return point;
 }
 

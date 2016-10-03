@@ -40,10 +40,10 @@ bool IsPointInPolygon(QPointF point, std::vector<QPointF> polygon) {
   std::vector<QPointF> intersect_points;
   for (int i = 0; i < size; i++) {
     QPointF point1 = polygon[i];
-	QPointF point2 = polygon[(i + 1) % size];
-	QLineF line1(point1, point2);
-	QLineF line2(QPointF(point.x() - 9999.0f, point.y()),QPointF(point.x() + 9999.0f,point.y()));
-	QPointF intersect_point;
+	  QPointF point2 = polygon[(i + 1) % size];
+	  QLineF line1(point1, point2);
+	  QLineF line2(QPointF(point.x() - 9999.0f, point.y()),QPointF(point.x() + 9999.0f,point.y()));
+	  QPointF intersect_point;
 	if (line1.intersect(line2, &intersect_point) == QLineF::BoundedIntersection) {
       intersect_points.push_back(intersect_point);
 	}
@@ -61,9 +61,9 @@ bool IsPointInPolygon(QPointF point, std::vector<QPointF> polygon) {
   }
 
   if (left_points.size() % 2 == 0) {
-	  return true;
+	  return false;
   }
   else {
-	  return false;
+	  return true;
   }
 }

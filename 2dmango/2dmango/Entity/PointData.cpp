@@ -10,6 +10,7 @@ PointData::PointData(std::string name, QPointF point) : BaseData(name) {
 }
 
 void PointData::set_point(QPointF point) {
+
   point_ = point;
   has_point_data_ = true;
 }
@@ -19,7 +20,7 @@ QPointF PointData::point() {
 }
 
 void PointData::Reset() {
-  point_ = QPointF();
+  //point_ = QPointF();
   has_point_data_ = false;
 }
 

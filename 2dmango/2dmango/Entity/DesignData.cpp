@@ -262,8 +262,14 @@ QPointF DesignData::CornerPosition(std::string cornerName) {
 
 void DesignData::UpdateRoomInfo() {
   clear_rooms();
+  //reset_geometry();
 
+  if (wall_data_map_.size() == 10) {
+    int a = 0;
+  }
   std::map<std::string, CornerData*>::iterator corner_it;
+
+
   for (corner_it = corner_data_map_.begin(); corner_it != corner_data_map_.end(); corner_it++) {
     CornerData* corner = corner_it->second;
     corner->UpdateRelatedInfo();
@@ -280,7 +286,10 @@ void DesignData::UpdateRoomInfo() {
     if (!wall->IsUnsharedWall(exclude_walls)) {
       continue;
     }
-    std::vector<WallData*> wall_path = wall->GetRoom(exclude_walls);
+    
+    std::vector<WallData*> wall_path = wall->GetRoom(exclude_walls); 
+
+
     if (wall_path.size() > 0) {
       update_exclude_walls(exclude_walls,wall_path);
       std::string room_name = generate_room_name();

@@ -109,6 +109,9 @@ class WallData :public BaseGeometryData{
     void set_generated_line_start_name(std::string name);
     void set_generated_line_end_name(std::string name);
 
+    void UpdateLine();
+    void UpdateGeneratedLine();
+
 
 	/*
     void set_end_corner_name(std::string name){

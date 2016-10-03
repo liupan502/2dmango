@@ -2,6 +2,7 @@
 #include <QLineF>
 #include "CornerData.h"
 #include "RoomData.h"
+#include <assert.h>
 
 std::string WallData::ToJson() {
   return " ";
@@ -185,29 +186,35 @@ std::vector<WallData*> WallData::GetRoom(std::set<WallData*> excludeWalls,std::v
     return room;
   }
   currentPath.push_back(this);
-  if (is_room_path(currentPath)) {
-    //room = currentPath;
-    //return room;
-	rooms.push_back(currentPath);
+  if (! is_available_path(currentPath)) {
+    return room;
   }
-  else if(is_available_path(currentPath)){
+  if (is_room_path(currentPath)) {    
+	  rooms.push_back(currentPath);
+  }
+  else {
     CornerData* last_corner = find_last_corner(currentPath);
     std::vector<WallData*> walls = last_corner->RelateWalls();
     for (int i = 0; i < walls.size(); i++) {
       WallData* wall = walls[i];
+      if (excludeWalls.find(wall) != excludeWalls.end()) {
+        continue;
+      }
       if (wall == this) {
         continue;
       }
       std::vector<WallData*> tmp_room = wall->GetRoom(excludeWalls,currentPath);
-      if (tmp_room.size() > 0) {
-        //room = tmp_room;
-		rooms.push_back(tmp_room);
-        break;
+      if (tmp_room.size() > 0) {        
+		    rooms.push_back(tmp_room);
+        
       }
     }
   }
 
   if (rooms.size() > 0) {
+    if (rooms.size() > 1) {
+      int a = 0;
+    }
 	  RoomData room_data("",rooms[0]);
     for (int i = 1; i < rooms.size(); i++) {
       RoomData tmp_room_data("", rooms[i]);
@@ -234,7 +241,7 @@ bool WallData::is_available_path(std::vector<WallData*> wallPath) {
       previous_corner = wall->start_corner();
     }
     else {      
-      previous_corner = wall->start_corner();
+      previous_corner = wall->end_corner();
     }
     corner_path.push_back(previous_corner);
   }
@@ -244,7 +251,7 @@ bool WallData::is_available_path(std::vector<WallData*> wallPath) {
     return true;
   }
   else {
-    return true;
+    return false;
   }
 }
 
@@ -303,18 +310,16 @@ void WallData::ResetGeometry(){
   normal_vector_ = QVector2D();  
   if (true) {
     PointData* point = start_corner_->GetPoint(generated_line_.start_point_name());
-	if (point != NULL) {
+	  if (point != NULL) {
       point->Reset();
-	}
-    
+	  }    
   }
 
   if (true) {
     PointData* point = end_corner_->GetPoint(generated_line_.end_point_name());
-	if (point != NULL) {
-		point->Reset();
-	}
-    
+	  if (point != NULL) {
+		  point->Reset();
+	  }    
   }
 }
 
@@ -440,7 +445,8 @@ void WallData::set_normal_vector(QVector2D vector) {
   PointData* end_point = end_corner()->GetPoint(line_.end_point_name());
   QVector2D line_vector = QVector2D(start_point->point() - end_point->point());
   qreal value = line_vector.x()*vector.x() + line_vector.y()*vector.y();
-  if (value == 0) {
+  //assert(value == 0);
+  if (abs(value) < 0.001 ) {
     vector.normalize();
     vector = vector*width();
     normal_vector_ = vector;    
@@ -483,7 +489,7 @@ void WallData::ComputePoint(PointData* point) {
     return;
   }
 
-  LineData line = GetLine(point);
+  /*LineData line = GetLine(point);
   LineData other_line = other_wall->GetLine(point);
   if (line.Line().isNull() || other_line.Line().isNull()) {
     return;
@@ -491,8 +497,9 @@ void WallData::ComputePoint(PointData* point) {
   QPointF position = line.Intersect(other_line);
   if (position.isNull()) {
     return;
-  }
-  point->set_point(position);
+  }*/
+  point = this->GetConnectedPoint(other_wall);
+  //point->set_point(position);
 }
 
 bool WallData::DoContianPoint(PointData* point) {
@@ -565,6 +572,52 @@ void WallData::set_generated_line_start_name(std::string name) {
 
 void WallData::set_generated_line_end_name(std::string name) {
   generated_line_.set_end_point_name(name);
+}
+
+void WallData::UpdateLine() {
+  if (start_corner_ != NULL) {
+    PointData* start_point = start_corner_->GetPoint(line_.start_point_name());
+    if (start_point != NULL && !start_point->point().isNull()) {
+      assert(!start_point->point().isNull());
+      QLineF  line(start_point->point(), line_.Line().p2());
+      assert(line.p1() != line.p2());
+      line_.set_line(line);
+    }
+  }
+
+  if (end_corner_ != NULL) {
+    PointData* end_point = end_corner_->GetPoint(line_.end_point_name());
+    if (end_point != NULL && !end_point->point().isNull()) {
+      assert(!end_point->point().isNull());
+      QLineF line(line_.Line().p1(), end_point->point());
+      assert(line.p1() != line.p2());
+      line_.set_line(line);
+    }
+  }
+  
+}
+
+void WallData::UpdateGeneratedLine() {
+  if (start_corner_ != NULL) {
+    PointData* start_point = start_corner_->GetPoint(generated_line_.start_point_name());
+    if (start_point != NULL && !start_point->point().isNull()) {
+      assert(!start_point->point().isNull());
+      QLineF line(start_point->point(), generated_line_.Line().p2());
+      assert(line.p1() != line.p2());
+      generated_line_.set_line(line);
+    }
+  }
+
+  if (end_corner_ != NULL) {
+    PointData* end_point = end_corner_->GetPoint(generated_line_.end_point_name());
+    if (end_point != NULL && !end_point->point().isNull()) {
+      
+      QLineF line(generated_line_.Line().p1(), end_point->point());
+      assert(line.p1() != line.p2());
+      generated_line_.set_line(line);
+    }
+
+  }
 }
 
 

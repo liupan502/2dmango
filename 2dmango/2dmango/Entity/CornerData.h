@@ -44,6 +44,7 @@ class CornerData :public BaseGeometryData{
     PointData* find_point_with_position(QPointF position);
     PointData* OutsidePoint();
     void UpdateRelatedInfo();
+    PointData* FindConnectPoint(WallData* wall1, WallData* wall2);
 
     QPointF LikePosition();
     

@@ -82,25 +82,17 @@ QPointF LineData::Intersect(LineData lineData) {
   QLineF line = Line();
   QLineF other_line = lineData.Line();
   QPointF intersect_point;
-  if (line.intersect(other_line, &intersect_point) != QLineF::NoIntersection) {
-    return intersect_point;
-  }
-  else if (IsSameLine(line, other_line)) {
+  if (IsSameLine(line, other_line)) {
     return GetSameLinesConnectedPoint(line, other_line);
   }
+  else if (line.intersect(other_line, &intersect_point) != QLineF::NoIntersection) {
+    return intersect_point;
+  }  
   else {
     return QPointF();
   }
 }
 
 bool LineData::IsAvailable() {
-  if (start_point_name_ == "") {
-    return false;
-  }
-
-  if (end_point_name_ == "") {
-    return false;
-  }
-
-  return true;
+  return (!line_.isNull());
 }

@@ -63,7 +63,28 @@ bool RoomData::check_wall(CornerData* previousCorner, int currentIndex, std::set
     result = true;
   }
   else {
-    std::string connect_point_name = current_wall->line().find_connected_point(next_wall->line());
+    std::string connect_point_name = "";
+    if (current_wall->IsStartCorner(previousCorner)) {
+      if (next_wall->IsStartCorner(previousCorner)) {
+        connect_point_name = current_wall->line().start_point_name() == next_wall->line().start_point_name() ?
+          current_wall->line().start_point_name() : "";
+      }
+      else {
+        connect_point_name = current_wall->line().start_point_name() == next_wall->line().end_point_name() ?
+          current_wall->line().start_point_name() : "";
+      }
+    }
+    else {
+      if (next_wall->IsStartCorner(previousCorner)) {
+        connect_point_name = current_wall->line().end_point_name() == next_wall->line().start_point_name() ?
+          current_wall->line().end_point_name() : "";
+      }
+      else {
+        connect_point_name = current_wall->line().end_point_name() == next_wall->line().end_point_name() ?
+          current_wall->line().end_point_name() : "";
+      }
+    }
+    //std::string connect_point_name = current_wall->line().find_connected_point(next_wall->line());
     if (connect_point_name != "") {
       result = true;
     }
@@ -111,11 +132,18 @@ void RoomData::GenerateLines() {
 
     QLineF vector_line = wall->line().Line().normalVector();
     QVector2D vector = QVector2D(vector_line.p2() - vector_line.p1());
+    if (wall->IsEndCorner(previous_corner)) {
+      vector = -vector;
+    }
     // end to start 
     if (is_counterclockwise) {
       vector = -vector;     
-    }    
+    } 
+    if (wall->name() == "10") {
+      int a = 0;
+    }
     wall->set_normal_vector(vector);
+    previous_corner = corner;
   }
 
 }
@@ -128,12 +156,12 @@ std::vector<CornerData*> RoomData::GetCorners() {
   }  
   CornerData* previous_corner = NULL;
   
-  for (int i = 1; i < size; i++) {
-    if (walls_[i]->IsEndCorner(previous_corner)) {
-      previous_corner = walls_[i]->start_corner();      
+  for (int i = 0; i < size; i++) {
+    if (walls_[i]->IsStartCorner(previous_corner)) {
+      previous_corner = walls_[i]->end_corner();      
     }
     else {
-      previous_corner = walls_[i]->end_corner();
+      previous_corner = walls_[i]->start_corner();
     }
     corners.push_back(previous_corner);
   }

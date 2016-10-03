@@ -49,8 +49,7 @@ RoomData* DesignData::find_available_room(std::set<RoomData*> excludeRooms, std:
 
 void DesignData::UpdateGeometry() {
   reset_geometry();
-  update_wall_geometrys();
-  update_corner_positions();
+  update_wall_geometrys();  
 }
 
 void DesignData::reset_geometry() {
@@ -65,18 +64,19 @@ void DesignData::update_wall_geometrys() {
   for (it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
 	  if (it->second->status() == DRAWING_WALL_DATA) {
 		  it->second->set_status(UNROOM_WALL_DATA);
-
 	  }
   }
 
   std::set<RoomData*> exclude_rooms;
   std::set<WallData*> exclude_walls;
   while (true) {
+
     RoomData* room = find_available_room(exclude_rooms, exclude_walls);
     if (!room) {
       break;
     }
     exclude_rooms.insert(room);
+   
     room->GenerateLines();
     std::vector<WallData*> walls = room->walls();
     for (int i = 0; i < walls.size(); i++) {
@@ -85,7 +85,33 @@ void DesignData::update_wall_geometrys() {
         continue;
       }
       exclude_walls.insert(wall);
-      update_wall_geometry(wall);      
+      update_wall_geometry(wall); 
+      CornerData* start_corner = wall->start_corner();
+      std::vector<WallData*> start_related_walls = start_corner->RelateWalls();
+
+      bool should_update_corner = true;
+      for (int i = 0; i < start_related_walls.size(); i++) {
+        if (exclude_walls.find(start_related_walls[i]) == exclude_walls.end()) {
+          should_update_corner = false;
+          break;
+        }
+      }
+      if (should_update_corner) {        
+        start_corner->UpdateCornerPosition();
+      }
+
+      should_update_corner = true;
+      CornerData* end_corner = wall->end_corner();
+      std::vector<WallData*> end_related_walls = end_corner->RelateWalls();
+      for (int i = 0; i < end_related_walls.size(); i++) {
+        if (exclude_walls.find(end_related_walls[i]) == exclude_walls.end()) {
+          should_update_corner = false;
+          break;
+        }
+      }
+      if (should_update_corner) {      
+        end_corner->UpdateCornerPosition();
+      }
     }
   }
   
@@ -129,16 +155,17 @@ void DesignData::sort_wall(std::vector<WallData*>& wall_datas){
 }
 
 void DesignData::update_wall_geometry(WallData* wall) {
+  
   PointData* point1 = wall->start_corner()->GetPoint(wall->line().start_point_name());
   if (point1 && !point1->has_point_data()) {
     wall->ComputePoint(point1);
   }
      
-  PointData* point2 = wall->start_corner()->GetPoint(wall->line().end_point_name());
+  PointData* point2 = wall->end_corner()->GetPoint(wall->line().end_point_name());
   if (point2 && !point2->has_point_data()) {
     wall->ComputePoint(point2);
   }
-  PointData* point3 = wall->end_corner()->GetPoint(wall->generate_line().start_point_name());
+  PointData* point3 = wall->start_corner()->GetPoint(wall->generate_line().start_point_name());
   if (point3 && !point3->has_point_data()) {
     wall->ComputePoint(point3);
   }
