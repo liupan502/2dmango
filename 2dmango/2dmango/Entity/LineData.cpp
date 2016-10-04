@@ -1,5 +1,6 @@
 #include "LineData.h"
 #include "Util/LineUtil.h"
+#include <assert.h>
 LineData::LineData():BaseData() {
   is_independent_ = true;
   start_point_name_ = "";
@@ -89,6 +90,7 @@ QPointF LineData::Intersect(LineData lineData) {
     return intersect_point;
   }  
   else {
+    assert(false);
     return QPointF();
   }
 }

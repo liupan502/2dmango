@@ -6,6 +6,7 @@
 #include "WallData.h"
 #include "CornerData.h"
 #include "RoomData.h"
+#include "WallPath.h"
 
 #include "Geometry/WallGeometry.h"
 #include <QVector2d>
@@ -88,6 +89,8 @@ class DesignData :public BaseData {
     void sort_wall(std::vector<WallData*>& wall_datas);
 
     void find_unclosed_walls(std::set<WallData*>& unclosedWalls);
+
+    WallData* find_start_wall(std::set<WallData*> excludeWalls);
 
     void update_exclude_walls(std::set<WallData*>& exclude_walls, std::vector<WallData*>walls);
 

@@ -17,7 +17,7 @@ class BaseData {
       name_ = name;
     }
 
-    std::string name(){
+    std::string name() const {
       return name_;
     }
 

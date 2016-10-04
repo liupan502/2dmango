@@ -16,7 +16,7 @@ bool IsPointInLine(QPointF point, QLineF line) {
   }
   vec2.normalize();
 
-  if (vec1 == vec2) {
+  if (EqualVector2D(vec1,vec2)) {
     return true;
   }
   else {
@@ -79,11 +79,13 @@ QPointF GetSameLinesConnectedPoint(QLineF line1, QLineF line2) {
   }
 }
 
-  return QPointF(points[1].x()+points[2].x(),points[1].y()+points[1].y())/2.0;
+  return QPointF(points[1].x()+points[2].x(),points[1].y()+points[2].y())/2.0;
 }
 
 bool EqualVector2D(QVector2D vec1, QVector2D vec2) {
 
+  vec1.normalize();
+  vec2.normalize();
   QVector2D vec3 = vec1 - vec2;
   if (vec3.length() < 0.001) {
     return true;

@@ -1,6 +1,11 @@
 #include "DrawWallActionAdapter.h"
 #include "Entity/DesignDataWrapper.h"
 
+#include <windows.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <ctype.h>
+
 const int draw_none = 0;
 const int draw_ready = 1;
 const int draw_initilizing = 2;
@@ -95,6 +100,7 @@ void DrawWallActionAdapter::right_mouse_button_release(QMouseEvent* event){
 }
 
 void DrawWallActionAdapter::ready_mouse_move(QMouseEvent* event) {
+  //OutputDebugString(TEXT("在调试器里输出的类容\n"));
   QPointF current_point = QPointF(event->pos());  
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
   QPointF point;
@@ -102,12 +108,10 @@ void DrawWallActionAdapter::ready_mouse_move(QMouseEvent* event) {
     start_point_ = point;
     instance->HotRegionMoveTo(point);
     instance->ShowHotRegion(true);
-    if (start_point_.isNull()) {
-      int a = 0;
-    }
-    else {
-      int a = 0;
-    }
+    //OutputDebugString(TEXT("find start point\n"));
+  }
+  else {
+    //OutputDebugString(TEXT("not find start point\n"));
   }
 }
 
@@ -118,9 +122,10 @@ void DrawWallActionAdapter::initilizing_mouse_move(QMouseEvent* event) {
     DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
     if (instance->IsPointInHotRegion(pos)) {
       tmp_wall_->set_end_corner_position(QPointF(pos));
+      OutputDebugString(TEXT("initilizing_mouse_move inside region\n"));
     }
     else {
-      
+      OutputDebugString(TEXT("initilizing_mouse_move outside region\n"));
       draw_status_ = draw_drawing;
       QPointF start_point = tmp_wall_->start_corner_position();
       qreal offset_x = pos.x() - start_point.x();

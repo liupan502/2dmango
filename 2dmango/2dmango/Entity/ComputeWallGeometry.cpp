@@ -72,8 +72,13 @@ void DesignData::update_wall_geometrys() {
   while (true) {
 
     RoomData* room = find_available_room(exclude_rooms, exclude_walls);
+   
     if (!room) {
       break;
+    }
+
+    if (wall_data_map_.size() == 16) {
+      int a = 0;
     }
     exclude_rooms.insert(room);
    

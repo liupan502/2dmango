@@ -180,7 +180,7 @@ bool CornerData::DoContainPoint(PointData* point) {
 }
 
 void CornerData::UpdateCornerPosition() {
-  if (name() == "2" && related_wall_map_.size() == 3) {
+  if ( related_wall_map_.size() == 4) {
     int a = 0;
   }
   std::set<std::string> point_names;
@@ -237,7 +237,7 @@ void CornerData::UpdateCornerPosition() {
 	LineData generate_line2 = walls[1]->generate_line();
     QPointF  position = generate_line1.Intersect(generate_line2);
     assert(!position.isNull());
-    position = generate_line1.Intersect(generate_line2);
+    //position = generate_line1.Intersect(generate_line2);
     std::string point_name = AddPoint(position);
   point_names.insert(point_name);
   generated_point_ = GetPoint(point_name);

@@ -161,6 +161,9 @@
     <ClCompile Include="Util\LineUtil.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\WallPath.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -239,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="Util\LineUtil.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\WallPath.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

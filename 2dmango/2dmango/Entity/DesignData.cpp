@@ -2,7 +2,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <set>
-
+#include "WallPath.h"
+#include <assert.h>
 std::string DesignData::ToJson(){
   return " ";
 }
@@ -260,43 +261,162 @@ QPointF DesignData::CornerPosition(std::string cornerName) {
   return QPointF();
 }
 
+/*
 void DesignData::UpdateRoomInfo() {
   clear_rooms();
   //reset_geometry();
 
-  if (wall_data_map_.size() == 10) {
+  if (wall_data_map_.size() == 16) {
     int a = 0;
   }
   std::map<std::string, CornerData*>::iterator corner_it;
-
-
   for (corner_it = corner_data_map_.begin(); corner_it != corner_data_map_.end(); corner_it++) {
     CornerData* corner = corner_it->second;
     corner->UpdateRelatedInfo();
   }
 
   std::set<WallData*> exclude_walls;
+  std::map < std::string, WallData* > tmp_wall_data_map = wall_data_map_;
   find_unclosed_walls(exclude_walls);
-  std::map<std::string,WallData*>::iterator it;
-  for (it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
-    WallData* wall = it->second;
-    if (exclude_walls.find(wall) != exclude_walls.end()) {
-      continue;
-    }
-    if (!wall->IsUnsharedWall(exclude_walls)) {
-      continue;
-    }
-    
-    std::vector<WallData*> wall_path = wall->GetRoom(exclude_walls); 
-
-
-    if (wall_path.size() > 0) {
-      update_exclude_walls(exclude_walls,wall_path);
-      std::string room_name = generate_room_name();
-      RoomData* room = new RoomData(room_name,wall_path);
-      room_data_map_.insert(make_pair(room_name,room));
+  for (std::set<WallData*>::iterator it = exclude_walls.begin(); it != exclude_walls.end(); it++) {
+    std::map<std::string, WallData*>::iterator map_it = tmp_wall_data_map.find(((*it)->name()));
+    if (map_it != tmp_wall_data_map.end()) {
+      tmp_wall_data_map.erase(map_it);
     }
   }
+
+  std::map<std::string,WallData*>::iterator it;
+  //for (it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
+  while (true) {
+    if (tmp_wall_data_map.size() == 0) {
+      break;
+    }
+    for (it = tmp_wall_data_map.begin(); it != tmp_wall_data_map.end(); ) {
+      WallData* wall = it->second;
+      if (exclude_walls.find(wall) != exclude_walls.end()) {
+        it++;
+        continue;
+      }
+      if (!wall->IsUnsharedWall(exclude_walls)) {
+        it++;
+        continue;
+      }
+
+      std::vector<WallData*> wall_path = wall->GetRoom(exclude_walls);
+
+      if (wall_path.size() > 0) {
+        
+        for (int i = 0; i < wall_path.size(); i++) {
+          std::map<std::string, WallData*>::iterator map_it = tmp_wall_data_map.find(wall_path[i]->name());
+          if (map_it != tmp_wall_data_map.end() && wall_path[i]->IsUnsharedWall(exclude_walls)) {
+            tmp_wall_data_map.erase(map_it);
+          }
+        }
+        update_exclude_walls(exclude_walls, wall_path);
+
+        std::string room_name = generate_room_name();
+        RoomData* room = new RoomData(room_name, wall_path);
+        room_data_map_.insert(make_pair(room_name, room));
+        break;
+      }
+      else {
+        it++;
+      }
+    }
+  }
+}
+*/
+
+void DesignData::UpdateRoomInfo() {
+  clear_rooms();
+  std::map<std::string, CornerData*>::iterator corner_it;
+  for (corner_it = corner_data_map_.begin(); corner_it != corner_data_map_.end(); corner_it++) {
+    CornerData* corner = corner_it->second;
+    corner->UpdateRelatedInfo();
+  }
+
+  std::map<std::string,WallPath*> wall_paths = WallPathFactory::CreateWallPaths(wall_data_map_);
+  std::set<WallData*> exclude_walls;
+  find_unclosed_walls(exclude_walls);
+  std::set<WallPath*> exclude_wall_paths;
+  
+  for (std::set<WallData*>::iterator it = exclude_walls.begin(); it != exclude_walls.end(); it++) {
+    WallData* exclude_wall = *it;
+    for (std::map<std::string, WallPath*>::iterator path_it = wall_paths.begin(); path_it != wall_paths.end(); path_it++) {
+      if (path_it->second->DoContianWall(exclude_wall)) {
+        exclude_wall_paths.insert(path_it->second);
+        wall_paths.erase(path_it);
+        break;
+      }
+    }
+    
+  }
+  
+  
+  while (true) {
+    if (wall_paths.size() == 0) {
+      break;
+    }
+    int previous_num = wall_paths.size(); 
+    WallPath* wall_path = NULL;
+    WallData* start_wall = find_start_wall(exclude_walls);
+    for (std::map<std::string, WallPath*>::iterator wall_path_map_it = wall_paths.begin();
+      wall_path_map_it != wall_paths.end(); wall_path_map_it++) {
+      if (wall_path_map_it->second->DoContianWall(start_wall)) {
+        wall_path = wall_path_map_it->second;
+        continue;
+      }
+    }
+
+    WallPath room = wall_path->GetRoom(exclude_wall_paths);
+    std::vector<WallData*> tmp_wall_datas = room.walls();
+    std::set<WallPath*> used_paths;      
+    for (std::map<std::string, WallPath*>::iterator tmp_it = wall_paths.begin(); tmp_it != wall_paths.end(); tmp_it++) {        
+      for (int i = 0; i < tmp_wall_datas.size(); i++) {
+        if (tmp_it->second->DoContianWall(tmp_wall_datas[i])) {
+          used_paths.insert(tmp_it->second);
+          break;
+        }
+      }
+    }   
+
+    for (std::set<WallPath*>::iterator tmp_it = used_paths.begin(); tmp_it != used_paths.end(); tmp_it++) {
+      WallPath* tmp_path = *tmp_it;
+      if (tmp_path->IsUnshare(exclude_wall_paths) || tmp_path == wall_path) {
+        //exclude_wall_paths.insert(tmp_path);
+        std::map<std::string, WallPath*>::iterator tmp_wall_path_it = wall_paths.find(tmp_path->name());
+        if (tmp_wall_path_it != wall_paths.end()) {
+          wall_paths.erase(tmp_wall_path_it);
+        }
+      }
+    }
+
+    std::vector<WallPath*> tmp_exclude_wall_paths;
+    for (std::set<WallPath*>::iterator tmp_it = used_paths.begin(); tmp_it != used_paths.end(); tmp_it++) {
+      WallPath* tmp_path = *tmp_it;
+      if (tmp_path->IsUnshare(exclude_wall_paths) || tmp_path == wall_path) {
+        tmp_exclude_wall_paths.push_back(*tmp_it);
+        std::vector<WallData*> tmp_wall_datas = tmp_path->walls();
+        exclude_walls.insert(tmp_wall_datas.begin(), tmp_wall_datas.end());
+      }
+    }
+    exclude_wall_paths.insert(tmp_exclude_wall_paths.begin(), tmp_exclude_wall_paths.end());
+
+    if (wall_paths.size() == previous_num) {
+      assert(false);
+    }
+
+    std::string room_name = generate_room_name();
+    RoomData* room_data = new RoomData(room_name, tmp_wall_datas);
+    room_data_map_.insert(make_pair(room_name, room_data));
+     
+   
+  }
+
+  for(std::set<WallPath*>::iterator it = exclude_wall_paths.begin(); it != exclude_wall_paths.end(); it++) {
+    delete (*it);    
+  }
+
 }
 
 void DesignData::find_unclosed_walls(std::set<WallData*>& unclosedWalls) { 
@@ -355,4 +475,69 @@ CornerData* DesignData::FindCornerWithPosition(QPointF currentPosition) {
     }
   }
   return corner;
+}
+
+WallData* DesignData::find_start_wall(std::set<WallData*> excludeWalls) {
+  WallData* start_wall = NULL;
+  std::vector<WallData*> start_walls;
+  std::map<std::string, WallData*>::iterator wall_map_it = wall_data_map_.begin();
+  for (wall_map_it = wall_data_map_.begin(); wall_map_it != wall_data_map_.end(); wall_map_it++) {
+    WallData* tmp_wall = wall_map_it->second;
+    if (excludeWalls.find(tmp_wall) != excludeWalls.end()) {
+      continue;
+    }
+
+    if (!tmp_wall->IsUnsharedWall(excludeWalls)) {
+      continue;
+    }
+
+    QVector2D vec = tmp_wall->WallVector();
+    if (abs(vec.x()) > abs(vec.y())) {
+      continue;
+    }
+
+    if (start_wall == NULL) {
+      start_wall = tmp_wall;
+      continue;
+    }   
+
+    if ((tmp_wall->start_corner_position().x() < start_wall->start_corner_position().x()) &&
+      tmp_wall->start_corner_position().x() < start_wall->end_corner_position().x()) {
+      start_wall = tmp_wall;
+      start_walls.clear();
+      continue;
+    }
+   /* else if((tmp_wall->start_corner_position().x() == start_wall->start_corner_position().x()) ||
+      tmp_wall->start_corner_position().x() ==  start_wall->end_corner_position().x()){
+      start_walls.push_back(tmp_wall);
+      continue;
+    }*/
+
+    if ((tmp_wall->end_corner_position().x() < start_wall->start_corner_position().x()) &&
+      tmp_wall->end_corner_position().x() < start_wall->end_corner_position().x()) {
+      start_wall = tmp_wall;
+      start_walls.clear();
+      continue;
+    }
+   /* else if ((tmp_wall->end_corner_position().x() == start_wall->start_corner_position().x()) ||
+      tmp_wall->end_corner_position().x() == start_wall->end_corner_position().x()) {
+      start_walls.push_back(tmp_wall);
+    }*/
+  }
+
+  /*for (int i = 0; i < start_walls.size(); i++) {
+    WallData* tmp_wall = start_walls[i];
+    if ((tmp_wall->end_corner_position().y() > start_wall->start_corner_position().y()) ||
+      tmp_wall->end_corner_position().y() > start_wall->end_corner_position().y()) {
+      start_wall = tmp_wall;
+      continue;
+    }
+
+    if ((tmp_wall->start_corner_position().y() > start_wall->start_corner_position().y()) ||
+      tmp_wall->start_corner_position().y() > start_wall->end_corner_position().y()) {
+      start_wall = tmp_wall;
+      continue;
+    }
+  }*/
+  return start_wall;
 }

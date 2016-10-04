@@ -432,6 +432,7 @@ PointData* WallData::compute_connected_position(CornerData* corner, WallData* wa
   else {
     point = corner->GetPoint(generateName1);
     QPointF position = generated_line_.Intersect(other_generate_line);
+    //assert()
     point->set_point(position);
   }
   return point;
@@ -507,8 +508,28 @@ bool WallData::DoContianPoint(PointData* point) {
   if (point == NULL|| point->name() == "") {
     return result;
   }
-  if (start_corner_->DoContainPoint(point) || end_corner_->DoContainPoint(point)){
+  /*if (start_corner_->DoContainPoint(point) || end_corner_->DoContainPoint(point)){
     result = true;
+  }*/
+
+  std::string point_name = point->name();
+  if (start_corner_->DoContainPoint(point)) {
+    if (point_name == line_.start_point_name()) {
+      result = true;
+    }
+
+    if (point_name == generated_line_.start_point_name()) {
+      result = true;
+    }
+  }
+  else if(end_corner_->DoContainPoint(point)){
+    if (point_name == line_.end_point_name()) {
+      result = true;
+    }
+
+    if (point_name == generated_line_.end_point_name()) {
+      result = true;
+    }
   }
   return result;
 }

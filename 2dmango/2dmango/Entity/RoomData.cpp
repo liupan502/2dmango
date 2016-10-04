@@ -157,11 +157,11 @@ std::vector<CornerData*> RoomData::GetCorners() {
   CornerData* previous_corner = NULL;
   
   for (int i = 0; i < size; i++) {
-    if (walls_[i]->IsStartCorner(previous_corner)) {
-      previous_corner = walls_[i]->end_corner();      
+    if (walls_[i]->IsEndCorner(previous_corner)) {
+      previous_corner = walls_[i]->start_corner();      
     }
     else {
-      previous_corner = walls_[i]->start_corner();
+      previous_corner = walls_[i]->end_corner();
     }
     corners.push_back(previous_corner);
   }
