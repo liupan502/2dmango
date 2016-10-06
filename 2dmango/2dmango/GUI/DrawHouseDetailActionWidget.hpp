@@ -18,5 +18,9 @@ protected slots:
 private:
 	void init();
   QPushButton* draw_wall_btn_;
+  QPushButton* window_btn_;
+  QPushButton* single_door_btn_;
+  QPushButton* double_door_btn_;
+  QPushButton* move_door_btn_;
 };
 #endif

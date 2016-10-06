@@ -28,3 +28,15 @@ bool BaseGeometry::is_visible() {
   return is_visible_;
 }
 
+bool BaseGeometry::IsPointIn(QPointF point) {
+  bool result = false;
+  for (int i = 0; i < paths_.size(); i++) {
+    QPainterPath path = paths_[i]->GetPainterPath();
+    if (path.contains(point)) {
+      result = true;
+      break;
+    }
+  }
+  return result;
+}
+

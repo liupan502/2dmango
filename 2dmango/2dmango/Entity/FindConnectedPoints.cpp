@@ -57,7 +57,7 @@ bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName,
           drawing_wall_num++;
         }
       }
-      if (drawing_wall_num <= 1 && !wall_data->DoContainCorner(wall->start_corner())) {
+      if (drawing_wall_num <= 1 && !wall_data->DoContainCorner(wall->end_corner())) {
         corners.push_back(wall->end_corner());
         walls.push_back(wall);
         points.push_back(QPointF(tmp_vec.x() + end_position.x(), tmp_vec.y() + end_position.y()));

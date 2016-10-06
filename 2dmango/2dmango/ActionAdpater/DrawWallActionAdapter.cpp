@@ -164,11 +164,11 @@ void DrawWallActionAdapter::initilizing_mouse_move(QMouseEvent* event) {
 }
 
 void DrawWallActionAdapter::drawing_mouse_move(QMouseEvent* event) {  
-  QPointF pos = event->pos();
+  QPointF pos = QPointF(event->pos());
   
   if (tmp_wall_ != NULL) {    
     DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
-    if (instance->IsPointInHotRegion(QPointF(pos))) {   
+    if (instance->IsPointInHotRegion(pos)) {   
       instance->ClearAuxiliaryLines();
       pos = compute_right_position(tmp_wall_,pos);
       tmp_wall_->set_end_corner_position(pos);

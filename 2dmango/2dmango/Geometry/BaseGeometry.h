@@ -11,6 +11,7 @@ class BaseGeometry {
    virtual void Draw(QPainter* painter);
    void set_is_visible(bool is_visible);
    bool is_visible();
+   virtual bool IsPointIn(QPointF point);
    BaseGeometry();
  protected:
    std::vector<BasePath*> paths_;

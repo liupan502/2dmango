@@ -9,7 +9,7 @@ BaseDetailActionWidget::~BaseDetailActionWidget() {
 }
 
 void BaseDetailActionWidget::init(){
-  setGeometry(100,0,200,400);
+  setGeometry(100,0,200,800);
   setWindowFlags(Qt::FramelessWindowHint);
   setAutoFillBackground(true);
   QPalette palette;
