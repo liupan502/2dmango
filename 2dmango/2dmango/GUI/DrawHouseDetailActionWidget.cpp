@@ -58,7 +58,9 @@ void DrawHouseDetailActionWidget::OnDoubleDoorBtnClicked() {
 }
 
 void DrawHouseDetailActionWidget::OnMoveDoorBtnClicked() {
-
+  DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  MoveDoorGeometry* move_door_geometry = new MoveDoorGeometry(DEFAULT_WALL_WIDTH, 1.5 * DEFAULT_SINGLE_DOOR_LENGTH);
+  instance->AddGeometry(move_door_geometry);
 }
 
 void DrawHouseDetailActionWidget::OnSingleDoorBtnClicked() {
@@ -68,5 +70,7 @@ void DrawHouseDetailActionWidget::OnSingleDoorBtnClicked() {
 }
 
 void DrawHouseDetailActionWidget::OnWindowBtnClicked() {
-
+  DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  WindowGeometry* window_geometry = new WindowGeometry(DEFAULT_WALL_WIDTH, DEFAULT_SINGLE_DOOR_LENGTH);
+  instance->AddGeometry(window_geometry);
 }

@@ -7,9 +7,15 @@ class WindowGeometry :public BaseGeometry {
 public:
   WindowGeometry();
   WindowGeometry(float width, float length);
+  ~WindowGeometry();
 
 private:
-  float width_;
-  float length_;
+  float width_, length_;
+  PolygonPath* path1_;
+  PolygonPath* path2_;
+  QPolygonF build_path1_polygon();
+  QPolygonF build_path2_polygon();
+
+  virtual void update_geometry();
 };
 #endif
