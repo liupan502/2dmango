@@ -7,6 +7,8 @@ WorkSpaceWidget::WorkSpaceWidget(QWidget * parent) : QWidget(parent) {
 	init();
   setMouseTracking(true);
   mouse_adapter_ = new BaseActionAdapter();
+  default_action_adapter_ = new DefaultActionAdapter();
+  mouse_adapter_ = default_action_adapter_;
   draw_wall_mouse_adapter_ = NULL;
   work_mode_ = NONE_WORK_MODE;
   int a = 0;

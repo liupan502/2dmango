@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActionAdpater\BaseActionAdapter.cpp" />
+    <ClCompile Include="ActionAdpater\DefaultActionAdapter.cpp" />
     <ClCompile Include="ActionAdpater\DrawWallActionAdapter.cpp" />
     <ClCompile Include="Entity\ComputeWallGeometry.cpp" />
     <ClCompile Include="Entity\CornerData.cpp" />
@@ -131,8 +132,12 @@
     <ClCompile Include="Geometry\AuxiliaryLineGeometry.cpp" />
     <ClCompile Include="Geometry\BaseGeometry.cpp" />
     <ClCompile Include="Geometry\BasePath.cpp" />
+    <ClCompile Include="Geometry\DoubleDoorGeometry.cpp" />
     <ClCompile Include="Geometry\HotRegionGeometry.cpp" />
+    <ClCompile Include="Geometry\MoveDoorGeometry.cpp" />
+    <ClCompile Include="Geometry\SingleDoorGeometry.cpp" />
     <ClCompile Include="Geometry\WallGeometry.cpp" />
+    <ClCompile Include="Geometry\WindowGeometry.cpp" />
     <ClCompile Include="GUI\actionnavgationwidget.cpp" />
     <ClCompile Include="GUI\BaseDetailActionWidget.cpp" />
     <ClCompile Include="GUI\DrawHouseDetailActionWidget.cpp" />
@@ -168,7 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionAdpater\BaseActionAdapter.h" />
+    <ClInclude Include="ActionAdpater\DefaultActionAdapter.h" />
     <ClInclude Include="ActionAdpater\DrawWallActionAdapter.h" />
+    <ClInclude Include="const.h" />
     <ClInclude Include="Entity\BaseData.h" />
     <ClInclude Include="Entity\CornerData.h" />
     <ClInclude Include="Entity\DesignData.h" />
@@ -182,8 +189,12 @@
     <ClInclude Include="Geometry\AuxiliaryLineGeometry.h" />
     <ClInclude Include="Geometry\BaseGeometry.h" />
     <ClInclude Include="Geometry\BasePath.h" />
+    <ClInclude Include="Geometry\DoubleDoorGeometry.h" />
     <ClInclude Include="Geometry\HotRegionGeometry.h" />
+    <ClInclude Include="Geometry\MoveDoorGeometry.h" />
+    <ClInclude Include="Geometry\SingleDoorGeometry.h" />
     <ClInclude Include="Geometry\WallGeometry.h" />
+    <ClInclude Include="Geometry\WindowGeometry.h" />
     <ClInclude Include="Util\LineUtil.h" />
     <ClInclude Include="Util\PolygonUtil.h" />
     <CustomBuild Include="GUI\WorkSpaceWidget.hpp">

@@ -164,6 +164,21 @@
     <ClCompile Include="Entity\WallPath.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
+    <ClCompile Include="ActionAdpater\DefaultActionAdapter.cpp">
+      <Filter>ActionAdapter</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\DoubleDoorGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\SingleDoorGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\MoveDoorGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\WindowGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -245,6 +260,24 @@
     </ClInclude>
     <ClInclude Include="Entity\WallPath.h">
       <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionAdpater\DefaultActionAdapter.h">
+      <Filter>ActionAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\SingleDoorGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\DoubleDoorGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\MoveDoorGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\WindowGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="const.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

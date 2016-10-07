@@ -40,3 +40,17 @@ bool BaseGeometry::IsPointIn(QPointF point) {
   return result;
 }
 
+void BaseGeometry::MoveTo(QPointF position) { 
+  position_ = position;
+  this->update_geometry();
+}
+
+void BaseGeometry::Translate(QPointF offset) {  
+  position_ += offset;
+  this->update_geometry();
+}
+
+void BaseGeometry::update_geometry() {
+  ;
+}
+

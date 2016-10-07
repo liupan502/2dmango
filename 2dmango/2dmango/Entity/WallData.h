@@ -17,6 +17,7 @@ date:    2016.9.15
 #include <QVector2D>
 #include "Geometry/WallGeometry.h"
 #include "PointData.h"
+#include "const.h"
 
 typedef enum WALL_DATA_TYPE {
 
@@ -47,7 +48,7 @@ class WallData :public BaseGeometryData{
      start_corner_ = NULL;
      end_corner_ = NULL;
      normal_vector_ = QVector2D();
-     set_width(12);
+     set_width(DEFAULT_WALL_WIDTH);
 	   status_ = NONE_STAUS_WALL_DATA;
    }
 

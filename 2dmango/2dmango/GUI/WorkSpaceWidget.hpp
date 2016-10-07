@@ -2,6 +2,7 @@
 #include <QWidget>
 #include "ActionAdpater/BaseActionAdapter.h"
 #include "ActionAdpater/DrawWallActionAdapter.h"
+#include "ActionAdpater/DefaultActionAdapter.h"
 
 typedef enum WORK_MODE{
   NONE_WORK_MODE,
@@ -31,4 +32,5 @@ private:
 
   BaseActionAdapter* mouse_adapter_;
   DrawWallActionAdapter* draw_wall_mouse_adapter_;
+  DefaultActionAdapter* default_action_adapter_;
 };

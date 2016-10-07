@@ -4,6 +4,12 @@
 #include "BaseGeometry.h"
 
 class DoubleDoorGeometry : public BaseGeometry{
+public:
+  DoubleDoorGeometry();
+  DoubleDoorGeometry(float width, float length);
 
+private:
+  float width_;
+  float length_;
 };
 #endif

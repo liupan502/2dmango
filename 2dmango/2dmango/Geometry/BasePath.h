@@ -41,7 +41,7 @@ class PolygonPath :public BasePath{
   public:
     virtual QPainterPath GetPainterPath();
     PolygonPath(QPolygonF polygon);
-    
+    void set_polygon(QPolygonF polygon);
   private:
     QPolygonF polygon_;
 };
@@ -57,6 +57,27 @@ class EllipsePath :public BasePath{
   private:
     QPointF center_;
     qreal rx_,ry_; 
+};
+
+class ArcPath :public BasePath {
+public:
+  virtual QPainterPath GetPainterPath();
+  ArcPath(QPointF p1, QPointF p2,float radius);
+  void set_p1(QPointF p1);
+  void set_p2(QPointF p2);
+  void set_radius(float radius);
+private:
+  QPointF p1_;
+  QPointF p2_;
+  float radius_;
+};
+
+class ContianerPath :public BasePath {
+public:
+  virtual QPainterPath GetPainterPath();
+  void AddSubPath(BasePath* subPath);
+private:
+  std::vector<BasePath*> subPaths;
 };
 
 

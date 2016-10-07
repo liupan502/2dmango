@@ -15,7 +15,7 @@ class DefaultActionAdapter : public BaseActionAdapter {
 
     virtual void OnMouseLeave(QEvent* event);
  private:
-   BaseGeometry* current_selected_geometry_;
+   
    bool left_mouse_down_;
 };
 #endif

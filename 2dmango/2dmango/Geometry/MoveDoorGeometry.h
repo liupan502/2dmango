@@ -3,6 +3,12 @@
 
 #include "BaseGeometry.h"
 class MoveDoorGeometry :public BaseGeometry {
+public:
+  MoveDoorGeometry();
+  MoveDoorGeometry(float width, float length);
 
+private:
+  float width_;
+  float length_;
 };
 #endif

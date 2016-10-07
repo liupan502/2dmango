@@ -65,6 +65,10 @@ QPainterPath PolygonPath::GetPainterPath() {
   return painter_path;
 }
 
+void PolygonPath::set_polygon(QPolygonF polygon) {
+  polygon_ = polygon;
+}
+
 EllipsePath::EllipsePath(QPointF center, qreal rx, qreal ry) {
   center_ = center;
   rx_ = rx;

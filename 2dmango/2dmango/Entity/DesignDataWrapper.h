@@ -51,6 +51,10 @@ class DesignDataWrapper {
 
     void UpdateRoomInfo();
 
+    void AddGeometry(BaseGeometry* selected);
+
+    BaseGeometry* current_selected_geometry();
+
     static DesignDataWrapper* GetInstance();
     
   private:
@@ -66,6 +70,8 @@ class DesignDataWrapper {
    HotRegionGeometry hot_region_;
 
    std::vector<AuxiliaryLineGeometry> auxiliary_lines_;
+
+   BaseGeometry* current_selected_geometry_;
    
    
 

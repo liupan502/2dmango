@@ -14,6 +14,10 @@ signals:
 
 protected slots:  
   void OnDrawWallBtnClicked();
+  void OnSingleDoorBtnClicked();
+  void OnDoubleDoorBtnClicked();
+  void OnMoveDoorBtnClicked();
+  void OnWindowBtnClicked();
 
 private:
 	void init();

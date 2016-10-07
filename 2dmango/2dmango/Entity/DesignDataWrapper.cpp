@@ -5,6 +5,7 @@ DesignDataWrapper* DesignDataWrapper::instance = 0;
 DesignDataWrapper::DesignDataWrapper(){
   design_data_ = new DesignData();
   hot_region_ = HotRegionGeometry(QPointF(100.0,100.0),50,50);
+  current_selected_geometry_ = NULL;
 }
 
 void DesignDataWrapper::Draw(QPainter* painter){
@@ -14,6 +15,10 @@ void DesignDataWrapper::Draw(QPainter* painter){
   }
   for(int i=0;i<wall_geometrys_.size();i++){
     wall_geometrys_[i].Draw(painter);
+  }
+
+  if (current_selected_geometry_ != NULL) {
+    current_selected_geometry_->Draw(painter);
   }
 }
 
@@ -87,4 +92,13 @@ bool DesignDataWrapper::FindEndPoint(WallData* wall_data, CornerData* corner, QP
   return design_data_->FindEndPoint(wall_data,corner, currentPoint, endPoint);
 }
 
+void DesignDataWrapper::AddGeometry(BaseGeometry* geometry) {
+  if (current_selected_geometry_ != NULL) {
+    delete current_selected_geometry_;    
+  }
+  current_selected_geometry_ = geometry;
+}
 
+BaseGeometry* DesignDataWrapper::current_selected_geometry() {
+  return current_selected_geometry_;
+}
