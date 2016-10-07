@@ -92,3 +92,55 @@ void EllipsePath::set_rx(qreal rx) {
 void EllipsePath::set_ry(qreal ry) {
   ry_ = ry;
 }
+
+ArcPath::ArcPath(QRectF rect, qreal startAngle, qreal sweepLength, QPointF start_point) {
+  Update(rect, startAngle, sweepLength, start_point);
+}
+
+void ArcPath::set_rect(QRectF rect) {
+  rect_ = rect;
+}
+
+void ArcPath::set_start_angle(qreal startAngle) {
+  start_angle_ = startAngle;
+}
+
+void ArcPath::set_sweep_length(qreal sweepLength) {
+  sweep_length_ = sweepLength;
+}
+
+void ArcPath::Update(QRectF rect, qreal startAngle, qreal sweepLength,QPointF start_point) {
+  rect_ = rect;
+  start_angle_ = startAngle;
+  sweep_length_ = sweepLength;
+  start_point_ = start_point;
+}
+
+QPainterPath ArcPath::GetPainterPath() {
+  QPainterPath path;
+  path.moveTo(start_point_);
+  path.arcTo(rect_,start_angle_,sweep_length_);
+  return path;
+}
+
+void ContianerPath::AddSubPath(BasePath* subPath) {
+  sub_paths_.push_back(subPath);
+}
+
+QPainterPath ContianerPath::GetPainterPath() {
+  QPainterPath path;
+  for (int i = 0; i < sub_paths_.size(); i++) {
+    path.addPath(sub_paths_[i]->GetPainterPath());
+  }
+  return path;
+}
+
+ContianerPath::~ContianerPath() {
+  for (int i = 0; i < sub_paths_.size(); i++) {
+    if (sub_paths_[i] != NULL) {
+      delete sub_paths_[i];
+      sub_paths_[i] = NULL;
+    }
+  }
+}
+

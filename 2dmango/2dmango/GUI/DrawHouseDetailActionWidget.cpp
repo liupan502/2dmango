@@ -3,6 +3,9 @@
 #include "WorkSpaceWidget.hpp"
 #include "Entity/DesignDataWrapper.h"
 #include "Geometry/SingleDoorGeometry.h"
+#include "Geometry/DoubleDoorGeometry.h"
+#include "Geometry/MoveDoorGeometry.h"
+#include "Geometry/WindowGeometry.h"
 #include "const.h"
 
 DrawHouseDetailActionWidget::DrawHouseDetailActionWidget(QWidget * parent) : BaseDetailActionWidget(parent) {
@@ -49,7 +52,9 @@ void DrawHouseDetailActionWidget::OnDrawWallBtnClicked(){
 }
 
 void DrawHouseDetailActionWidget::OnDoubleDoorBtnClicked() {
-
+  DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  DoubleDoorGeometry* double_door_geometry = new DoubleDoorGeometry(DEFAULT_WALL_WIDTH, 2 * DEFAULT_SINGLE_DOOR_LENGTH);
+  instance->AddGeometry(double_door_geometry);
 }
 
 void DrawHouseDetailActionWidget::OnMoveDoorBtnClicked() {
@@ -58,7 +63,7 @@ void DrawHouseDetailActionWidget::OnMoveDoorBtnClicked() {
 
 void DrawHouseDetailActionWidget::OnSingleDoorBtnClicked() {
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
-  SingleDoorGeometry* single_door_geometry = new SingleDoorGeometry(DEFAULT_WALL_WIDTH, 100);
+  SingleDoorGeometry* single_door_geometry = new SingleDoorGeometry(DEFAULT_WALL_WIDTH, DEFAULT_SINGLE_DOOR_LENGTH);
   instance->AddGeometry(single_door_geometry);
 }
 

@@ -1,4 +1,5 @@
 #ifndef MANGO_2D_CONST_H_
 #define MANGO_2D_CONST_H_
 const int DEFAULT_WALL_WIDTH = 12;
+const int DEFAULT_SINGLE_DOOR_LENGTH = 100;
 #endif

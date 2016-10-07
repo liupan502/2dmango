@@ -135,6 +135,7 @@
     <ClCompile Include="Geometry\DoubleDoorGeometry.cpp" />
     <ClCompile Include="Geometry\HotRegionGeometry.cpp" />
     <ClCompile Include="Geometry\MoveDoorGeometry.cpp" />
+    <ClCompile Include="Geometry\PenFactory.cpp" />
     <ClCompile Include="Geometry\SingleDoorGeometry.cpp" />
     <ClCompile Include="Geometry\WallGeometry.cpp" />
     <ClCompile Include="Geometry\WindowGeometry.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Geometry\DoubleDoorGeometry.h" />
     <ClInclude Include="Geometry\HotRegionGeometry.h" />
     <ClInclude Include="Geometry\MoveDoorGeometry.h" />
+    <ClInclude Include="Geometry\PenFactory.h" />
     <ClInclude Include="Geometry\SingleDoorGeometry.h" />
     <ClInclude Include="Geometry\WallGeometry.h" />
     <ClInclude Include="Geometry\WindowGeometry.h" />

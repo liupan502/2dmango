@@ -93,12 +93,17 @@ bool DesignDataWrapper::FindEndPoint(WallData* wall_data, CornerData* corner, QP
 }
 
 void DesignDataWrapper::AddGeometry(BaseGeometry* geometry) {
-  if (current_selected_geometry_ != NULL) {
-    delete current_selected_geometry_;    
-  }
+  delete_current_selected_geometry();
   current_selected_geometry_ = geometry;
 }
 
 BaseGeometry* DesignDataWrapper::current_selected_geometry() {
   return current_selected_geometry_;
+}
+
+void DesignDataWrapper::delete_current_selected_geometry() {
+  if (current_selected_geometry_ != NULL) {
+    delete current_selected_geometry_;
+    current_selected_geometry_ = NULL;
+  }
 }

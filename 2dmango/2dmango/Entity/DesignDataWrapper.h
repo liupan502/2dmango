@@ -16,6 +16,10 @@ class DesignDataWrapper {
 
   public:
     
+    virtual ~DesignDataWrapper()
+    {
+      delete_current_selected_geometry();
+    }
     void Draw(QPainter* painter);
     WallData* AddWall();
 
@@ -72,6 +76,8 @@ class DesignDataWrapper {
    std::vector<AuxiliaryLineGeometry> auxiliary_lines_;
 
    BaseGeometry* current_selected_geometry_;
+
+   void delete_current_selected_geometry();
    
    
 

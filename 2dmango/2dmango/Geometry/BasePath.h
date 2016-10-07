@@ -62,22 +62,27 @@ class EllipsePath :public BasePath{
 class ArcPath :public BasePath {
 public:
   virtual QPainterPath GetPainterPath();
-  ArcPath(QPointF p1, QPointF p2,float radius);
-  void set_p1(QPointF p1);
-  void set_p2(QPointF p2);
-  void set_radius(float radius);
+  ArcPath(QRectF rect,qreal startAngle,qreal sweepLength, QPointF start_point);
+  void set_rect(QRectF rect);
+  void set_start_angle(qreal startAngle);
+  void set_sweep_length(qreal sweepLength);
+  
+  void Update(QRectF rect, qreal startAngle, qreal sweepLength,QPointF start_point);
 private:
-  QPointF p1_;
-  QPointF p2_;
-  float radius_;
+  QRectF rect_;
+  qreal start_angle_;
+  qreal sweep_length_;
+  QPointF start_point_;
 };
 
 class ContianerPath :public BasePath {
 public:
   virtual QPainterPath GetPainterPath();
   void AddSubPath(BasePath* subPath);
+  virtual ~ContianerPath();
+ 
 private:
-  std::vector<BasePath*> subPaths;
+  std::vector<BasePath*> sub_paths_;
 };
 
 
