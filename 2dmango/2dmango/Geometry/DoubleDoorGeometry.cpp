@@ -2,14 +2,14 @@
 #include "const.h"
 #include "PenFactory.h"
 
-DoubleDoorGeometry::DoubleDoorGeometry() :BaseGeometry() {
+DoubleDoorGeometry::DoubleDoorGeometry() :InnerWallGeometry() {
   width_ = 0.0;
   length_ = 0.0;
 };
 
-DoubleDoorGeometry::DoubleDoorGeometry(float width, float length) {
-  width_ = width;
-  length_ = length;
+DoubleDoorGeometry::DoubleDoorGeometry(float width, float length): InnerWallGeometry(width,length) {
+  //width_ = width;
+  //length_ = length;
 
   QPolygonF path1_polygon = build_path1_polygon();
   path1_ = new PolygonPath(path1_polygon);

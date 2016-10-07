@@ -2,8 +2,9 @@
 #define MANGO_2D_DOUBLE_DOOR_GEOMETRY_H_
 
 #include "BaseGeometry.h"
+#include "InnerWallGeometry.h"
 
-class DoubleDoorGeometry : public BaseGeometry{
+class DoubleDoorGeometry : public InnerWallGeometry{
 public:
   DoubleDoorGeometry();
   DoubleDoorGeometry(float width, float length);
@@ -11,8 +12,8 @@ public:
   
 
 private:
-  float width_;
-  float length_;
+  //float width_;
+  //float length_;
   const qreal path2_width_ = 20;
 
   PolygonPath* path1_;

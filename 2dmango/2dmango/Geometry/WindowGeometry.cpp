@@ -1,12 +1,12 @@
 #include "WindowGeometry.h"
 #include "PenFactory.h"
 
-WindowGeometry::WindowGeometry() :BaseGeometry() {
+WindowGeometry::WindowGeometry() :InnerWallGeometry() {
   width_ = 0.0;
   length_ = 0.0;
 }
 
-WindowGeometry::WindowGeometry(float width, float length) : BaseGeometry() {
+WindowGeometry::WindowGeometry(float width, float length) : InnerWallGeometry(width,length) {
   width_ = width;
   length_ = length;
 

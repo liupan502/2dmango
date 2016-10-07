@@ -2,8 +2,8 @@
 #define MANGO_2D_WINDOW_GEOMETRY_H_
 
 #include "BaseGeometry.h"
-
-class WindowGeometry :public BaseGeometry {
+#include "InnerWallGeometry.h"
+class WindowGeometry :public InnerWallGeometry {
 public:
   WindowGeometry();
   WindowGeometry(float width, float length);

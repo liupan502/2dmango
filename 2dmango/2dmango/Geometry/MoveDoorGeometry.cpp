@@ -1,14 +1,14 @@
 #include "MoveDoorGeometry.h"
 #include "PenFactory.h"
 
-MoveDoorGeometry::MoveDoorGeometry() :BaseGeometry() {
+MoveDoorGeometry::MoveDoorGeometry() :InnerWallGeometry() {
   width_ = 0.0;
   length_ = 0.0;
 }
 
-MoveDoorGeometry::MoveDoorGeometry(float width, float length) : BaseGeometry() {
-  width_ = width;
-  length_ = length;
+MoveDoorGeometry::MoveDoorGeometry(float width, float length) : InnerWallGeometry(width,length) {
+  //width_ = width;
+  //length_ = length;
 
   QPolygonF path1_polygon = build_path1_polygon();
   path1_ = new PolygonPath(path1_polygon);

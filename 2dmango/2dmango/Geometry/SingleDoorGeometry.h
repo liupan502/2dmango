@@ -3,8 +3,8 @@
 
 #include "BaseGeometry.h"
 
-
-class SingleDoorGeometry : public BaseGeometry {
+#include "InnerWallGeometry.h"
+class SingleDoorGeometry : public InnerWallGeometry {
 public:
   SingleDoorGeometry();
   SingleDoorGeometry(float width, float length);
@@ -15,8 +15,8 @@ protected:
   virtual void update_geometry();
 
 private:
-  float width_;
-  float length_;
+  //float width_;
+  //float length_;
   PolygonPath* path1_;
   PolygonPath* path2_;
   ArcPath* path3_;

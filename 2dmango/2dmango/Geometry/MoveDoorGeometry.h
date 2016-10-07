@@ -2,15 +2,16 @@
 #define MANGO_2D_MOVE_DOOR_GEOMETRY_H_
 
 #include "BaseGeometry.h"
-class MoveDoorGeometry :public BaseGeometry {
+#include "InnerWallGeometry.h"
+class MoveDoorGeometry :public InnerWallGeometry {
 public:
   MoveDoorGeometry();
   MoveDoorGeometry(float width, float length);
   ~MoveDoorGeometry();  
 
 private:
-  float width_;
-  float length_;
+  //float width_;
+  //float length_;
   const qreal path2_offset = 5;
 
   PolygonPath* path1_;

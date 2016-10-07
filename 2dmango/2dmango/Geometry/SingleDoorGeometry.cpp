@@ -1,7 +1,7 @@
 #include "SingleDoorGeometry.h"
 #include "PenFactory.h"
 
-SingleDoorGeometry::SingleDoorGeometry() :BaseGeometry() {
+SingleDoorGeometry::SingleDoorGeometry() :InnerWallGeometry() {
   width_ = 0.0;
   length_ = 0.0;
 }
@@ -26,9 +26,9 @@ SingleDoorGeometry::~SingleDoorGeometry(){
   path4_ = NULL;
 }
 
-SingleDoorGeometry::SingleDoorGeometry(float width, float length) : BaseGeometry() {
-  width_ = width;
-  length_ = length;
+SingleDoorGeometry::SingleDoorGeometry(float width, float length) : InnerWallGeometry(width,length) {
+  //width_ = width;
+  //length_ = length;
   build_geometry(width, length);
 }
 
