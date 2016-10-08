@@ -54,3 +54,7 @@ void BaseGeometry::update_geometry() {
   ;
 }
 
+QRectF BaseGeometry::Rect() {
+  return QRectF();
+}
+

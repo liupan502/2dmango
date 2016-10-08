@@ -8,6 +8,7 @@ public:
   WindowGeometry();
   WindowGeometry(float width, float length);
   ~WindowGeometry();
+  QRectF Rect();
 
 private:
   float width_, length_;

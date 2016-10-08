@@ -95,3 +95,25 @@ bool EqualVector2D(QVector2D vec1, QVector2D vec2) {
   }
 
 }
+
+int PointDistanceToLine(QPointF point, QLineF line, qreal& distance) {
+  int status = 0;
+  QLineF normal_line = NormalLineWithPoint(line, point);
+  QPointF tmp_point;
+  normal_line.intersect(line,&tmp_point);
+  if (IsPointInLine(tmp_point, line)) {
+    status = 1;
+  }
+  distance = QVector2D(point - tmp_point).length();
+  return status;
+}
+
+QLineF NormalLineWithPoint(QLineF line, QPointF point,qreal radius) {
+  QLineF normal_line;
+  QLineF tmp_normal_vector = line.normalVector();
+  QVector2D tmp_vec = QVector2D(tmp_normal_vector.p2() - tmp_normal_vector.p1());
+  tmp_vec.normalize();
+  tmp_vec = tmp_vec*radius;
+  normal_line = QLineF(point, point + tmp_vec.toPoint());
+  return normal_line;
+}

@@ -6,10 +6,16 @@ class InnerWallGeometry :public BaseGeometry {
 public:
   InnerWallGeometry();
   InnerWallGeometry(float width_, float length_);
+  virtual void MoveTo(QPointF position);
+  virtual void Translate(QPointF offset);
+  virtual QRectF Rect();
+//public signals :
+//InnerWallGeometryUpdate();
 
 protected:
   float width_;
   float length_;
+  void compute_position(QPointF& currentPosition);
 private:
   
 };

@@ -107,3 +107,24 @@ void DesignDataWrapper::delete_current_selected_geometry() {
     current_selected_geometry_ = NULL;
   }
 }
+
+WallGeometry DesignDataWrapper::GetClosestWall(QPointF position, qreal& distance) {
+  WallGeometry wall_geometry;
+  qreal min_distance = -1;
+  for (int i = 0; i < wall_geometrys_.size(); i++) {
+    WallGeometry tmp_wall_geometry = wall_geometrys_[i];
+    qreal tmp_distance;
+    if (tmp_wall_geometry.PointDistanceToGeometry(position, tmp_distance)) {
+      if (min_distance < 0) {
+        wall_geometry = tmp_wall_geometry;
+        min_distance = tmp_distance;
+      }
+      else if(tmp_distance < min_distance){
+        wall_geometry = tmp_wall_geometry;
+        min_distance = tmp_distance;
+      }
+    }
+  }
+  return wall_geometry;
+}
+

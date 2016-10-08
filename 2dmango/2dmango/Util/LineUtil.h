@@ -9,4 +9,8 @@ QPointF GetSameLinesConnectedPoint(QLineF line1, QLineF line2);
 bool IsPointInLine(QPointF point, QLineF line);
 
 bool EqualVector2D(QVector2D vec1, QVector2D vec2);
+
+int PointDistanceToLine(QPointF point, QLineF line, qreal& distance);
+
+QLineF NormalLineWithPoint(QLineF line, QPointF point,qreal radius = 10);
 #endif

@@ -9,7 +9,7 @@ public:
   SingleDoorGeometry();
   SingleDoorGeometry(float width, float length);
   virtual ~SingleDoorGeometry();
-  
+  virtual QRectF Rect();
 
 protected:
   virtual void update_geometry();

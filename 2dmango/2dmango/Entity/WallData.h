@@ -15,7 +15,7 @@ date:    2016.9.15
 #include <set>
 
 #include <QVector2D>
-#include "Geometry/WallGeometry.h"
+//#include "Geometry/WallGeometry.h"
 #include "PointData.h"
 #include "const.h"
 
@@ -40,6 +40,7 @@ typedef enum WALL_DATA_STATUS {
 
 class CornerData;
 class RoomData;
+class WallGeometry;
 
 class WallData :public BaseGeometryData{
   public:
@@ -212,7 +213,7 @@ class WallData :public BaseGeometryData{
     PointData* compute_connected_position(CornerData* corner,WallData* wall,std::string name1,std::string generateName1,
                                                                                std::string name2,std::string generateName2);
 
-	int compare_wall_path(std::vector<WallData*> path1, std::vector <WallData*> path2);
+	//int compare_wall_path(std::vector<WallData*> path1, std::vector <WallData*> path2);
 
     // 按照逆时针方向的第一个点
     //std::string start_corner_name_;

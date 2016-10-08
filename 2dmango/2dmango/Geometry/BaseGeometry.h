@@ -14,6 +14,7 @@ class BaseGeometry {
    void set_is_visible(bool is_visible);
    bool is_visible();
    virtual bool IsPointIn(QPointF point);
+   virtual QRectF rect();
    BaseGeometry();
  protected:
    std::vector<BasePath*> paths_;

@@ -2,6 +2,7 @@
 #include <QLineF>
 #include "CornerData.h"
 #include "RoomData.h"
+#include "Geometry/WallGeometry.h"
 #include <assert.h>
 
 std::string WallData::ToJson() {
@@ -567,7 +568,7 @@ WallGeometry WallData::GetGeometry() {
     points.push_back(start_corner_position());
     points.push_back(end_corner_position());
   }
-  WallGeometry geometry(points);
+  WallGeometry geometry(points,this);
   return geometry;
 }
 
