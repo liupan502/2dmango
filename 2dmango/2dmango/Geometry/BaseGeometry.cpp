@@ -16,6 +16,7 @@ void BaseGeometry::Draw(QPainter* painter) {
     painter->setPen(pen);
     QBrush brush = paths_[i]->brush();
     painter->setBrush(brush);
+    
     painter->setTransform(transform_);
     QPainterPath painter_path = paths_[i]->GetPainterPath();
     painter->drawPath(painter_path);
@@ -62,9 +63,10 @@ QRectF BaseGeometry::Rect() {
 }
 
 void BaseGeometry::update_transform() {
-  QTransform transform;
-  transform.rotateRadians(M_PI - rotate_radian_);
+  QTransform transform;  
   transform.translate(position_.x(),position_.y());
+  transform.rotateRadians(rotate_radian_);
+  transform_ = transform;
 }
 
 

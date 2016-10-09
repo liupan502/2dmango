@@ -77,7 +77,8 @@ QPolygonF SingleDoorGeometry::build_path1_polygon() {
   QPointF point4 = QPointF(length, 0);
   polygon << point4; 
   polygon << point1;
-  QPointF offset_point = position_ - QPointF(length / 2.0, width / 2.0);
+  //QPointF offset_point = position_ - QPointF(length / 2.0, width / 2.0);
+  QPointF offset_point = -QPointF(length / 2.0, width / 2.0);
   polygon.translate(offset_point);
   return polygon;
 }
@@ -95,13 +96,15 @@ QPolygonF SingleDoorGeometry::build_path2_polygon() {
   QPointF point4 = QPointF(0, width / 2.0 - length);
   polygon << point4; 
   polygon << point1;
-  QPointF offset_point = position_ - QPointF(length / 2.0, width / 2.0);
+  //QPointF offset_point = position_ - QPointF(length / 2.0, width / 2.0);
+  QPointF offset_point =  - QPointF(length / 2.0, width / 2.0);
   polygon.translate(offset_point);
   return polygon;
 }
 
 void SingleDoorGeometry::build_path3(QRectF& rect, qreal& startAngle, qreal& sweepLength, QPointF& startPoint) {
-  QPointF offset = position_ - QPointF(length_ / 2, width_ / 2);
+  //QPointF offset = position_ - QPointF(length_ / 2, width_ / 2);
+  QPointF offset = - QPointF(length_ / 2, width_ / 2);
   QPointF top_left_point(2*path2_width_-length_,-(length_-width_/2));
   QPointF bottom_right_point(length_ , length_ - width_ / 2);
   rect = QRectF(top_left_point, bottom_right_point);
@@ -112,6 +115,7 @@ void SingleDoorGeometry::build_path3(QRectF& rect, qreal& startAngle, qreal& swe
 }
 
 void SingleDoorGeometry::update_geometry() {
+  BaseGeometry::update_geometry();
   QPolygonF polygon1 = build_path1_polygon();
   path1_->set_polygon(polygon1);
 
@@ -130,7 +134,8 @@ void SingleDoorGeometry::update_geometry() {
 
 std::vector<QPointF> SingleDoorGeometry::build_path4_points() {
   std::vector<QPointF> points;
-  QPointF offset = position_ - QPointF(length_ / 2, width_ / 2);
+  //QPointF offset = position_ - QPointF(length_ / 2, width_ / 2);
+  QPointF offset =  - QPointF(length_ / 2, width_ / 2);
   QPointF point1(path2_width_, -(length_ - width_ / 2));
   points.push_back(point1+offset);
 

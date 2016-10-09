@@ -76,7 +76,8 @@ QPolygonF DoubleDoorGeometry::build_path1_polygon() {
   polygon << point4;
 
   polygon << point1;
-  QPointF offset = position_ - QPointF(0.0, half_width);
+  //QPointF offset = position_ - QPointF(0.0, half_width);
+  QPointF offset =  - QPointF(0.0, half_width);
   polygon.translate(offset);
   return polygon;
 }
@@ -100,7 +101,8 @@ QPolygonF DoubleDoorGeometry::build_path2_polygon() {
 
   polygon << point1;
 
-  QPointF offset = position_ - QPointF(0.0, half_width);
+  //QPointF offset = position_ - QPointF(0.0, half_width);
+  QPointF offset =  - QPointF(0.0, half_width);
   polygon.translate(offset);
 
   return polygon;
@@ -110,8 +112,8 @@ std::vector<QPointF> DoubleDoorGeometry::build_path3_points() {
   
   qreal half_width = width_ / 2.0;
   qreal half_length = length_ / 2.0;
-  QPointF offset = position_ - QPointF(0.0, half_width);
-
+  //QPointF offset = position_ - QPointF(0.0, half_width);
+  QPointF offset =  - QPointF(0.0, half_width);
   std::vector<QPointF> points;
 
 
@@ -137,7 +139,8 @@ void DoubleDoorGeometry::build_path4_params(QRectF& rect, qreal& startAngle, qre
   QPointF top_left_point(-rect_width,-rect_height/2.0);
   QPointF bottom_right_point(0.0,rect_height/2.0);  
   rect = QRectF(top_left_point, bottom_right_point);
-  QPointF offset = position_ - QPointF(0.0, half_width);
+  //QPointF offset = position_ - QPointF(0.0, half_width);
+  QPointF offset =  - QPointF(0.0, half_width);
   rect.translate(offset);
   
   startAngle = 0;
@@ -164,7 +167,8 @@ QPolygonF DoubleDoorGeometry::build_path6_polygon() {
 
   polygon << point1;
 
-  QPointF offset = position_ - QPointF(0.0, half_width);
+  //QPointF offset = position_ - QPointF(0.0, half_width);
+  QPointF offset =  - QPointF(0.0, half_width);
   polygon.translate(offset);
   return polygon;
 }
@@ -174,7 +178,8 @@ std::vector<QPointF> DoubleDoorGeometry::build_path7_points() {
   qreal half_width = width_ / 2.0;
   qreal half_length = length_ / 2.0;
   std::vector<QPointF> points;
-  QPointF offset = position_ - QPointF(0.0, half_width);
+  //QPointF offset = position_ - QPointF(0.0, half_width);
+  QPointF offset =  - QPointF(0.0, half_width);
   QPointF point1(0.0, 0.0);
   points.push_back(point1 + offset);
 
@@ -196,7 +201,8 @@ void DoubleDoorGeometry::build_path8_params(QRectF& rect, qreal& startAngle, qre
   QPointF top_left_point(0.0, -rect_height / 2.0);
   QPointF bottom_right_point = top_left_point + QPointF(rect_width, rect_height);
   rect = QRectF(top_left_point, bottom_right_point);
-  QPointF offset = position_ - QPointF(0.0, half_width);
+  //QPointF offset = position_ - QPointF(0.0, half_width);
+  QPointF offset =  - QPointF(0.0, half_width);
   rect.translate(offset);
 
   startAngle = 90;
@@ -206,6 +212,8 @@ void DoubleDoorGeometry::build_path8_params(QRectF& rect, qreal& startAngle, qre
 }
 
 void DoubleDoorGeometry::update_geometry() {
+
+  BaseGeometry::update_geometry();
 
   QPolygonF path1_polygon = build_path1_polygon();
   path1_->set_polygon(path1_polygon);

@@ -1,6 +1,7 @@
 #include "InnerWallGeometry.h"
 #include "Entity/DesignDataWrapper.h"
 #include "Util/LineUtil.h"
+#include "Util/VectorUtil.h"
 #include <math.h>
 
 InnerWallGeometry::InnerWallGeometry() :BaseGeometry() {
@@ -47,8 +48,11 @@ void InnerWallGeometry::compute_position(QPointF& position) {
     QRectF rect = Rect();
     qreal half_length = rect.width()/2.0;
     if (distance > half_length) {
-      QVector2D wall_vector = wall_geometry.WallVector();      
-      rotate_radian_ = acosf(wall_vector.x()/wall_vector.length());
+      //QVector2D wall_vector = wall_geometry.WallVector();      
+      //rotate_radian_ = acosf(wall_vector.x()/wall_vector.length());
+      QVector2D vec(0, -1);
+      QVector2D wall_normal_vector = wall_geometry.NormalVector();
+      rotate_radian_ = AngleWithVectors(wall_normal_vector,vec);
       QPointF tmp_point1, tmp_point2;
       normal_line.intersect(line1, &tmp_point1);
       normal_line.intersect(line2, &tmp_point2);

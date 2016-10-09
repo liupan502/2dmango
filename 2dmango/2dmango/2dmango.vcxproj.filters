@@ -191,6 +191,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DrawWallActionAdapter.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="Geometry\RoomGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\VectorUtil.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -296,6 +302,12 @@
     </ClInclude>
     <ClInclude Include="Geometry\InnerWallGeometry.h">
       <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\RoomGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\VectorUtil.h">
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

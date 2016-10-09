@@ -128,7 +128,8 @@ bool DesignDataWrapper::GetClosestWall(QPointF position, qreal& distance, WallGe
   if (min_distance < 0) {
     return false;
   }
-  else {
+  else {    
+    distance = min_distance;
     return true;
   }
 }

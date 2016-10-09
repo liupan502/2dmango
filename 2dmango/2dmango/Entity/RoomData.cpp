@@ -101,10 +101,7 @@ std::vector<PointData*> RoomData::polygon() {
   int wall_size = walls_.size();
   for (int i = 0; i < wall_size; i++) {
     WallData* wall = walls_[i];
-    WallData* next_wall = walls_[(i+1)%wall_size];
-    if (wall->name() == "7") {
-      int a = 0;
-    }
+    WallData* next_wall = walls_[(i+1)%wall_size];   
     PointData* point = wall->GetConnectedPoint(next_wall);
     polygon.push_back(point);
   }
@@ -207,4 +204,34 @@ std::vector<QPointF> RoomData::get_points(std::vector<CornerData*> corners) {
     }
   }
   return points;
+}
+
+QVector2D RoomData::WallOutsideDirection(WallData* wallData) {
+  QVector2D outside_direction;
+  /*WallData* tmp_wall = NULL;
+  int wall_index = -1;
+  for (int i = 0; i < walls_.size(); i++) {
+    if (wallData = walls_[i]) {
+      tmp_wall = walls_[i];
+      wall_index = i;
+      break;
+    }
+  }
+  if (tmp_wall == NULL) {
+    return outside_direction;
+  }
+
+  std::vector<PointData*> room_polygon = polygon();
+  int size = room_polygon.size();
+  std::vector<QPointF> points;
+  for (int i = 0; i < size; i++) {
+    points.push_back(room_polygon[i]->point());
+  }
+  PolygonFlipY(points);
+  bool is_counterclockwise = IsCounterclockwisePolygon(points);
+  WallData* next_wall = walls_[(wall_index + 1) % walls_.size()];
+
+  CornerData* corner = wallData->GetConnectedCorner(next_wall);*/
+
+  return outside_direction;
 }

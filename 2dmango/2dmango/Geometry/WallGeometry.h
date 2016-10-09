@@ -14,6 +14,7 @@ class WallGeometry :public BaseGeometry {
     QLineF Line1();
     QLineF Line2();
     QVector2D WallVector();
+    QVector2D NormalVector();
 
   private:   
    QPolygonF polygon_;

@@ -73,3 +73,9 @@ QLineF WallGeometry::Line2() {
 QVector2D WallGeometry::WallVector() {
   return wall_data_->WallVector();
 }
+
+QVector2D WallGeometry::NormalVector() {
+  QVector2D result =  wall_data_->normal_vector();
+  result.normalize();
+  return result;
+}

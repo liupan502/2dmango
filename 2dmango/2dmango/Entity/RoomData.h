@@ -63,6 +63,8 @@ class RoomData :public BaseData {
     std::vector<CornerData*> GetCorners();
 
     std::string virtual ToJson();
+
+    QVector2D WallOutsideDirection(WallData* wallData);
   private:
     std::string func_name_;
 
@@ -87,6 +89,8 @@ class RoomData :public BaseData {
     std::vector<PointData*> polygon();
 
     std::vector<QPointF> get_points(std::vector<CornerData*> corners);
+
+    
 };
 
 #endif // !MANGO_2D_ROOM_DATA_H_

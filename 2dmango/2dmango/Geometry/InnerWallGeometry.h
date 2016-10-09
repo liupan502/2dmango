@@ -17,6 +17,7 @@ protected:
   float length_;
   
   void compute_position(QPointF& currentPosition);
+  //void virtual update_geometry();
 private:
   
 };

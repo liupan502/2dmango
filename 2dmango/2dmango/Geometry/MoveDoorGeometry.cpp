@@ -43,7 +43,8 @@ QPolygonF MoveDoorGeometry::build_path1_polygon() {
   polygon << point1;
 
 
-  QPointF offset = position_ - QPointF(length_/2.0,width_/2.0);
+  //QPointF offset = position_ - QPointF(length_/2.0,width_/2.0);
+  QPointF offset =  - QPointF(length_ / 2.0, width_ / 2.0);
   polygon.translate(offset);
   return polygon;
 }
@@ -65,7 +66,8 @@ QPolygonF MoveDoorGeometry::build_path2_polygon() {
   polygon << point4;
 
   polygon << point1;
-  QPointF offset = position_ - QPointF(length_ / 2.0, width_ / 2.0);
+  //QPointF offset = position_ - QPointF(length_ / 2.0, width_ / 2.0);
+  QPointF offset =  - QPointF(length_ / 2.0, width_ / 2.0);
   polygon.translate(offset);
   return polygon;
 }
@@ -87,12 +89,15 @@ QPolygonF MoveDoorGeometry::build_path3_polygon() {
   polygon << point4;
 
   polygon << point1;
-  QPointF offset = position_ - QPointF(length_ / 2.0, width_ / 2.0);
+  //QPointF offset = position_ - QPointF(length_ / 2.0, width_ / 2.0);
+  QPointF offset =  - QPointF(length_ / 2.0, width_ / 2.0);
   polygon.translate(offset);
   return polygon;
 }
 
 void MoveDoorGeometry::update_geometry() {
+
+  BaseGeometry::update_geometry();
   QPolygonF path1_polygon = build_path1_polygon();
   path1_ ->set_polygon(path1_polygon);  
 
