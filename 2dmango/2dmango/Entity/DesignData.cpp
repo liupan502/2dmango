@@ -1,5 +1,5 @@
 #include "DesignData.h"
-#define _USE_MATH_DEFINES
+
 #include <math.h>
 #include <set>
 #include "WallPath.h"

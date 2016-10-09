@@ -8,7 +8,7 @@ public:
   MoveDoorGeometry();
   MoveDoorGeometry(float width, float length);
   ~MoveDoorGeometry();  
-  QRectF Rect();
+  
 
 private:
   //float width_;

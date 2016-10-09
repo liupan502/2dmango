@@ -21,13 +21,14 @@ WallGeometry::WallGeometry(std::vector<QPointF> points,WallData* wallData) {
   }
 
   if (size == 6) {
-	  QPolygonF polygon;
+	  //QPolygonF polygon;
+    polygon_.clear();
 	  for (int i = 0; i <= size; i++) {
 		  int index = i%size;
 		  QPointF point = points[index];
-		  polygon << point;
+      polygon_ << point;
 	  }
-	  PolygonPath* polygon_path = new PolygonPath(polygon);
+	  PolygonPath* polygon_path = new PolygonPath(polygon_);
 	  polygon_path->set_pen(QPen(Qt::black, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin));
 	  polygon_path->set_brush(QBrush(Qt::yellow));
 	  paths_.push_back(polygon_path);
@@ -67,4 +68,8 @@ QLineF WallGeometry::Line1() {
 
 QLineF WallGeometry::Line2() {
   return QLineF(polygon_[2],polygon_[3]);
+}
+
+QVector2D WallGeometry::WallVector() {
+  return wall_data_->WallVector();
 }

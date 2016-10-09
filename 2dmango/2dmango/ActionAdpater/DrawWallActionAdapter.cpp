@@ -97,6 +97,7 @@ void DrawWallActionAdapter::right_mouse_button_release(QMouseEvent* event){
   previous_corner_ = NULL;
   current_corner_ = NULL;
   draw_status_ = draw_ready;
+  emit  EndDrawWall();
 }
 
 void DrawWallActionAdapter::ready_mouse_move(QMouseEvent* event) {
@@ -328,4 +329,6 @@ QPointF DrawWallActionAdapter::compute_connected_position(WallData* wall, QPoint
 void DrawWallActionAdapter::current_room_complete(std::string corner_name) {
   
 }
+
+
 

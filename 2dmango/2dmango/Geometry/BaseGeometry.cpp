@@ -1,9 +1,11 @@
 #include "BaseGeometry.h"
-
+#include <math.h>
 BaseGeometry::BaseGeometry() {
   is_visible_ = true;
   index_ = 0;
+  transform_ = QTransform();
 }
+
 void BaseGeometry::Draw(QPainter* painter) {
   if (!is_visible_) {
     return;
@@ -14,6 +16,7 @@ void BaseGeometry::Draw(QPainter* painter) {
     painter->setPen(pen);
     QBrush brush = paths_[i]->brush();
     painter->setBrush(brush);
+    painter->setTransform(transform_);
     QPainterPath painter_path = paths_[i]->GetPainterPath();
     painter->drawPath(painter_path);
   }
@@ -51,10 +54,17 @@ void BaseGeometry::Translate(QPointF offset) {
 }
 
 void BaseGeometry::update_geometry() {
-  ;
+  update_transform();
 }
 
 QRectF BaseGeometry::Rect() {
   return QRectF();
 }
+
+void BaseGeometry::update_transform() {
+  QTransform transform;
+  transform.rotateRadians(M_PI - rotate_radian_);
+  transform.translate(position_.x(),position_.y());
+}
+
 

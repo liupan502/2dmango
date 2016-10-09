@@ -13,7 +13,7 @@ class WallGeometry :public BaseGeometry {
     bool PointDistanceToGeometry(QPointF position, qreal& distance);
     QLineF Line1();
     QLineF Line2();
-    
+    QVector2D WallVector();
 
   private:   
    QPolygonF polygon_;

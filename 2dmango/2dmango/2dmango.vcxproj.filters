@@ -185,6 +185,12 @@
     <ClCompile Include="Geometry\InnerWallGeometry.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DrawWallActionAdapter.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DrawWallActionAdapter.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -207,6 +213,9 @@
     </CustomBuild>
     <CustomBuild Include="GUI\WorkSpaceWidget.hpp">
       <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ActionAdpater\DrawWallActionAdapter.h">
+      <Filter>ActionAdapter</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -244,9 +253,6 @@
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="ActionAdpater\BaseActionAdapter.h">
-      <Filter>ActionAdapter</Filter>
-    </ClInclude>
-    <ClInclude Include="ActionAdpater\DrawWallActionAdapter.h">
       <Filter>ActionAdapter</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\AuxiliaryLineGeometry.h">

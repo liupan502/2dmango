@@ -82,3 +82,4 @@ void WindowGeometry::update_geometry() {
   QPolygonF path2_polygon = build_path2_polygon();
   path2_->set_polygon(path2_polygon);  
 }
+

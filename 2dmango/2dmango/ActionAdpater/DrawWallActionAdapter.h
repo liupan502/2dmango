@@ -14,6 +14,10 @@ class  DrawWallActionAdapter : public BaseActionAdapter {
 
     virtual void OnMouseRelease(QMouseEvent* event);
 
+    Q_OBJECT
+    signals:
+    void EndDrawWall();
+
   private:
     
     void left_mouse_button_press(QMouseEvent* event);

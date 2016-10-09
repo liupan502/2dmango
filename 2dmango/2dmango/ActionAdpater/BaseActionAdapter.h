@@ -3,7 +3,7 @@
 #include <QMouseEvent>
 #include <QEvent>
 #include "Entity/DesignDataWrapper.h"
-class BaseActionAdapter {
+class BaseActionAdapter:public QObject {
   public:
     //BaseMouseAdapter();
     virtual void OnMouseMove(QMouseEvent* event);

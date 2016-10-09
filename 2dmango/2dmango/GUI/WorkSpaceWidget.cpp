@@ -68,7 +68,12 @@ void WorkSpaceWidget::BeginDrawWall(){
     return;
   if(draw_wall_mouse_adapter_ == NULL){
     draw_wall_mouse_adapter_ = new DrawWallActionAdapter();
+    connect(draw_wall_mouse_adapter_, SIGNAL(EndDrawWall()), this, SLOT(EndDrawWall()));    
   }
   mouse_adapter_ = draw_wall_mouse_adapter_;  
   
 } 
+
+void WorkSpaceWidget::EndDrawWall() {
+  mouse_adapter_ = default_action_adapter_;
+}

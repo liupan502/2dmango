@@ -15,6 +15,7 @@ public:
 protected:
   float width_;
   float length_;
+  
   void compute_position(QPointF& currentPosition);
 private:
   

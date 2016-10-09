@@ -10,7 +10,6 @@ typedef enum WORK_MODE{
 } WORK_MODE;
 
 class WorkSpaceWidget : public QWidget {
-	Q_OBJECT
 
 public:
 	WorkSpaceWidget(QWidget * parent = Q_NULLPTR);
@@ -18,6 +17,10 @@ public:
 
   void SwitchWorkMode(WORK_MODE mode);
   void BeginDrawWall();
+
+  Q_OBJECT
+  public slots:
+  void EndDrawWall();
 
 protected:
   virtual void paintEvent(QPaintEvent* event);
