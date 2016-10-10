@@ -1,9 +1,10 @@
 #include "BaseGeometry.h"
 #include <math.h>
-BaseGeometry::BaseGeometry() {
+BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
   is_visible_ = true;
   index_ = 0;
   transform_ = QTransform();
+  data_ = data;
 }
 
 void BaseGeometry::Draw(QPainter* painter) {
@@ -69,4 +70,43 @@ void BaseGeometry::update_transform() {
   transform_ = transform;
 }
 
+void BaseGeometry::set_height(float height) {
+  height_ = height;
+}
+
+void BaseGeometry::set_width(float width) {
+  width_ = width;
+}
+
+void BaseGeometry::set_length(float length) {
+  length_ = length;
+}
+
+float BaseGeometry::width() {
+  return width_;
+}
+
+float BaseGeometry::height() {
+  return height_;
+}
+
+float BaseGeometry::length() {
+  return length_;
+}
+
+QPointF  BaseGeometry::position() {
+  return position_;
+}
+
+void BaseGeometry::set_position(QPointF position) {
+  position_ = position;
+}
+
+void BaseGeometry::set_rotation(float radian) {
+  rotate_radian_ = radian;
+}
+
+float BaseGeometry::rotation() {
+  return rotate_radian_;
+}
 

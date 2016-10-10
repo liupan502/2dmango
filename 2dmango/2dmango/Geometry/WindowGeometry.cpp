@@ -1,12 +1,13 @@
 #include "WindowGeometry.h"
 #include "PenFactory.h"
+#include "Entity/OpeningData.h"
 
-WindowGeometry::WindowGeometry() :InnerWallGeometry() {
+WindowGeometry::WindowGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*)data) {
   width_ = 0.0;
   length_ = 0.0;
 }
 
-WindowGeometry::WindowGeometry(float width, float length) : InnerWallGeometry(width,length) {
+WindowGeometry::WindowGeometry(float width, float length,OpeningData* data) : InnerWallGeometry(width,length, (BaseGeometryData*)data) {
   width_ = width;
   length_ = length;
 

@@ -3,10 +3,11 @@
 
 #include "BaseGeometry.h"
 #include "InnerWallGeometry.h"
+class OpeningData;
 class MoveDoorGeometry :public InnerWallGeometry {
 public:
-  MoveDoorGeometry();
-  MoveDoorGeometry(float width, float length);
+  MoveDoorGeometry(OpeningData* data = NULL);
+  MoveDoorGeometry(float width, float length, OpeningData* data = NULL);
   ~MoveDoorGeometry();  
   
 

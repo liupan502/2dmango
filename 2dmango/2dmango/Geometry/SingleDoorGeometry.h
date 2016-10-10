@@ -4,10 +4,12 @@
 #include "BaseGeometry.h"
 
 #include "InnerWallGeometry.h"
+
+class OpeningData;
 class SingleDoorGeometry : public InnerWallGeometry {
 public:
-  SingleDoorGeometry();
-  SingleDoorGeometry(float width, float length);
+  SingleDoorGeometry(OpeningData* openningData = NULL);
+  SingleDoorGeometry(float width, float length,OpeningData* openningData = NULL);
   virtual ~SingleDoorGeometry();
   
 
@@ -23,6 +25,7 @@ private:
   LinesPath* path4_;
   ContianerPath* contianer_path_;
   const qreal path2_width_ = 20;
+  OpeningData* opening_data_;
   
 
 

@@ -4,10 +4,12 @@
 #include "BaseGeometry.h"
 #include "InnerWallGeometry.h"
 
+class OpeningData;
+
 class DoubleDoorGeometry : public InnerWallGeometry{
 public:
-  DoubleDoorGeometry();
-  DoubleDoorGeometry(float width, float length);
+  DoubleDoorGeometry(OpeningData* data = NULL);
+  DoubleDoorGeometry(float width, float length,OpeningData* data = NULL);
   virtual ~DoubleDoorGeometry();
   
 

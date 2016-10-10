@@ -28,29 +28,64 @@ class BaseData {
 
 class BaseGeometryData:public BaseData{
   public:
+    BaseGeometryData() {
+      length_ = 0.0;
+      width_ = 0.0;
+      height_ = 0.0;
 
-    void set_length(int length){
+      position_ = QVector3D();
+       
+      rotation_x_ = 0.0;
+      rotation_y_ = 0.0;
+      rotation_z_ = 0.0;
+    }
+
+    void set_length(float length){
       length_ = length;
     }
 
-    int length(){
+    float length(){
       return length_;
     }
 
-    void set_width(int width){\
+    void set_width(float width){
       width_ = width;
     }
 
-    int width(){
+    float width(){
       return width_;
     }
 
-    void set_height(int height){
+    void set_height(float height){
       height_ = height;
     }
 
-    int height(){
+    float height(){
       return height_;
+    }
+
+    void set_rotation_z(float rotationZ) {
+      rotation_z_ = rotationZ;
+    }
+
+    float rotation_z() {
+      return rotation_z_;
+    }
+
+    void set_rotation_x(float rotationX) {
+      rotation_x_ = rotationX;
+    }
+
+    float ratation_x() {
+      return rotation_x_;
+    }
+
+    void set_rotation_y(float rotationY) {
+      rotation_y_ = rotationY;
+    }
+
+    float rotation_y() {
+      return rotation_y_;
     }
 
 
@@ -63,10 +98,14 @@ class BaseGeometryData:public BaseData{
     }
     virtual std::string ToJson() = 0;
 
-  private:
-    int length_;
-    int width_;
-    int height_;
+  protected:
+    float length_;
+    float width_;
+    float height_;
+
+    float rotation_x_;
+    float rotation_y_;
+    float rotation_z_;
 
     QVector3D position_;
 

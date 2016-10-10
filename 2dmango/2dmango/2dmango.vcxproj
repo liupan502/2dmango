@@ -89,6 +89,8 @@
     <ClCompile Include="Entity\FindPoint.cpp" />
     <ClCompile Include="Entity\HotRegionImpl.cpp" />
     <ClCompile Include="Entity\LineData.cpp" />
+    <ClCompile Include="Entity\ModelData.cpp" />
+    <ClCompile Include="Entity\OpeningData.cpp" />
     <ClCompile Include="Entity\PointData.cpp" />
     <ClCompile Include="Entity\RoomData.cpp" />
     <ClCompile Include="Entity\WallData.cpp" />
@@ -184,6 +186,8 @@
   <ItemGroup>
     <ClInclude Include="ActionAdpater\BaseActionAdapter.h" />
     <ClInclude Include="ActionAdpater\DefaultActionAdapter.h" />
+    <ClInclude Include="Entity\ModelData.h" />
+    <ClInclude Include="Entity\OpeningData.h" />
     <ClInclude Include="Util\VectorUtil.h" />
     <CustomBuild Include="ActionAdpater\DrawWallActionAdapter.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

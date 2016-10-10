@@ -2,12 +2,12 @@
 #include "const.h"
 #include "PenFactory.h"
 
-DoubleDoorGeometry::DoubleDoorGeometry() :InnerWallGeometry() {
+DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*) data) {
   width_ = 0.0;
   length_ = 0.0;
 };
 
-DoubleDoorGeometry::DoubleDoorGeometry(float width, float length): InnerWallGeometry(width,length) {
+DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* data): InnerWallGeometry(width,length, (BaseGeometryData*)data) {
   //width_ = width;
   //length_ = length;
 

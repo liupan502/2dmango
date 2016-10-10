@@ -197,6 +197,12 @@
     <ClCompile Include="Util\VectorUtil.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\OpeningData.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity\ModelData.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -308,6 +314,12 @@
     </ClInclude>
     <ClInclude Include="Util\VectorUtil.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\OpeningData.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\ModelData.h">
+      <Filter>Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

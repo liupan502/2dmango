@@ -3,17 +3,20 @@
 #include "Util/LineUtil.h"
 #include "Util/VectorUtil.h"
 #include <math.h>
+#include "Entity/BaseData.h"
 
-InnerWallGeometry::InnerWallGeometry() :BaseGeometry() {
+InnerWallGeometry::InnerWallGeometry(BaseGeometryData* data):BaseGeometry(data) {
   width_ = 0.0;
   length_ = 0.0;
   rotate_radian_ = 0.0;
+  init_with_data(data);
 }
 
-InnerWallGeometry::InnerWallGeometry(float width, float length):BaseGeometry() {
+InnerWallGeometry::InnerWallGeometry(float width, float length, BaseGeometryData* data):BaseGeometry(data) {
   width_ = width;
   length_ = length;
   rotate_radian_ = 0.0;
+  init_with_data(data);
 }
 
 void InnerWallGeometry::MoveTo(QPointF position) {
@@ -74,4 +77,16 @@ QRectF InnerWallGeometry::Rect() {
   rect = QRectF(top_left_point, bottom_right_point);
   
   return rect;
+}
+
+void InnerWallGeometry::init_with_data(BaseGeometryData* data) {
+  if (data == NULL) {
+    return;
+  }
+  set_width(data->width());
+  set_length(data->length());
+  set_rotation(data->rotation_z());
+  QVector3D tmp_vec3d = data->position();
+  QPointF tmp_point = QPointF(tmp_vec3d.x(), tmp_vec3d.y());
+  set_position(tmp_point);
 }

@@ -3,10 +3,12 @@
 
 #include "BaseGeometry.h"
 #include "InnerWallGeometry.h"
+
+class OpeningData;
 class WindowGeometry :public InnerWallGeometry {
 public:
-  WindowGeometry();
-  WindowGeometry(float width, float length);
+  WindowGeometry(OpeningData* data = NULL);
+  WindowGeometry(float width, float length,OpeningData* data = NULL);
   ~WindowGeometry();
   
 

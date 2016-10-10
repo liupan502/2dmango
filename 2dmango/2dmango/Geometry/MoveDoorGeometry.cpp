@@ -1,12 +1,12 @@
 #include "MoveDoorGeometry.h"
 #include "PenFactory.h"
-
-MoveDoorGeometry::MoveDoorGeometry() :InnerWallGeometry() {
+#include "Entity/OpeningData.h"
+MoveDoorGeometry::MoveDoorGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*) data) {
   width_ = 0.0;
   length_ = 0.0;
 }
 
-MoveDoorGeometry::MoveDoorGeometry(float width, float length) : InnerWallGeometry(width,length) {
+MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* data) : InnerWallGeometry(width,length, (BaseGeometryData*)data) {
   //width_ = width;
   //length_ = length;
 

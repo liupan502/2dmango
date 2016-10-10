@@ -1,9 +1,10 @@
 #include "SingleDoorGeometry.h"
 #include "PenFactory.h"
 
-SingleDoorGeometry::SingleDoorGeometry() :InnerWallGeometry() {
+SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*)openingData) {
   width_ = 0.0;
   length_ = 0.0;
+  opening_data_ = openingData;
 }
 
 SingleDoorGeometry::~SingleDoorGeometry(){
@@ -26,9 +27,10 @@ SingleDoorGeometry::~SingleDoorGeometry(){
   path4_ = NULL;
 }
 
-SingleDoorGeometry::SingleDoorGeometry(float width, float length) : InnerWallGeometry(width,length) {
+SingleDoorGeometry::SingleDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
   //width_ = width;
   //length_ = length;
+  opening_data_ = openingData;
   build_geometry(width, length);
 }
 
