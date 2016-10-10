@@ -82,3 +82,7 @@ QVector2D WallGeometry::NormalVector() {
   result.normalize();
   return result;
 }
+
+WallData* WallGeometry::wall_data() {
+  return wall_data_;
+}

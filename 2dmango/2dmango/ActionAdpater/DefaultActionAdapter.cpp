@@ -12,7 +12,13 @@ void DefaultActionAdapter::OnMouseLeave(QEvent* event) {
 
 void DefaultActionAdapter::OnMouseRelease(QMouseEvent* event) {
   left_mouse_down_ = false;
- 
+  DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  BaseGeometry* current_selected_geometry = instance->current_selected_geometry();
+  QPointF position = QPointF(event->pos());
+  if (current_selected_geometry != NULL) {    
+    instance->AddGeometry(NULL);
+    instance->AddCurrentData();
+  }
 }
 
 void DefaultActionAdapter::OnMousePress(QMouseEvent* event) {

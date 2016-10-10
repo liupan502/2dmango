@@ -19,6 +19,7 @@
 //const int MAX_CORNER_NUM = 10000;
 //const int MAX_ROOM_NUM = 1000;
 
+class InnerWallGeometry;
 class DesignData :public BaseData {
   public:
     
@@ -45,6 +46,7 @@ class DesignData :public BaseData {
     QPointF CornerPosition(std::string cornerName);
 
     CornerData* FindCornerWithPosition(QPointF currentPosition);
+    
 
     void UpdateRoomInfo();
 

@@ -25,7 +25,7 @@ private:
   LinesPath* path4_;
   ContianerPath* contianer_path_;
   const qreal path2_width_ = 20;
-  OpeningData* opening_data_;
+  
   
 
 

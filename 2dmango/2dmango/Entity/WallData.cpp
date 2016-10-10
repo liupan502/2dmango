@@ -642,5 +642,20 @@ void WallData::UpdateGeneratedLine() {
   }
 }
 
+void WallData::AddOpening(std::string opening_name) {
+  opening_names_.insert(opening_name);
+}
+
+void WallData::RemoveOpening(std::string opening_name) {
+  std::set<std::string>::iterator it = opening_names_.find(opening_name);
+  if (it != opening_names_.end()) {
+    opening_names_.erase(it);
+  }
+}
+
+std::set<std::string> WallData::opening_names() {
+  return opening_names_;
+}
+
 
 

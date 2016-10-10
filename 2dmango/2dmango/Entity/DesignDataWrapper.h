@@ -85,6 +85,8 @@ class DesignDataWrapper {
    
    void insert_opening_data(InnerWallGeometry* innerWallGeometry);
 
+   WallData* FindWallWithInnerWallGeometry(InnerWallGeometry* innerWallGeometry);
+
 
 };
 

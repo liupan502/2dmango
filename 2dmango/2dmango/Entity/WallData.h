@@ -41,6 +41,7 @@ typedef enum WALL_DATA_STATUS {
 class CornerData;
 class RoomData;
 class WallGeometry;
+class OpeningData;
 
 class WallData :public BaseGeometryData{
   public:
@@ -53,9 +54,13 @@ class WallData :public BaseGeometryData{
 	   status_ = NONE_STAUS_WALL_DATA;
    }
 
-	void set_status(WALL_DATA_STATUS status);
+    void AddOpening(std::string opening_name);
 
-	WALL_DATA_STATUS status();
+    void RemoveOpening(std::string opening_name);
+
+	  void set_status(WALL_DATA_STATUS status);
+
+	  WALL_DATA_STATUS status();
 
     bool DoContainCorner(CornerData* corner);
 
@@ -191,9 +196,11 @@ class WallData :public BaseGeometryData{
 
 	//LineData generated_line();
 
-	void UpdateGeneratedLine(LineData line);
+	  void UpdateGeneratedLine(LineData line);
 
     virtual std::string ToJson();
+
+    std::set<std::string> opening_names();
   private:
     
     bool is_available_path(std::vector<WallData*> wallPath);
@@ -239,6 +246,7 @@ class WallData :public BaseGeometryData{
     CornerData* start_corner_;
     CornerData* end_corner_;
     QVector2D normal_vector_;
+    std::set<std::string> opening_names_;
 };
 
 #endif

@@ -151,8 +151,13 @@ void DesignDataWrapper::AddCurrentData() {
 
 void DesignDataWrapper::insert_opening_data(InnerWallGeometry* geometry) {
   OPENING_TYPE opening_type = geometry->opening_type();
+  WallData* wall_data = FindWallWithInnerWallGeometry(geometry);
+  if (wall_data == NULL) {
+    return;
+  }
   std::string opening_name = design_data_->GenerateOpeningName();
   OpeningData* data = NULL;
+
   switch (opening_type) {
     case OPENING_SINGLE_DOOR:
       data = new OpeningData(*(SingleDoorGeometry*)geometry, opening_name);
@@ -170,8 +175,24 @@ void DesignDataWrapper::insert_opening_data(InnerWallGeometry* geometry) {
       break;
   }
 
+  
+
   if (data != NULL) {
     design_data_->AddOpening(data);
+    wall_data->AddOpening(opening_name);
   }  
+}
+
+WallData* DesignDataWrapper::FindWallWithInnerWallGeometry(InnerWallGeometry* geometry) {
+  WallData* wall = NULL;
+  QPointF position = geometry->position();
+  WallGeometry wall_geometry;
+  qreal distance;
+  if (GetClosestWall(position, distance, wall_geometry)) {
+    if (distance == 0) {
+      wall = wall_geometry.wall_data();
+    }
+  }
+  return wall;
 }
 
