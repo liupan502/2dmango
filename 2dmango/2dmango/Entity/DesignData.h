@@ -7,6 +7,7 @@
 #include "CornerData.h"
 #include "RoomData.h"
 #include "WallPath.h"
+#include "OpeningData.h"
 
 #include "Geometry/WallGeometry.h"
 #include <QVector2d>
@@ -20,11 +21,17 @@
 
 class DesignData :public BaseData {
   public:
+    
     virtual std::string ToJson();
 
+    virtual ~DesignData();
+
     WallData* AddWall();
+
     CornerData* AddCorner();
+
     RoomData* AddRoom();
+
     std::vector<WallGeometry> ComputeWallGeometrys();
 
     bool FindConnectedPoints(QPointF currentPoint, std::string wallName,std::vector<QPointF>& points);
@@ -43,22 +50,21 @@ class DesignData :public BaseData {
 
     bool IsEmpty();
 
-	void UpdateGeometry();
+	  void UpdateGeometry();
+
+    void AddOpening(OpeningData* openingData);
+
+    std::string GenerateOpeningName();
 
   private:
 
-    void clear_rooms();
-
-    //bool is_connected_point(QPointF currentPoint,QVector2D vec ,QPointF testPoint);
-    //bool is_connected_corner(CornerData);
+    void clear_rooms();    
 
     QPointF compute_connected_point(WallData* wall, CornerData* corner, QPointF point);
 
     bool is_valid_connected_point(std::string pointName,std::string wallName, std::set<std::string>cornersSet);
 
     bool is_attached_corner(QPointF currentPoint,std::string wallName,std::string cornerName, std::set<std::string> cornersName);
-
-    
 
     void reset_geometry();
 
@@ -107,6 +113,8 @@ class DesignData :public BaseData {
 
     // 房间数据
     std::map<std::string,RoomData*> room_data_map_;
+
+    std::map<std::string, OpeningData*> opening_data_map_;
 };
 #endif // !MANGO_2D_DESIGN_DATA_H_
 

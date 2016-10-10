@@ -86,6 +86,7 @@ std::string DesignData::generate_point_name() {
   return name;
 }
 
+
 std::string DesignData::generate_name(std::vector<std::string> used_names){
   int max_num = 0;
   for(int i=0;i<used_names.size();i++){
@@ -97,61 +98,6 @@ std::string DesignData::generate_name(std::vector<std::string> used_names){
   sprintf(buf,"%d",max_num+1);
   return std::string(buf);
 }
-
-/*bool DesignData::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& points) {
-  WallData* wall_data = wall_data_map_[wallName];
-  QVector2D vec = wall_data->WallPerpendicularVector();
-  points.clear();
-  std::set<std::string> corners_set;
-  std::map<std::string,WallData*>::iterator it;
-  for (it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
-    WallData* wall_data = it->second;
-    if (wall_data->status() == ROOM_WALL_DATA) {
-      continue;
-    }   
-    CornerData* start_corner = wall_data->start_corner();
-    if (start_corner != NULL) {
-      QPointF start_corner_pos = wall_data->start_corner_position();
-      std::string start_corner_name = start_corner->name();
-      if (is_connected_point(currentPoint, vec, start_corner_pos)&&
-          is_valid_connected_point(start_corner_name,wallName, corners_set)) {
-        points.push_back(start_corner_pos);
-        corners_set.insert(start_corner_name);
-      }
-    }
-    else {
-
-    }
-    std::string end_corner_name = wall_data->end_corner_name();
-    CornerData* end_corner = corner_data_map_[end_corner_name];
-    if (end_corner) {
-      QPointF end_corner_pos = wall_data->end_corner_position();
-      if (is_connected_point(currentPoint, vec, end_corner_pos)&&
-        is_valid_connected_point(end_corner_name, wallName, corners_set)) {
-        points.push_back(end_corner_pos);
-        corners_set.insert(end_corner_name);
-      }
-    }
-    else {
-
-    }
-  }
-  return (points.size() != 0);
-}*/
-
-/*bool DesignData::is_connected_point(QPointF currentPoint, QVector2D vec, QPointF testPoint) {
-  QVector2D tmp_vec(testPoint-currentPoint);
-  if (tmp_vec.length() < 1|| vec.length() < 1) {
-    return false;
-  }
-  tmp_vec.normalize();
-  vec.normalize();
-  float abs_dot_product_value = abs(QVector2D::dotProduct(tmp_vec,vec));
-  if (abs_dot_product_value > cos(5.0f/180.0f*M_PI) && abs_dot_product_value <= 1.0) {
-    return true;
-  }
-  return false;
-}*/
 
 bool DesignData::is_valid_connected_point(std::string pointName, std::string wallName,std::set<std::string>cornersSet) {
   if (cornersSet.find(pointName) != cornersSet.end()) {
@@ -260,72 +206,6 @@ QPointF DesignData::CornerPosition(std::string cornerName) {
   }
   return QPointF();
 }
-
-/*
-void DesignData::UpdateRoomInfo() {
-  clear_rooms();
-  //reset_geometry();
-
-  if (wall_data_map_.size() == 16) {
-    int a = 0;
-  }
-  std::map<std::string, CornerData*>::iterator corner_it;
-  for (corner_it = corner_data_map_.begin(); corner_it != corner_data_map_.end(); corner_it++) {
-    CornerData* corner = corner_it->second;
-    corner->UpdateRelatedInfo();
-  }
-
-  std::set<WallData*> exclude_walls;
-  std::map < std::string, WallData* > tmp_wall_data_map = wall_data_map_;
-  find_unclosed_walls(exclude_walls);
-  for (std::set<WallData*>::iterator it = exclude_walls.begin(); it != exclude_walls.end(); it++) {
-    std::map<std::string, WallData*>::iterator map_it = tmp_wall_data_map.find(((*it)->name()));
-    if (map_it != tmp_wall_data_map.end()) {
-      tmp_wall_data_map.erase(map_it);
-    }
-  }
-
-  std::map<std::string,WallData*>::iterator it;
-  //for (it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
-  while (true) {
-    if (tmp_wall_data_map.size() == 0) {
-      break;
-    }
-    for (it = tmp_wall_data_map.begin(); it != tmp_wall_data_map.end(); ) {
-      WallData* wall = it->second;
-      if (exclude_walls.find(wall) != exclude_walls.end()) {
-        it++;
-        continue;
-      }
-      if (!wall->IsUnsharedWall(exclude_walls)) {
-        it++;
-        continue;
-      }
-
-      std::vector<WallData*> wall_path = wall->GetRoom(exclude_walls);
-
-      if (wall_path.size() > 0) {
-        
-        for (int i = 0; i < wall_path.size(); i++) {
-          std::map<std::string, WallData*>::iterator map_it = tmp_wall_data_map.find(wall_path[i]->name());
-          if (map_it != tmp_wall_data_map.end() && wall_path[i]->IsUnsharedWall(exclude_walls)) {
-            tmp_wall_data_map.erase(map_it);
-          }
-        }
-        update_exclude_walls(exclude_walls, wall_path);
-
-        std::string room_name = generate_room_name();
-        RoomData* room = new RoomData(room_name, wall_path);
-        room_data_map_.insert(make_pair(room_name, room));
-        break;
-      }
-      else {
-        it++;
-      }
-    }
-  }
-}
-*/
 
 void DesignData::UpdateRoomInfo() {
   clear_rooms();
@@ -540,4 +420,43 @@ WallData* DesignData::find_start_wall(std::set<WallData*> excludeWalls) {
     }
   }*/
   return start_wall;
+}
+
+void DesignData::AddOpening(OpeningData* openingData) {
+  std::map<std::string, OpeningData*>::iterator it = opening_data_map_.find(openingData->name());
+  assert(it == opening_data_map_.end());
+  opening_data_map_.insert(make_pair(openingData->name(),openingData));
+}
+
+std::string DesignData::GenerateOpeningName() {
+  std::vector<std::string> names;
+  std::map<std::string, OpeningData*>::iterator it;
+  for (it = opening_data_map_.begin(); it != opening_data_map_.end(); it++) {
+    names.push_back(it->first);
+  }
+  std::string name = generate_name(names);
+}
+
+DesignData::~DesignData() {
+
+  for (std::map<std::string, WallData*>::iterator it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
+    delete it->second;
+    it->second = NULL;
+  }
+
+  for (std::map<std::string, CornerData*>::iterator it = corner_data_map_.begin(); it != corner_data_map_.end(); it++) {
+    delete it->second;
+    it->second = NULL;
+  }
+
+  for (std::map<std::string, RoomData*>::iterator it = room_data_map_.begin(); it != room_data_map_.end(); it++) {
+    delete it->second;
+    it->second = NULL;
+  }
+
+  for (std::map<std::string, OpeningData*>::iterator it = opening_data_map_.begin(); it != opening_data_map_.end(); it++) {
+    delete it->second;
+    it->second = NULL;
+  }
+
 }
