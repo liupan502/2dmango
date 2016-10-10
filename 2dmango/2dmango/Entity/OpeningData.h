@@ -27,10 +27,13 @@ public:
   OpeningData(MoveDoorGeometry geometry, std::string name = "");
   OpeningData(WindowGeometry geometry, std::string name = "");
   BaseGeometry* GetGeometry();
+
+  std::string virtual ToJson();
 private:
   OPENING_TYPE opening_type_;
   std::string wall_name_;
   void init_geometry(BaseGeometry geometry);
   
 };
+
 #endif

@@ -5,6 +5,7 @@ BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
   index_ = 0;
   transform_ = QTransform();
   data_ = data;
+  geometry_type_ = GEOMETRY_NONE;
 }
 
 void BaseGeometry::Draw(QPainter* painter) {
@@ -108,5 +109,9 @@ void BaseGeometry::set_rotation(float radian) {
 
 float BaseGeometry::rotation() {
   return rotate_radian_;
+}
+
+GEOMETRY_TYPE BaseGeometry::geometry_type() {
+  return geometry_type_;
 }
 

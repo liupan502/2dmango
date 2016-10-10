@@ -5,6 +5,7 @@ SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeome
   width_ = 0.0;
   length_ = 0.0;
   opening_data_ = openingData;
+  opening_type_ = OPENING_SINGLE_DOOR;
 }
 
 SingleDoorGeometry::~SingleDoorGeometry(){
@@ -31,6 +32,7 @@ SingleDoorGeometry::SingleDoorGeometry(float width, float length, OpeningData* o
   //width_ = width;
   //length_ = length;
   opening_data_ = openingData;
+  opening_type_ = OPENING_SINGLE_DOOR;
   build_geometry(width, length);
 }
 

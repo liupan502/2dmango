@@ -8,6 +8,13 @@
 #include "BasePath.h"
 
 class BaseGeometryData;
+
+typedef enum GEOMETRY_TYPE {
+  GEOMETRY_NONE,
+  GEOMETRY_WALL,
+  GEOMETRY_OPENING,
+  GEOMETRY_MODEL,
+} GEOMETRY_TYPE;
 class BaseGeometry {
   public:
    BaseGeometry(BaseGeometryData* data = NULL);
@@ -32,6 +39,7 @@ class BaseGeometry {
    float length();
    QPointF position();
    float rotation();
+   GEOMETRY_TYPE geometry_type();
 
  protected:
    std::vector<BasePath*> paths_;
@@ -46,6 +54,7 @@ class BaseGeometry {
    float height_;
 
    BaseGeometryData* data_;
+   GEOMETRY_TYPE geometry_type_;
    
    virtual void update_transform();
    virtual void update_geometry();

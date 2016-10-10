@@ -10,6 +10,8 @@ InnerWallGeometry::InnerWallGeometry(BaseGeometryData* data):BaseGeometry(data) 
   length_ = 0.0;
   rotate_radian_ = 0.0;
   init_with_data(data);
+  geometry_type_ = GEOMETRY_OPENING;
+  opening_type_ = OPENING_NONE;
 }
 
 InnerWallGeometry::InnerWallGeometry(float width, float length, BaseGeometryData* data):BaseGeometry(data) {
@@ -17,6 +19,8 @@ InnerWallGeometry::InnerWallGeometry(float width, float length, BaseGeometryData
   length_ = length;
   rotate_radian_ = 0.0;
   init_with_data(data);
+  geometry_type_ = GEOMETRY_OPENING;
+  opening_type_ = OPENING_NONE;
 }
 
 void InnerWallGeometry::MoveTo(QPointF position) {
@@ -90,3 +94,8 @@ void InnerWallGeometry::init_with_data(BaseGeometryData* data) {
   QPointF tmp_point = QPointF(tmp_vec3d.x(), tmp_vec3d.y());
   set_position(tmp_point);
 }
+
+OPENING_TYPE InnerWallGeometry::opening_type() {
+  return opening_type_;
+}
+

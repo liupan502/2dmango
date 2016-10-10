@@ -5,12 +5,16 @@
 DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*) data) {
   width_ = 0.0;
   length_ = 0.0;
+  opening_data_ = data;
+  opening_type_ = OPENING_DOUBLE_DOOR;
 };
 
 DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* data): InnerWallGeometry(width,length, (BaseGeometryData*)data) {
   //width_ = width;
   //length_ = length;
 
+  opening_data_ = data;
+  opening_type_ = OPENING_DOUBLE_DOOR;
   QPolygonF path1_polygon = build_path1_polygon();
   path1_ = new PolygonPath(path1_polygon);
   path1_->set_pen(PenFactory::pen1());

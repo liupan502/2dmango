@@ -63,3 +63,7 @@ void OpeningData::init_geometry(BaseGeometry geometry) {
 
   set_rotation_z(geometry.rotation());
 }
+
+std::string OpeningData::ToJson() {
+  return "";
+}

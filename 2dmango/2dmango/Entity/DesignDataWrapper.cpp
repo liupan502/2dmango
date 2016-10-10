@@ -1,4 +1,8 @@
 #include "DesignDataWrapper.h"
+#include "Geometry/DoubleDoorGeometry.h"
+#include "Geometry/SingleDoorGeometry.h"
+#include "Geometry/MoveDoorGeometry.h"
+#include "Geometry/WindowGeometry.h"
 
 DesignDataWrapper* DesignDataWrapper::instance = 0;
 
@@ -132,5 +136,42 @@ bool DesignDataWrapper::GetClosestWall(QPointF position, qreal& distance, WallGe
     distance = min_distance;
     return true;
   }
+}
+
+void DesignDataWrapper::AddCurrentData() {
+  GEOMETRY_TYPE geometry_type = current_selected_geometry_->geometry_type();
+  switch (geometry_type) {
+    case GEOMETRY_OPENING:
+      insert_opening_data((InnerWallGeometry*)current_selected_geometry_);
+      break;
+    default:
+      break;
+  }
+}
+
+void DesignDataWrapper::insert_opening_data(InnerWallGeometry* geometry) {
+  OPENING_TYPE opening_type = geometry->opening_type();
+  std::string opening_name = design_data_->GenerateOpeningName();
+  OpeningData* data = NULL;
+  switch (opening_type) {
+    case OPENING_SINGLE_DOOR:
+      data = new OpeningData(*(SingleDoorGeometry*)geometry, opening_name);
+      break;
+    case OPENING_MOVE_DOOR:
+      data = new OpeningData(*((MoveDoorGeometry*)geometry), opening_name);
+      break;
+    case OPENING_DOUBLE_DOOR:
+      data = new OpeningData(*(DoubleDoorGeometry*)geometry, opening_name);
+      break;
+    case OPENING_WINDOW:
+      data = new OpeningData(*(WindowGeometry*)geometry, opening_name);
+      break;
+    default:
+      break;
+  }
+
+  if (data != NULL) {
+    design_data_->AddOpening(data);
+  }  
 }
 

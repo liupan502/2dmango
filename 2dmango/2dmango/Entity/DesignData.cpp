@@ -435,6 +435,7 @@ std::string DesignData::GenerateOpeningName() {
     names.push_back(it->first);
   }
   std::string name = generate_name(names);
+  return name;
 }
 
 DesignData::~DesignData() {

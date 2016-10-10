@@ -83,7 +83,7 @@ class DesignDataWrapper {
 
    void delete_current_selected_geometry();
    
-   
+   void insert_opening_data(InnerWallGeometry* innerWallGeometry);
 
 
 };
