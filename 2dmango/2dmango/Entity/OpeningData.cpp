@@ -72,3 +72,7 @@ QJsonObject OpeningData::ToJson() {
   object.insert("wall_name", QJsonValue(wall_name_.c_str()));
   return object;
 }
+
+void OpeningData::InitWithObject(QJsonObject& jsonObject) {
+
+}

@@ -37,3 +37,7 @@ QJsonObject PointData::ToJson() {
   object.insert("point", QJsonValue(point_str));
   return object;
 }
+
+void PointData::InitWithObject(QJsonObject& jsonObject) {
+
+}

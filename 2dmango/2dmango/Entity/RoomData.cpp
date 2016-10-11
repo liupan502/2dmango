@@ -21,6 +21,10 @@ QJsonObject RoomData::ToJson() {
   return QJsonObject();
 }
 
+void RoomData::InitWithObject(QJsonObject& jsonObject) {
+
+}
+
 RoomData::RoomData():BaseData(){
   
 }

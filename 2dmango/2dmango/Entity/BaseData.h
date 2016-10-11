@@ -28,6 +28,15 @@ class BaseData {
       object.insert("name", QJsonValue(name_.c_str()));
       return object;
     };
+
+    virtual void InitWithObject(QJsonObject& jsonObject) {
+      if (jsonObject.contains("name")) {
+        name_ = jsonObject["name"].toString().toStdString();
+      }
+      else {
+        name_ = "";
+      }
+    }
   private:
     std::string name_;
 };
@@ -102,6 +111,7 @@ class BaseGeometryData:public BaseData{
     QVector3D position(){
       return position_;
     }
+
     virtual QJsonObject ToJson() {
       QJsonObject object;
       QJsonObject parent_object = BaseData::ToJson();
@@ -117,6 +127,59 @@ class BaseGeometryData:public BaseData{
       QString position_str = QVector3DToString(position_);
       object.insert("position", position_str);
       return object;
+    }
+
+    virtual void InitWithObject(QJsonObject& jsonObject) {
+      BaseData::InitWithObject(jsonObject);
+      if (jsonObject.contains("length")) {
+        length_ = jsonObject["length"].toDouble();
+      }
+      else {
+        length_ = 0.0;
+      }
+
+      if (jsonObject.contains("width")) {
+        width_ = jsonObject["width"].toDouble();
+      }
+      else {
+        width_ = 0.0;
+      }
+
+      if (jsonObject.contains("height")) {
+        height_ = jsonObject["height"].toDouble();
+      }
+      else {
+        height_ = 0.0;
+      }
+
+      if (jsonObject.contains("rotation_x")) {
+        rotation_x_ = jsonObject["rotation_x"].toDouble();
+      }
+      else {
+        rotation_x_ = 0.0;
+      }
+
+      if (jsonObject.contains("rotation_y")) {
+        rotation_y_ = jsonObject["rotation_y"].toDouble();
+      }
+      else {
+        rotation_y_ = 0.0;
+      }
+
+      if (jsonObject.contains("rotation_z")) {
+        rotation_z_ = jsonObject["rotation_z"].toDouble();
+      }
+      else {
+        rotation_z_ = 0.0;
+      }
+
+      if (jsonObject.contains("position")) {
+        QString position_str = jsonObject["position"].toString();
+        position_ = StringToQVector3D(position_str);
+      }
+      else {
+        position_ = QVector3D();
+      }
     }
 
   protected:

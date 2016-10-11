@@ -64,6 +64,8 @@ class RoomData :public BaseData {
 
     QJsonObject virtual ToJson();
 
+    virtual void InitWithObject(QJsonObject& jsonObject);
+
     QVector2D WallOutsideDirection(WallData* wallData);
   private:
     std::string func_name_;

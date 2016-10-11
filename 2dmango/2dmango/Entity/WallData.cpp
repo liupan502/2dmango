@@ -46,6 +46,10 @@ QJsonObject WallData::ToJson() {
   return object;
 }
 
+void InitWithObject(QJsonObject& jsonObject) {
+
+}
+
 bool WallData::IsStartCorner(CornerData* corner){
   if (corner == NULL) {
     return false;

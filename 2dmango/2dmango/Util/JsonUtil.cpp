@@ -29,6 +29,18 @@ QString QVector3DToString(QVector3D vec3d) {
   return result;
 }
 
+QVector3D StringToQVector3D(QString string) {
+  QVector3D vec3d;
+  QStringList sub_strs = string.split(",");
+  if (sub_strs.size() == 3) {
+    qreal x = sub_strs[0].toFloat();
+    qreal y = sub_strs[1].toFloat();
+    qreal z = sub_strs[2].toFloat();
+    vec3d = QVector3D(x, y,z);
+  }
+  return vec3d;
+}
+
 QString QVector2DToString(QVector2D vec2d) {
   QString x_str ;
   x_str.clear();
@@ -43,6 +55,17 @@ QString QVector2DToString(QVector2D vec2d) {
   return result;
 }
 
+QVector2D StringToQVector2D(QString string) {
+  QVector2D vec2d;
+  QStringList sub_strs = string.split(",");
+  if (sub_strs.size() == 2) {
+    qreal x = sub_strs[0].toFloat();
+    qreal y = sub_strs[1].toFloat();    
+    vec2d = QVector2D(x, y);
+  }
+  return vec2d;
+}
+
 QString PointFToString(QPointF point) {
   QString x_str;
   x_str.clear();
@@ -55,4 +78,15 @@ QString PointFToString(QPointF point) {
   QString result = x_str + "," + y_str;
 
   return result;
+}
+
+QPointF StringToPointF(QString string) {
+  QPointF point;
+  QStringList sub_strs = string.split(",");
+  if (sub_strs.size() == 2) {
+    qreal x = sub_strs[0].toFloat();
+    qreal y = sub_strs[1].toFloat();
+    point = QPointF(x, y);
+  }
+  return point;
 }

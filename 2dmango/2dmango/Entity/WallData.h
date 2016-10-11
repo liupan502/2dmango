@@ -200,6 +200,8 @@ class WallData :public BaseGeometryData{
 
     virtual QJsonObject ToJson();
 
+    virtual void InitWithObject(QJsonObject& jsonObject);
+
     std::set<std::string> opening_names();
   private:
     

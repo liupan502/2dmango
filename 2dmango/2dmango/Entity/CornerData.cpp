@@ -42,6 +42,10 @@ QJsonObject CornerData::ToJson() {
   return object;
 }
 
+void CornerData::InitWithObject(QJsonObject& jsonObject) {
+
+}
+
 bool CornerData::has_position_data(){
   return has_position_data_;
 }
