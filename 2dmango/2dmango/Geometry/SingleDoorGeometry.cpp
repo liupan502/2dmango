@@ -1,5 +1,6 @@
 #include "SingleDoorGeometry.h"
 #include "PenFactory.h"
+#include "Entity/OpeningData.h"
 
 SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*)openingData) {
   width_ = 0.0;

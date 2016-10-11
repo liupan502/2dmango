@@ -3,6 +3,8 @@
 
 #include <string>
 #include <QVector3D>
+#include <QJsonObject>
+#include "Util/JsonUtil.h"
 
 
 class BaseData {
@@ -21,7 +23,11 @@ class BaseData {
       return name_;
     }
 
-    virtual std::string ToJson() = 0;
+    virtual QJsonObject ToJson() {
+      QJsonObject object;
+      object.insert("name", QJsonValue(name_.c_str()));
+      return object;
+    };
   private:
     std::string name_;
 };
@@ -96,7 +102,22 @@ class BaseGeometryData:public BaseData{
     QVector3D position(){
       return position_;
     }
-    virtual std::string ToJson() = 0;
+    virtual QJsonObject ToJson() {
+      QJsonObject object;
+      QJsonObject parent_object = BaseData::ToJson();
+      AttachJsonObject(object, parent_object);
+      object.insert("length", QJsonValue(length_));
+      object.insert("width", QJsonValue(width_));
+      object.insert("height", QJsonValue(height_));
+
+      object.insert("rotation_x", QJsonValue(rotation_x_));
+      object.insert("rotation_y", QJsonValue(rotation_y_));
+      object.insert("rotation_z", QJsonValue(rotation_z_));
+
+      QString position_str = QVector3DToString(position_);
+      object.insert("position", position_str);
+      return object;
+    }
 
   protected:
     float length_;

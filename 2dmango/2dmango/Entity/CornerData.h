@@ -18,7 +18,7 @@ class CornerData :public BaseGeometryData{
   public:
     CornerData();    
     virtual ~CornerData();
-    virtual std::string ToJson();
+    virtual QJsonObject ToJson();
     std::string AddPoint(QPointF point);
     void RemovePoint(std::string pointName);
     void UpdatePoint(std::string pointName,QPointF point);

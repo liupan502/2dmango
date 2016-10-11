@@ -4,8 +4,45 @@
 #include <set>
 #include "WallPath.h"
 #include <assert.h>
-std::string DesignData::ToJson(){
-  return " ";
+#include <QJsonArray>
+QJsonObject DesignData::ToJson(){
+  QJsonObject object;
+  QJsonObject parent_object = BaseData::ToJson();
+  AttachJsonObject(object, parent_object);
+  QJsonArray wall_data_array;
+  for (std::map<std::string, WallData*>::iterator it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
+    WallData* wall_data = it->second;
+    QJsonObject wall_data_object = wall_data->ToJson();
+    wall_data_array.append(wall_data_object);
+  }
+  object.insert("walls",QJsonValue(wall_data_array));
+
+  QJsonArray corner_data_array;
+  for (std::map<std::string, CornerData*>::iterator it = corner_data_map_.begin(); it != corner_data_map_.end(); it++) {
+    CornerData* corner_data = it->second;
+    QJsonObject corner_data_object = corner_data->ToJson();
+    corner_data_array.append(corner_data_object);
+  }
+  object.insert("corners",QJsonValue(corner_data_array));
+
+  QJsonArray opening_data_array;
+  for (std::map<std::string, OpeningData*>::iterator it = opening_data_map_.begin(); it != opening_data_map_.end(); it++) {
+    OpeningData* opening_data = it->second;
+    QJsonObject opening_data_value = opening_data->ToJson();
+    opening_data_array.append(opening_data_value);
+  }
+  object.insert("openings", QJsonValue(opening_data_array));
+
+  QJsonArray room_data_array;
+  for (std::map<std::string, RoomData*>::iterator it = room_data_map_.begin(); it != room_data_map_.end(); it++) {
+    RoomData* room_data = it->second;
+    QJsonObject room_data_value = room_data->ToJson();
+    room_data_array.append(room_data_value);
+  }
+  object.insert("rooms", QJsonValue(room_data_array));
+
+
+  return QJsonObject();
 }
 
 WallData* DesignData::AddWall(){

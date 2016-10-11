@@ -4,8 +4,21 @@
 #include "Util/PolygonUtil.h"
 #include "PointData.h"
 #include <assert.h>
-std::string RoomData::ToJson() {
-  return " ";
+#include <QJsonArray>
+QJsonObject RoomData::ToJson() {
+  QJsonObject object;
+  QJsonObject parent_object = BaseData::ToJson();
+  AttachJsonObject(object, parent_object);
+  object.insert("func_name", QJsonValue(func_name_.c_str()));
+
+  QJsonArray wall_name_array;
+  for (int i = 0; i < walls_.size(); i++) {
+    WallData* wall_data = walls_[i];
+    QJsonValue wall_data_value(wall_data->name().c_str());
+    wall_name_array.append(wall_data_value);
+  }
+  object.insert("wall_names", QJsonValue(wall_name_array));
+  return QJsonObject();
 }
 
 RoomData::RoomData():BaseData(){

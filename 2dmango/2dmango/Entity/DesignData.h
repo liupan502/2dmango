@@ -23,7 +23,7 @@ class InnerWallGeometry;
 class DesignData :public BaseData {
   public:
     
-    virtual std::string ToJson();
+    virtual QJsonObject ToJson();
 
     virtual ~DesignData();
 

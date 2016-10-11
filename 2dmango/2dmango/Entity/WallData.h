@@ -198,7 +198,7 @@ class WallData :public BaseGeometryData{
 
 	  void UpdateGeneratedLine(LineData line);
 
-    virtual std::string ToJson();
+    virtual QJsonObject ToJson();
 
     std::set<std::string> opening_names();
   private:
@@ -238,7 +238,7 @@ class WallData :public BaseGeometryData{
     //bool own_end_corner_data_;
 
     //bool is_completed_;
-	WALL_DATA_STATUS status_;
+	 WALL_DATA_STATUS status_;
     //QPointF start_corner_position_;
     //QPointF end_corner_position_;
     LineData line_;

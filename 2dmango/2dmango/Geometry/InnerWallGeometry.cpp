@@ -4,6 +4,7 @@
 #include "Util/VectorUtil.h"
 #include <math.h>
 #include "Entity/BaseData.h"
+#include "Entity/OpeningData.h"
 
 InnerWallGeometry::InnerWallGeometry(BaseGeometryData* data):BaseGeometry(data) {
   width_ = 0.0;

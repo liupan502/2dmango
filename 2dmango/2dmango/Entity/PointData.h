@@ -10,7 +10,7 @@ class PointData :public BaseData {
    QPointF point();
    void Reset();
    bool has_point_data();
-   virtual std::string ToJson();
+   virtual QJsonObject ToJson();
   private:
    QPointF point_;
    

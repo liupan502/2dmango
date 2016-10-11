@@ -1,6 +1,7 @@
 #include "WindowGeometry.h"
 #include "PenFactory.h"
 #include "Entity/OpeningData.h"
+#include "Entity/OpeningData.h"
 
 WindowGeometry::WindowGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*)data) {
   width_ = 0.0;

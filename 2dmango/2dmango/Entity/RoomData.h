@@ -26,33 +26,33 @@ class RoomData :public BaseData {
       return func_name_;
     }
 
-    void set_wall_names(std::vector<std::string> wall_names){
+    /*void set_wall_names(std::vector<std::string> wall_names){
       wall_names_ = wall_names;
-    }
+    }*/
 
-    std::vector<std::string> wall_names(){
+   /* std::vector<std::string> wall_names(){
       return wall_names_;
-    }
+    }*/
 
-    void set_corner_names(std::vector<std::string> corner_names){
-      corner_names_ = corner_names;
-    }
+    //void set_corner_names(std::vector<std::string> corner_names){
+    //  corner_names_ = corner_names;
+    //}
 
-    void set_extra_wall_names(std::vector<std::string> wall_names){
-      extra_wall_names_ = wall_names;
-    }
+    //void set_extra_wall_names(std::vector<std::string> wall_names){
+    //  extra_wall_names_ = wall_names;
+    //}
 
-    std::vector<std::string> extra_wall_names(){
-      return extra_wall_names_;
-    }
+    //std::vector<std::string> extra_wall_names(){
+    //  return extra_wall_names_;
+    //}
 
-    void set_extra_corner_names(std::vector<std::string> corner_names){
+    /*void set_extra_corner_names(std::vector<std::string> corner_names){
       extra_corner_names_ = corner_names;
-    }
+    }*/
 
-    std::vector<std::string> extra_corner_names() {
+    /*std::vector<std::string> extra_corner_names() {
       return extra_corner_names_;
-    }
+    }*/
 
     bool CanComputeWallGeometry(std::set<WallData*>excludeWalls);
 
@@ -62,23 +62,23 @@ class RoomData :public BaseData {
 
     std::vector<CornerData*> GetCorners();
 
-    std::string virtual ToJson();
+    QJsonObject virtual ToJson();
 
     QVector2D WallOutsideDirection(WallData* wallData);
   private:
     std::string func_name_;
 
     // 按照逆时针顺序的构成房间轮廓的墙名字
-    std::vector<std::string> wall_names_;
+    //std::vector<std::string> wall_names_;
 
     // 房间内部的墙
-    std::vector<std::string> extra_wall_names_;
+    //std::vector<std::string> extra_wall_names_;
 
     // 按照逆时针顺序构成的房间轮廓的corner 的名字
-    std::vector<std::string> corner_names_;
+    //std::vector<std::string> corner_names_;
 
     // 房间内部的corner
-    std::vector<std::string> extra_corner_names_;
+    //std::vector<std::string> extra_corner_names_;
 
     std::vector<WallData*> walls_;
 

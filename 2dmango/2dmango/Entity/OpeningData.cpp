@@ -64,6 +64,11 @@ void OpeningData::init_geometry(BaseGeometry geometry) {
   set_rotation_z(geometry.rotation());
 }
 
-std::string OpeningData::ToJson() {
-  return "";
+QJsonObject OpeningData::ToJson() {
+  QJsonObject object;
+  QJsonObject parent_object = BaseGeometryData::ToJson();
+  AttachJsonObject(object, parent_object);
+  object.insert("opening_type",QJsonValue((int)(opening_type_)));
+  object.insert("wall_name", QJsonValue(wall_name_.c_str()));
+  return object;
 }

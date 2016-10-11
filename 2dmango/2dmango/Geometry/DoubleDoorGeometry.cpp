@@ -1,6 +1,7 @@
 #include "DoubleDoorGeometry.h"
 #include "const.h"
 #include "PenFactory.h"
+#include "Entity/OpeningData.h"
 
 DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*) data) {
   width_ = 0.0;

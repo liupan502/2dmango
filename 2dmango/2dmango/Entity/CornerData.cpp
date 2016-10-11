@@ -5,13 +5,41 @@
 
 #include "Util/PolygonUtil.h"
 #include "Util/LineUtil.h"
+#include "Util/JsonUtil.h"
+
+#include <QJsonArray>
 
 CornerData::CornerData(): has_position_data_(false){
   generated_point_ = NULL;
 }
 
-std::string CornerData::ToJson() {
-  return " ";
+QJsonObject CornerData::ToJson() {
+  QJsonObject object;
+  QJsonObject parent_object = BaseGeometryData::ToJson();
+  AttachJsonObject(object, parent_object);
+  QJsonArray point_array;
+  for (std::map<std::string, PointData*>::iterator it = point_data_map_.begin(); it != point_data_map_.end(); it++) {
+    PointData* point_data = it->second;
+    QJsonObject point_data_object = point_data->ToJson();
+    point_array.append(point_data_object);
+  }
+  object.insert("points", QJsonValue(point_array));
+
+  QJsonArray wall_name_array;
+  for (std::map<std::string, WallData*>::iterator it = related_wall_map_.begin(); it != related_wall_map_.end(); it++) {
+    std::string wall_name = it->first;
+    QJsonValue wall_name_value(QString(wall_name.c_str()));
+    wall_name_array.append(wall_name_value);
+  }
+  object.insert("wall_names", QJsonValue(wall_name_array));
+  if (generated_point_ == NULL) {
+    object.insert("generated_point_name", QJsonValue(QString("")));
+  }
+  else {
+    object.insert("generated_point_name", QJsonValue(QString(generated_point_->name().c_str())));
+  }
+
+  return object;
 }
 
 bool CornerData::has_position_data(){

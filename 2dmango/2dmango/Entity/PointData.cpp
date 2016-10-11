@@ -27,6 +27,13 @@ void PointData::Reset() {
 bool PointData::has_point_data() {
   return has_point_data_;
 }
-std::string PointData::ToJson() {
-  return "";
+
+QJsonObject PointData::ToJson() {
+  QJsonObject object;
+  QJsonObject parent_object = BaseData::ToJson();
+  object.insert("is_generated", QJsonValue(is_generated_));
+  object.insert("has_point_data", QJsonValue(has_point_data_));
+  QString point_str = PointFToString(point_);
+  object.insert("point", QJsonValue(point_str));
+  return object;
 }

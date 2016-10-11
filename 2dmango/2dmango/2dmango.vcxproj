@@ -155,6 +155,7 @@
     <ClCompile Include="GUI\WorkSpaceWidget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mango2d.cpp" />
+    <ClCompile Include="Util\JsonUtil.cpp" />
     <ClCompile Include="Util\LineUtil.cpp" />
     <ClCompile Include="Util\PolygonUtil.cpp" />
     <ClCompile Include="Util\VectorUtil.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="ActionAdpater\DefaultActionAdapter.h" />
     <ClInclude Include="Entity\ModelData.h" />
     <ClInclude Include="Entity\OpeningData.h" />
+    <ClInclude Include="Util\JsonUtil.h" />
     <ClInclude Include="Util\VectorUtil.h" />
     <CustomBuild Include="ActionAdpater\DrawWallActionAdapter.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

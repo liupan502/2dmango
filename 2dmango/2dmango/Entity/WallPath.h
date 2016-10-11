@@ -19,7 +19,7 @@ public:
   WallPath GetRoom(std::set<WallPath*> excludeWallPaths);
   std::vector < WallData*> walls();
   //bool operator < (const WallPath& other) const;
-  virtual std::string ToJson();
+  virtual QJsonObject ToJson();
   private:
     std::vector<WallData*> walls_;
 };

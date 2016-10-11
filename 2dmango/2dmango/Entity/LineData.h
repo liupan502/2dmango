@@ -41,7 +41,7 @@ class LineData :public BaseData {
 
    bool IsAvailable();
 
-   virtual std::string ToJson();
+   virtual QJsonObject ToJson();
 
    QPointF Intersect(LineData line);
 

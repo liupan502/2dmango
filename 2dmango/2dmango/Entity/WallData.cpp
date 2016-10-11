@@ -4,9 +4,46 @@
 #include "RoomData.h"
 #include "Geometry/WallGeometry.h"
 #include <assert.h>
+#include <QJsonArray>
 
-std::string WallData::ToJson() {
-  return " ";
+QJsonObject WallData::ToJson() {
+  QJsonObject object;
+  QJsonObject parent_object = BaseData::ToJson();
+  AttachJsonObject(object, parent_object);
+  object.insert("wall_data_type", QJsonValue((int)(data_type_)));
+  object.insert("wall_data_status", QJsonValue((int)(status_)));
+
+  QJsonObject line_object = line_.ToJson();
+  object.insert("line", QJsonValue(line_object));
+
+  QJsonObject generated_line_object = generated_line_.ToJson();
+  object.insert("generated_line", QJsonValue(generated_line_object));
+
+  if (start_corner_ == NULL) {
+    object.insert("start_corner_name", QJsonValue(""));
+  }
+  else {
+    object.insert("start_corner_name", QJsonValue(QString(start_corner_->name().c_str())));
+  }
+
+  if (end_corner_ == NULL) {
+    object.insert("end_corner_name", QJsonValue(""));
+  }
+  else {
+    object.insert("end_corner_name", QJsonValue(QString(end_corner_->name().c_str())));
+  }
+
+  QString normal_vector_str = QVector2DToString(normal_vector_);
+  object.insert("normal_vector", QJsonValue(normal_vector_str));
+
+  QJsonArray opening_name_array;
+  for (std::set<std::string>::iterator it = opening_names_.begin(); it != opening_names_.end(); it++) {
+    std::string opening_name = *it;
+    QJsonValue opening_name_value(QString(opening_name.c_str()));
+    opening_name_array.append(opening_name_value);
+  }
+  object.insert("opening_names", QJsonValue(opening_name_array));
+  return object;
 }
 
 bool WallData::IsStartCorner(CornerData* corner){

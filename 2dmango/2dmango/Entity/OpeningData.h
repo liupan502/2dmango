@@ -28,7 +28,7 @@ public:
   OpeningData(WindowGeometry geometry, std::string name = "");
   BaseGeometry* GetGeometry();
 
-  std::string virtual ToJson();
+  QJsonObject virtual ToJson();
 private:
   OPENING_TYPE opening_type_;
   std::string wall_name_;

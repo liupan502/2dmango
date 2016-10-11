@@ -14,8 +14,8 @@ WallPath::WallPath(std::vector<WallData*> walls) {
   walls_ = walls;
 }
 
-std::string WallPath::ToJson() {
-  return "";
+QJsonObject WallPath::ToJson() {
+  return QJsonObject();
 }
 
 std::map<std::string, WallPath*> WallPathFactory::CreateWallPaths(std::map<std::string, WallData*> wall_data_map) {

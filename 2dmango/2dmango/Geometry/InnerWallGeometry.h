@@ -2,8 +2,9 @@
 #define MANGO_2D_INNER_WALL_GEOMETRY_H_
 
 #include "BaseGeometry.h"
-#include "Entity/OpeningData.h"
-
+//
+enum OPENING_TYPE;
+class OpeningData;
 class BaseGeometryData;
 class InnerWallGeometry :public BaseGeometry {
 public:

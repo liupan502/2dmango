@@ -37,8 +37,20 @@ bool LineData::is_independent() {
   return is_independent_;
 }
 
-std::string LineData::ToJson() {
-  return "";
+QJsonObject LineData::ToJson() {
+  QJsonObject object;
+  QJsonObject parent_object = BaseData::ToJson();
+  AttachJsonObject(object, parent_object);
+  object.insert("start_point_name", QJsonValue(start_point_name_.c_str()));
+  object.insert("end_point_name", QJsonValue(end_point_name_.c_str()));
+  object.insert("is_independent", QJsonValue(is_independent_));
+  QPointF start_point = line_.p1();
+  QString start_point_position_str = PointFToString(start_point);
+  object.insert("start_point_position", QJsonValue(start_point_position_str));
+  QPointF end_point = line_.p2();
+  QString end_point_position_str = PointFToString(end_point);
+  object.insert("end_point_position", QJsonValue(end_point_position_str));
+  return QJsonObject();
 }
 
 std::string LineData::find_connected_point(LineData line) {
