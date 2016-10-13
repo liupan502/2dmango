@@ -29,6 +29,7 @@ public:
   BaseGeometry* GetGeometry();
 
   QJsonObject virtual ToJson();
+  virtual void InitWithObject(QJsonObject& jsonObject);
 private:
   OPENING_TYPE opening_type_;
   std::string wall_name_;

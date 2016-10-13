@@ -43,6 +43,8 @@ class LineData :public BaseData {
 
    virtual QJsonObject ToJson();
 
+   virtual void InitWithObject(QJsonObject& jsonObject);
+
    QPointF Intersect(LineData line);
 
  private:

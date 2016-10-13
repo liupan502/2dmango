@@ -11,6 +11,7 @@ class PointData :public BaseData {
    void Reset();
    bool has_point_data();
    virtual QJsonObject ToJson();
+   virtual void InitWithObject(QJsonObject& jsonObject);
   private:
    QPointF point_;
    

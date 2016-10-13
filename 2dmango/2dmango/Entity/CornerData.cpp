@@ -43,6 +43,41 @@ QJsonObject CornerData::ToJson() {
 }
 
 void CornerData::InitWithObject(QJsonObject& jsonObject) {
+  BaseGeometryData::InitWithObject(jsonObject);
+  point_data_map_.clear();
+  if (jsonObject.contains("points")) {
+    QJsonArray point_array = jsonObject["points"].toArray();
+    for (int i = 0; i < point_array.size(); i++) {
+      QJsonObject point_object = point_array[i].toObject();
+      PointData* point_data = new PointData();
+      point_data->InitWithObject(point_object);
+      point_data_map_.insert(make_pair(point_data->name(), point_data));
+    }
+  }
+
+  related_wall_map_.clear();
+  if (jsonObject.contains("wall_names")) {
+    QJsonArray wall_array = jsonObject["wall_names"].toArray();
+    for (int i = 0; i < wall_array.size(); i++) {
+      std::string wall_name = wall_array[i].toString().toStdString();
+      WallData* wall_data = new WallData();
+      wall_data->set_name(wall_name);
+      related_wall_map_.insert(make_pair(wall_name, wall_data));
+    }
+
+    if (jsonObject.contains("generated_point_name")) {
+      std::string generated_point_name = jsonObject["generated_point_name"].toString().toStdString();
+      if (generated_point_name == "") {
+        generated_point_ = NULL;
+      }
+      else {
+        generated_point_ = point_data_map_[generated_point_name];
+      }
+    }
+    else {
+      generated_point_ = NULL;
+    }
+  }
 
 }
 

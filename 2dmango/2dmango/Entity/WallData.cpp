@@ -46,7 +46,57 @@ QJsonObject WallData::ToJson() {
   return object;
 }
 
-void InitWithObject(QJsonObject& jsonObject) {
+void WallData::InitWithObject(QJsonObject& jsonObject) {
+  BaseGeometryData::InitWithObject(jsonObject);
+  
+  if (jsonObject.contains("wall_data_type")) {
+    data_type_ = (WALL_DATA_TYPE)jsonObject["wall_data_type"].toInt();
+  }
+  else {
+    data_type_ = WALL_NO_DATA;
+  }
+
+  if (jsonObject.contains("wall_data_status")) {
+    status_ = (WALL_DATA_STATUS)jsonObject["wall_data_status"].toInt();
+  }
+  else {
+    status_ = NONE_STAUS_WALL_DATA;
+  }
+
+  if (jsonObject.contains("line")) {
+    QJsonObject line_object = jsonObject["line"].toObject();
+    line_.InitWithObject(line_object);
+  }
+
+  if (jsonObject.contains("generated_line")) {
+    QJsonObject generated_line_object = jsonObject["generated_line"].toObject();
+    generated_line_.InitWithObject(generated_line_object);
+  }
+
+  if (jsonObject.contains("start_corner_name")) {
+    std::string start_corner_name = jsonObject["start_corner_name"].toString().toStdString();
+    start_corner_ = new CornerData();
+    start_corner_->set_name(start_corner_name);
+  }
+
+  if (jsonObject.contains("end_corner_name")) {
+    std::string end_corner_name = jsonObject["end_corner_name"].toString().toStdString();
+    end_corner_ = new CornerData();
+    end_corner_->set_name(end_corner_name);
+  }
+
+  if (jsonObject.contains("normal_vector")) {
+    QString normal_vector_str = jsonObject["normal_vector"].toString();
+    normal_vector_ = StringToQVector2D(normal_vector_str);
+  }
+
+  if (jsonObject.contains("opening_names")) {
+    QJsonArray opening_name_array = jsonObject["opening_names"].toArray();
+    for (int i = 0; i < opening_name_array.size(); i++) {
+      std::string opening_name = opening_name_array[i].toString().toStdString();
+      opening_names_.insert(opening_name);
+    }
+  }
 
 }
 

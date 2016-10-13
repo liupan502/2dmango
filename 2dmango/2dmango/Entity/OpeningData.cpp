@@ -74,5 +74,18 @@ QJsonObject OpeningData::ToJson() {
 }
 
 void OpeningData::InitWithObject(QJsonObject& jsonObject) {
+  BaseGeometryData::InitWithObject(jsonObject);
+  if (jsonObject.contains("opening_type")) {
+    opening_type_ = (OPENING_TYPE)jsonObject["opening_type"].toInt();
+  }
+  else {
+    opening_type_ = OPENING_NONE;
+  }
 
+  if (jsonObject.contains("wall_name")) {
+    wall_name_ = jsonObject["wall_name"].toString().toStdString();
+  }
+  else {
+    wall_name_ = "";
+  }
 }

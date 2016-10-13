@@ -20,6 +20,7 @@ date:    2016.9.15
 #include "const.h"
 
 typedef enum WALL_DATA_TYPE {
+  WALL_NO_DATA,
 
   // 存储数据为内墙线的数据
   WALL_INSIDE_DATA,

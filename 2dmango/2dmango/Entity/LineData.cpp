@@ -53,6 +53,44 @@ QJsonObject LineData::ToJson() {
   return QJsonObject();
 }
 
+void LineData::InitWithObject(QJsonObject& jsonObject) {
+  BaseData::InitWithObject(jsonObject);
+  if (jsonObject.contains("start_point_name")) {
+    start_point_name_ = jsonObject["start_point_name"].toString().toStdString();
+  }
+  else {
+    start_point_name_ = "";
+  }
+
+  if (jsonObject.contains("end_point_name")) {
+    end_point_name_ = jsonObject["end_point_name"].toString().toStdString();
+  }
+  else {
+    end_point_name_ = "";
+  }
+
+  if (jsonObject.contains("is_independent")) {
+    is_independent_ = jsonObject["is_independent"].toBool();
+  }
+  else {
+    is_independent_ = false;
+  }
+
+  QPointF start_point;
+  if (jsonObject.contains("start_point_position")) {
+    QString start_point_str = jsonObject["start_point_position"].toString();
+    start_point = StringToPointF(start_point_str);
+  }
+
+  QPointF end_point;
+  if (jsonObject.contains("end_point_position")) {
+    QString end_point_str = jsonObject["end_point_position"].toString();
+    end_point = StringToPointF(end_point_str);
+  }
+
+  line_ = QLineF(start_point, end_point);
+}
+
 std::string LineData::find_connected_point(LineData line) {
   std::string connected_point_name = "";
   if (DoCotainPoint(line.start_point_name())) {

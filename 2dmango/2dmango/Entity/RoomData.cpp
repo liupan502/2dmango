@@ -22,7 +22,24 @@ QJsonObject RoomData::ToJson() {
 }
 
 void RoomData::InitWithObject(QJsonObject& jsonObject) {
+  if (jsonObject.contains("func_name")) {
+    func_name_ = jsonObject["func_name"].toString().toStdString();
+  }
+  else {
+    func_name_ = "";
+  }
 
+  walls_.clear();
+  QJsonArray wall_name_array;
+  if (jsonObject.contains("wall_names")) {
+    wall_name_array = jsonObject["wall_names"].toArray();
+    for (int i = 0; i < wall_name_array.size(); i++) {
+      std::string  wall_name_value = wall_name_array[i].toString().toStdString();
+      WallData* wall_data = new WallData();
+      wall_data->set_name(wall_name_value);
+      walls_.push_back(wall_data);
+    }
+  }
 }
 
 RoomData::RoomData():BaseData(){

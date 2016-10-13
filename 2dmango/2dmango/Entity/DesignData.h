@@ -25,6 +25,8 @@ class DesignData :public BaseData {
     
     virtual QJsonObject ToJson();
 
+    virtual void InitWithObject(QJsonObject& jsonObejct);
+
     virtual ~DesignData();
 
     WallData* AddWall();

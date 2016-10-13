@@ -45,6 +45,50 @@ QJsonObject DesignData::ToJson(){
   return QJsonObject();
 }
 
+void DesignData::InitWithObject(QJsonObject& jsonObject) {
+  BaseData::InitWithObject(jsonObject);
+
+  if (jsonObject.contains("walls")) {
+    QJsonArray wall_data_array = jsonObject["walls"].toArray();
+    for (int i = 0; i < wall_data_array.size(); i++) {
+      QJsonObject wall_object = wall_data_array[i].toObject();
+      WallData* wall_data = new WallData();
+      wall_data->InitWithObject(wall_object);
+      wall_data_map_.insert(make_pair(wall_data->name(), wall_data));
+    }
+  }
+
+  if (jsonObject.contains("corners")) {
+    QJsonArray corner_data_array = jsonObject["corners"].toArray();
+    for (int i = 0; i < corner_data_array.size(); i++) {
+      QJsonObject corner_object = corner_data_array[i].toObject();
+      CornerData* corner_data = new CornerData();
+      corner_data->InitWithObject(corner_object);
+      corner_data_map_.insert(make_pair(corner_data->name(), corner_data));
+    }
+  }
+
+  if (jsonObject.contains("openings")) {
+    QJsonArray opening_data_array = jsonObject["openings"].toArray();
+    for (int i = 0; i < opening_data_array.size(); i++) {
+      QJsonObject opening_object = opening_data_array[i].toObject();
+      OpeningData* opening_data = new OpeningData();
+      opening_data->InitWithObject(opening_object);
+      opening_data_map_.insert(make_pair(opening_data->name(), opening_data));
+    }
+
+    if (jsonObject.contains("rooms")) {
+      QJsonArray room_data_array = jsonObject["rooms"].toArray();
+      for (int i = 0; i < room_data_array.size(); i++) {
+        QJsonObject room_object = room_data_array[i].toObject();
+        RoomData* room_data = new RoomData();
+        room_data->InitWithObject(room_object);
+        room_data_map_.insert(make_pair(room_data->name(), room_data));
+      }
+    }
+  }
+}
+
 WallData* DesignData::AddWall(){
   std::string new_wall_name = generte_wall_name();
   WallData* new_wall = new WallData() ;

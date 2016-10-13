@@ -39,5 +39,26 @@ QJsonObject PointData::ToJson() {
 }
 
 void PointData::InitWithObject(QJsonObject& jsonObject) {
+  BaseData::InitWithObject(jsonObject);
+  if (jsonObject.contains("is_generated")) {
+    is_generated_ = jsonObject["is_generated"].toBool();
+  }
+  else {
+    is_generated_ = false;
+  }
 
+  if (jsonObject.contains("has_point_data")) {
+    has_point_data_ = jsonObject["has_point_data"].toBool();
+  }
+  else {
+    has_point_data_ = false;
+  }
+
+  if (jsonObject.contains("point")) {
+    QString point_str = jsonObject["point"].toString();
+    point_ = StringToPointF(point_str);
+  }
+  else {
+    point_ = QPointF();
+  }
 }
