@@ -42,6 +42,21 @@ void RoomData::InitWithObject(QJsonObject& jsonObject) {
   }
 }
 
+void RoomData::UpdateWallDatas(std::map<std::string, WallData*>& wallDataMap) {
+  for (int i = 0; i < walls_.size(); i++) {
+    WallData* wall = walls_[i];
+    std::string wall_name = wall->name();
+    std::map<std::string, WallData*>::iterator it = wallDataMap.find(wall_name);
+    if (it != wallDataMap.end()) {
+      WallData* tmp_wall = it->second;
+      if (wall != tmp_wall) {
+        delete wall;
+        walls_[i] = tmp_wall;
+      }
+    }
+  }
+}
+
 RoomData::RoomData():BaseData(){
   
 }
@@ -74,8 +89,6 @@ bool RoomData::CanComputeWallGeometry(std::set<WallData*>excludeWalls) {
   }
   return result;
 }
-
-
 
 CornerData* RoomData::find_previous_corner(int currentIndex) {
   int size = walls_.size();
@@ -269,3 +282,4 @@ QVector2D RoomData::WallOutsideDirection(WallData* wallData) {
 
   return outside_direction;
 }
+

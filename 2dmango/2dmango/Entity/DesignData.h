@@ -64,6 +64,8 @@ class DesignData :public BaseData {
 
     void clear_rooms();    
 
+    void update_design_data();
+
     QPointF compute_connected_point(WallData* wall, CornerData* corner, QPointF point);
 
     bool is_valid_connected_point(std::string pointName,std::string wallName, std::set<std::string>cornersSet);

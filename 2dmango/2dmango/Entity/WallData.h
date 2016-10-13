@@ -203,6 +203,8 @@ class WallData :public BaseGeometryData{
 
     virtual void InitWithObject(QJsonObject& jsonObject);
 
+    void UpdateCorners(std::map<std::string, CornerData*>& cornerDataMap);
+
     std::set<std::string> opening_names();
   private:
     
@@ -222,6 +224,8 @@ class WallData :public BaseGeometryData{
 
     PointData* compute_connected_position(CornerData* corner,WallData* wall,std::string name1,std::string generateName1,
                                                                                std::string name2,std::string generateName2);
+
+    void update_corner_data(CornerData** cornerData, std::map<std::string, CornerData*>& cornerDataMap);
 
 	//int compare_wall_path(std::vector<WallData*> path1, std::vector <WallData*> path2);
 

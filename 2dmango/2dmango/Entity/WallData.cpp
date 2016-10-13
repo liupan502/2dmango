@@ -100,6 +100,31 @@ void WallData::InitWithObject(QJsonObject& jsonObject) {
 
 }
 
+void WallData::update_corner_data(CornerData** cornerData, std::map<std::string, CornerData*>& cornerDataMap) {
+  if (cornerData == NULL || (*cornerData) == NULL) {
+    return;
+  }
+  std::string corner_name = (*cornerData)->name();
+  std::map<std::string, CornerData*>::iterator it = cornerDataMap.find(corner_name);
+  if (it != cornerDataMap.end()) {
+    CornerData* tmp_corner = it->second;
+    if (tmp_corner != (*cornerData)) {
+      delete (*cornerData);
+      (*cornerData) = tmp_corner;
+    }
+  }
+}
+
+void WallData::UpdateCorners(std::map<std::string, CornerData*>& cornerDataMap) {
+  if (start_corner_ != NULL) {
+    update_corner_data(&start_corner_, cornerDataMap);
+  }
+
+  if (end_corner_ != NULL) {
+    update_corner_data(&end_corner_, cornerDataMap);
+  }
+}
+
 bool WallData::IsStartCorner(CornerData* corner){
   if (corner == NULL) {
     return false;

@@ -89,6 +89,20 @@ void DesignData::InitWithObject(QJsonObject& jsonObject) {
   }
 }
 
+void DesignData::update_design_data() {
+  for (std::map<std::string, CornerData*>::iterator it = corner_data_map_.begin(); it != corner_data_map_.end(); it++) {
+    it->second->UpdateRelatedWalls(wall_data_map_);
+  }
+
+  for (std::map<std::string, WallData*>::iterator it = wall_data_map_.begin(); it != wall_data_map_.end(); it++) {
+    it->second->UpdateCorners(corner_data_map_);
+  }
+
+  for (std::map<std::string, RoomData*>::iterator it = room_data_map_.begin(); it != room_data_map_.end(); it++) {
+    it->second->UpdateWallDatas(wall_data_map_);
+  }
+}
+
 WallData* DesignData::AddWall(){
   std::string new_wall_name = generte_wall_name();
   WallData* new_wall = new WallData() ;
