@@ -16,9 +16,14 @@ typedef struct DesignUpdateInfo {
 } DesignUpdateInfo;
 
 class DesignUpdater :public QObject {
+
+public:
+  DesignUpdateInfo* GetUpdateInfo();
   Q_OBJECT
     public slots:
   void UpdateDesignData();
+
+
 };
 
 const std::string  INDEX_NAME = "INDEX_NAME";

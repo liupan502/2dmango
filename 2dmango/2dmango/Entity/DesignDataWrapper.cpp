@@ -3,6 +3,8 @@
 #include "Geometry/SingleDoorGeometry.h"
 #include "Geometry/MoveDoorGeometry.h"
 #include "Geometry/WindowGeometry.h"
+#include <QJsonObject>
+#include <QJsonDocument>
 
 DesignDataWrapper* DesignDataWrapper::instance = 0;
 
@@ -10,6 +12,7 @@ DesignDataWrapper::DesignDataWrapper(){
   design_data_ = new DesignData();
   hot_region_ = HotRegionGeometry(QPointF(100.0,100.0),50,50);
   current_selected_geometry_ = NULL;
+  design_data_id_ = 0;
 }
 
 void DesignDataWrapper::Draw(QPainter* painter){
@@ -196,3 +199,17 @@ WallData* DesignDataWrapper::FindWallWithInnerWallGeometry(InnerWallGeometry* ge
   return wall;
 }
 
+void DesignDataWrapper::AddDesignDataId() {
+  design_data_id_++;
+}
+
+int DesignDataWrapper::DesignDataId() {
+  return design_data_id_;
+}
+
+std::string DesignDataWrapper::GetDesignData() {
+  QJsonObject object = design_data_->ToJson();
+  QJsonDocument doc(object);
+  std::string result =  doc.toJson().toStdString();
+  return result;
+}

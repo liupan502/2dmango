@@ -42,7 +42,7 @@ QJsonObject DesignData::ToJson(){
   object.insert("rooms", QJsonValue(room_data_array));
 
 
-  return QJsonObject();
+  return object;
 }
 
 void DesignData::InitWithObject(QJsonObject& jsonObject) {

@@ -93,7 +93,8 @@ void DrawWallActionAdapter::left_mouse_button_release(QMouseEvent* event){
 void DrawWallActionAdapter::right_mouse_button_release(QMouseEvent* event){
   bdrawing_ = false;
   tmp_wall_ = NULL;
-  DesignDataWrapper* ptr = DesignDataWrapper::GetInstance();
+  DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  instance->AddDesignDataId();
   previous_corner_ = NULL;
   current_corner_ = NULL;
   draw_status_ = draw_ready;
@@ -143,6 +144,7 @@ void DrawWallActionAdapter::initilizing_mouse_move(QMouseEvent* event) {
     }
   }
   else {
+    DesignDataWrapper::GetInstance()->AddDesignDataId();
     tmp_wall_ = DesignDataWrapper::GetInstance()->AddWall();
 	  tmp_wall_->set_status(DRAWING_WALL_DATA);
     if (previous_corner_ == NULL) {
@@ -154,13 +156,9 @@ void DrawWallActionAdapter::initilizing_mouse_move(QMouseEvent* event) {
     current_point_ = pos;
     tmp_wall_->set_start_corner(previous_corner_);
     
-    tmp_wall_->set_start_corner_position(previous_point_);
-    
-    tmp_wall_->set_end_corner(current_corner_);
-    //tmp_wall_->set_end_corner_name(current_corner_->name());
-    tmp_wall_->set_end_corner_position(QPointF(pos));
-    //tmp_wall_->set_own_end_corner_data(true);
-    //tmp_wall_->set_end_corner(current_corner_);
+    tmp_wall_->set_start_corner_position(previous_point_);    
+    tmp_wall_->set_end_corner(current_corner_);    
+    tmp_wall_->set_end_corner_position(QPointF(pos));    
   }
 }
 
@@ -218,10 +216,7 @@ void DrawWallActionAdapter::ready_left_mouse_press(QMouseEvent* event) {
   previous_point_ = current_point_;
   QPointF pos = start_point_.isNull()?event->pos(): start_point_; 
   
-  if (current_corner_ == NULL) {
-    if (!start_point_.isNull()) {
-      int a = 0;
-    }
+  if (current_corner_ == NULL) {    
     if (!instance->IsEmpty() && start_point_.isNull()) {
       return;
     }
@@ -248,15 +243,14 @@ void DrawWallActionAdapter::ready_left_mouse_press(QMouseEvent* event) {
         return;
       }
 		  instance->HotRegionMoveTo(event->pos());
-		  instance->ShowHotRegion(true);
+		  instance->ShowHotRegion(true); 
+      instance->AddDesignDataId();
       draw_status_ = draw_initilizing;
 	  }
-	  else {
-      if (!is_first_room_) {
-        int a = 0;
-      }
+	  else {      
 		  instance->HotRegionMoveTo(event->pos());
 		  instance->ShowHotRegion(false);
+      instance->AddDesignDataId();
 		  instance->UpdateRoomInfo();
 		  instance->UpdateGeometry();
       current_corner_ = NULL;
@@ -297,7 +291,8 @@ void DrawWallActionAdapter::initilizing_left_mouse_release(QMouseEvent* event) {
 }
 
 void DrawWallActionAdapter::drawing_left_mouse_release(QMouseEvent* event) {
-  ;
+  //DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  //instance->AddDesignDataId();
 }
 
 QPointF DrawWallActionAdapter::compute_right_position(WallData* wall, QPointF position) {

@@ -59,6 +59,12 @@ class DesignDataWrapper {
 
     void AddCurrentData();
 
+    void AddDesignDataId();
+
+    int DesignDataId();
+
+    std::string GetDesignData();
+
     BaseGeometry* current_selected_geometry();
 
     bool GetClosestWall(QPointF position,qreal& distance,WallGeometry& wallGeometry);
@@ -74,6 +80,7 @@ class DesignDataWrapper {
    static DesignDataWrapper *instance ;
    static const int cost = 0;
    DesignData* design_data_;
+   int design_data_id_;
    std::vector<WallGeometry> wall_geometrys_;
    HotRegionGeometry hot_region_;
 

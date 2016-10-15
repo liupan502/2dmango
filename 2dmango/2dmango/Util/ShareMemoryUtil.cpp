@@ -1,7 +1,9 @@
 #include "ShareMemoryUtil.h"
 #include <windows.h>
 #include <wchar.h>
+#include "Entity/DesignDataWrapper.h"
 #include "CharUtil.h"
+#include <QJsonObject>
 
 void SetupTimer(DesignUpdater* updater) {
   QTimer timer;
@@ -43,6 +45,60 @@ void ShareMemoryEnd() {
 }
 
 void DesignUpdater::UpdateDesignData() {
-  int a = 0;
-  int b = 0;
+  DesignUpdateInfo* info = GetUpdateInfo();
+  DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  int id = instance->DesignDataId();
+  if (id == info->id) {
+    return;
+  }
+  else if (id > info->id) {
+    std::string json_str = instance->GetDesignData();    
+    
+    std::string buffer_name = "";
+    if (info->index == 1) {
+      buffer_name = SHARE_BUFFER_1;
+    }
+    else {
+      buffer_name = SHARE_BUFFER_2;
+    }
+
+    wchar_t tmp[256];
+    CharToWChar(buffer_name.c_str(), tmp);
+    LPVOID h_buffer_map = ::OpenFileMapping(FILE_MAP_ALL_ACCESS, 0, tmp);
+    if (h_buffer_map != NULL) {
+      LPVOID pBuffer = ::MapViewOfFile(h_buffer_map, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+      int data_size = json_str.length();       
+      wchar_t* data_buffer = (wchar_t*)malloc(sizeof(wchar_t)*(data_size+1));      
+      CharToWChar(json_str.c_str(), data_buffer);
+      wmemcpy((wchar_t*)pBuffer,data_buffer,data_size+1);      
+      free(data_buffer);      
+    }
+
+    info->id = id;
+    info->updater = 0;
+    if (info->index == 1) {
+      info->index = 2;
+    }
+    else {
+      info->index = 1;
+    }
+
+
+
+  }
+  else {
+
+  }
+}
+
+DesignUpdateInfo* DesignUpdater::GetUpdateInfo() {
+  DesignUpdateInfo* info = NULL;
+  wchar_t tmp[256];
+  CharToWChar(INDEX_NAME.c_str(), tmp);
+  LPVOID h_map = ::OpenFileMapping(FILE_MAP_ALL_ACCESS, 0, tmp);
+  if (h_map != NULL) {
+    LPVOID pBuffer = ::MapViewOfFile(h_map, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+    info = (DesignUpdateInfo*)pBuffer;
+  }
+  return info;
 }
