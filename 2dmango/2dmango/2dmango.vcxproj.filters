@@ -206,6 +206,18 @@
     <ClCompile Include="Util\JsonUtil.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Util\ShareMemoryUtil.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\CharUtil.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ShareMemoryUtil.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ShareMemoryUtil.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -231,6 +243,9 @@
     </CustomBuild>
     <CustomBuild Include="ActionAdpater\DrawWallActionAdapter.h">
       <Filter>ActionAdapter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Util\ShareMemoryUtil.h">
+      <Filter>Util</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +340,9 @@
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="Util\JsonUtil.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\CharUtil.h">
       <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
