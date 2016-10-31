@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+class InnerWallGeometry;
+
 class DesignDataWrapper {
 
   public:
@@ -82,6 +84,7 @@ class DesignDataWrapper {
    DesignData* design_data_;
    int design_data_id_;
    std::vector<WallGeometry> wall_geometrys_;
+   std::vector<InnerWallGeometry*> inner_wall_geometrys_;
    HotRegionGeometry hot_region_;
 
    std::vector<AuxiliaryLineGeometry> auxiliary_lines_;

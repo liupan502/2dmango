@@ -53,6 +53,7 @@ class WallData :public BaseGeometryData{
      normal_vector_ = QVector2D();
      set_width(DEFAULT_WALL_WIDTH);
 	   status_ = NONE_STAUS_WALL_DATA;
+     data_type_ = WALL_INSIDE_DATA;
    }
 
     void AddOpening(std::string opening_name);

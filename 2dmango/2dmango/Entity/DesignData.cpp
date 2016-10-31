@@ -5,6 +5,11 @@
 #include "WallPath.h"
 #include <assert.h>
 #include <QJsonArray>
+#include "Geometry/InnerWallGeometry.h"
+#include "Geometry/SingleDoorGeometry.h"
+#include "Geometry/DoubleDoorGeometry.h"
+#include "Geometry/MoveDoorGeometry.h"
+#include "Geometry/WindowGeometry.h"
 QJsonObject DesignData::ToJson(){
   QJsonObject object;
   QJsonObject parent_object = BaseData::ToJson();
@@ -555,6 +560,39 @@ DesignData::~DesignData() {
     it->second = NULL;
   }
 
+}
+
+std::vector<InnerWallGeometry*> DesignData::GetInnerWallGeometry() {
+  
+  std::vector<InnerWallGeometry*> result;
+  std::map<std::string, OpeningData*>::iterator it;
+  for (it = opening_data_map_.begin(); it != opening_data_map_.end(); it++) {
+    OpeningData* opening = it->second;
+    float width = opening->width(); 
+    float length = opening->length();
+    InnerWallGeometry* geo = NULL;
+    switch (opening->type()){
+      case OPENING_SINGLE_DOOR:
+        geo = new SingleDoorGeometry(width, length,opening);
+        break;
+      case OPENING_DOUBLE_DOOR:
+        geo = new DoubleDoorGeometry(width, length, opening);
+        break;
+      case OPENING_MOVE_DOOR:
+        geo = new MoveDoorGeometry(width, length, opening);
+        break;
+      case OPENING_WINDOW:
+        geo = new WindowGeometry(width, length, opening);
+        break;
+      default:
+        break;     
+    }
+    if (geo != NULL) {
+      result.push_back(geo);
+    }
+  }
+
+  return result;
 }
 
 

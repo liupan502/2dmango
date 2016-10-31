@@ -30,10 +30,7 @@ class LineData :public BaseData {
 
    bool IsEndPoint(std::string pointName);
 
-   //void set_point(QPointF point);
-
-   //void set_vec(QVector2D vec);
-    void set_line(QLineF line);
+   void set_line(QLineF line);
 
    void Reset();
 

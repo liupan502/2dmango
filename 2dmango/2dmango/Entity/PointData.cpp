@@ -31,6 +31,7 @@ bool PointData::has_point_data() {
 QJsonObject PointData::ToJson() {
   QJsonObject object;
   QJsonObject parent_object = BaseData::ToJson();
+  AttachJsonObject(object, parent_object);
   object.insert("is_generated", QJsonValue(is_generated_));
   object.insert("has_point_data", QJsonValue(has_point_data_));
   QString point_str = PointFToString(point_);

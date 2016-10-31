@@ -27,6 +27,7 @@ public:
   OpeningData(MoveDoorGeometry geometry, std::string name = "");
   OpeningData(WindowGeometry geometry, std::string name = "");
   BaseGeometry* GetGeometry();
+  OPENING_TYPE type();
 
   QJsonObject virtual ToJson();
   virtual void InitWithObject(QJsonObject& jsonObject);

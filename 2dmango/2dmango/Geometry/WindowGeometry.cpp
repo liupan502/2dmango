@@ -3,18 +3,38 @@
 #include "Entity/OpeningData.h"
 #include "Entity/OpeningData.h"
 
-WindowGeometry::WindowGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*)data) {
-  width_ = 0.0;
-  length_ = 0.0;
-  opening_data_ = data;
+WindowGeometry::WindowGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*)openingData) {
+  if (openingData != NULL) {
+    width_ = openingData->width();
+    length_ = openingData->length();
+    //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    //MoveTo(position);
+  }
+  else {
+    width_ = 0.0;
+    length_ = 0.0;
+  }
+  opening_data_ = openingData;
   opening_type_ = OPENING_WINDOW;
 }
 
-WindowGeometry::WindowGeometry(float width, float length,OpeningData* data) : InnerWallGeometry(width,length, (BaseGeometryData*)data) {
+WindowGeometry::WindowGeometry(float width, float length,OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
+  
+  if (openingData != NULL) {
+    width_ = openingData->width();
+    length_ = openingData->length();
+    //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    //MoveTo(position);
+  }
+  else {
+    width_ = width;
+    length_ = length;
+  }
+  
   width_ = width;
   length_ = length;
   opening_type_ = OPENING_WINDOW;
-  opening_data_ = data;
+  opening_data_ = openingData;
   QPolygonF path1_polygon = build_path1_polygon();
   path1_ = new PolygonPath(path1_polygon);
   path1_->set_pen(PenFactory::pen1());
@@ -25,6 +45,11 @@ WindowGeometry::WindowGeometry(float width, float length,OpeningData* data) : In
   path2_->set_pen(PenFactory::pen1());
   paths_.push_back(path2_);
 
+
+  if (openingData != NULL) {
+    QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    MoveTo(position);
+  }
   
 }
 

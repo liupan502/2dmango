@@ -18,7 +18,7 @@ QJsonObject RoomData::ToJson() {
     wall_name_array.append(wall_data_value);
   }
   object.insert("wall_names", QJsonValue(wall_name_array));
-  return QJsonObject();
+  return object;
 }
 
 void RoomData::InitWithObject(QJsonObject& jsonObject) {

@@ -15,9 +15,11 @@ void DefaultActionAdapter::OnMouseRelease(QMouseEvent* event) {
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
   BaseGeometry* current_selected_geometry = instance->current_selected_geometry();
   QPointF position = QPointF(event->pos());
-  if (current_selected_geometry != NULL) {    
-    instance->AddGeometry(NULL);
+  if (current_selected_geometry != NULL) {   
     instance->AddCurrentData();
+    instance->AddGeometry(NULL);
+    instance->UpdateGeometry();
+    instance->AddDesignDataId();
   }
 }
 

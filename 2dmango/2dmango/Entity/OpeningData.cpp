@@ -89,3 +89,7 @@ void OpeningData::InitWithObject(QJsonObject& jsonObject) {
     wall_name_ = "";
   }
 }
+
+OPENING_TYPE OpeningData::type() {
+  return opening_type_;
+}

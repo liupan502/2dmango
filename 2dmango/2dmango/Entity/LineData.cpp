@@ -50,7 +50,7 @@ QJsonObject LineData::ToJson() {
   QPointF end_point = line_.p2();
   QString end_point_position_str = PointFToString(end_point);
   object.insert("end_point_position", QJsonValue(end_point_position_str));
-  return QJsonObject();
+  return object;
 }
 
 void LineData::InitWithObject(QJsonObject& jsonObject) {

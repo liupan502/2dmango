@@ -1,17 +1,33 @@
 #include "MoveDoorGeometry.h"
 #include "PenFactory.h"
 #include "Entity/OpeningData.h"
-MoveDoorGeometry::MoveDoorGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*) data) {
-  width_ = 0.0;
-  length_ = 0.0;
-  opening_data_ = data;
+MoveDoorGeometry::MoveDoorGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*) openingData) {
+  if (openingData != NULL) {
+    width_ = openingData->width();
+    length_ = openingData->length();
+    //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    //MoveTo(position);
+  }
+  else{
+    width_ = 0.0;
+    length_ = 0.0;
+  }
+  
+  
+  opening_data_ = openingData;
   opening_type_ = OPENING_MOVE_DOOR;
 }
 
-MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* data) : InnerWallGeometry(width,length, (BaseGeometryData*)data) {
-  //width_ = width;
-  //length_ = length;
-  opening_data_ = data;
+MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
+
+  if (openingData != NULL) {
+    width_ = openingData->width();
+    length_ = openingData->length();
+    //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    //MoveTo(position);
+  } 
+
+  opening_data_ = openingData;
   opening_type_ = OPENING_MOVE_DOOR;
 
   QPolygonF path1_polygon = build_path1_polygon();
@@ -28,6 +44,11 @@ MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* data)
   path3_ = new PolygonPath(path3_polygon);
   path3_->set_pen(PenFactory::pen1());
   paths_.push_back(path3_);
+
+  if (openingData != NULL) {
+    QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    MoveTo(position);
+  }
   
 }
 

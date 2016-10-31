@@ -48,7 +48,7 @@ void DesignUpdater::UpdateDesignData() {
   DesignUpdateInfo* info = GetUpdateInfo();
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
   int id = instance->DesignDataId();
-  if (id == info->id) {
+   if (id == info->id) {
     return;
   }
   else if (id > info->id) {

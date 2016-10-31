@@ -24,9 +24,15 @@ void DesignDataWrapper::Draw(QPainter* painter){
     wall_geometrys_[i].Draw(painter);
   }
 
+  for (int i = 0; i < inner_wall_geometrys_.size(); i++) {
+    inner_wall_geometrys_[i]->Draw(painter);
+  }
+
   if (current_selected_geometry_ != NULL) {
     current_selected_geometry_->Draw(painter);
   }
+
+
 }
 
 DesignDataWrapper*  DesignDataWrapper::GetInstance(){
@@ -55,6 +61,11 @@ WallData* DesignDataWrapper::AddWall(){
 
 void DesignDataWrapper::UpdateGeometry() {
   wall_geometrys_ = design_data_->ComputeWallGeometrys();
+  for (int i = 0; i < inner_wall_geometrys_.size(); i++) {
+    delete inner_wall_geometrys_[i];
+  }
+  inner_wall_geometrys_.clear();
+  inner_wall_geometrys_ = design_data_->GetInnerWallGeometry();
 }
 
 bool DesignDataWrapper::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& points) {

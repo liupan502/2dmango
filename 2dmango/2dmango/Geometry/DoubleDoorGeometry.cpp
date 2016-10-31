@@ -3,18 +3,37 @@
 #include "PenFactory.h"
 #include "Entity/OpeningData.h"
 
-DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* data) :InnerWallGeometry((BaseGeometryData*) data) {
-  width_ = 0.0;
-  length_ = 0.0;
-  opening_data_ = data;
+DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*) openingData) {
+  if (openingData != NULL) {
+    width_ = openingData->width();
+    length_ = openingData->length();
+    //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    //MoveTo(position);
+  }
+  else {
+    width_ = 0.0;
+    length_ = 0.0;
+  }
+
+
+  
+  opening_data_ = openingData;
   opening_type_ = OPENING_DOUBLE_DOOR;
 };
 
-DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* data): InnerWallGeometry(width,length, (BaseGeometryData*)data) {
+DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* openingData): InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
   //width_ = width;
   //length_ = length;
 
-  opening_data_ = data;
+  if (openingData != NULL) {
+    width_ = openingData->width();
+    length_ = openingData->length();
+    //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    //MoveTo(position);
+  }
+  
+
+  opening_data_ = openingData;
   opening_type_ = OPENING_DOUBLE_DOOR;
   QPolygonF path1_polygon = build_path1_polygon();
   path1_ = new PolygonPath(path1_polygon);
@@ -60,6 +79,11 @@ DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* d
   contianer_path2_->AddSubPath(path8_);
   contianer_path2_->set_pen(PenFactory::pen1());
   paths_.push_back(contianer_path2_);
+
+  if (openingData != NULL) {
+    QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    MoveTo(position);
+  }
 
 }
 

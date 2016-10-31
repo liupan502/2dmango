@@ -3,8 +3,17 @@
 #include "Entity/OpeningData.h"
 
 SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*)openingData) {
-  width_ = 0.0;
-  length_ = 0.0;
+  
+  if (openingData != NULL) {
+    width_ = openingData->width();
+    length_ = openingData->length();
+    //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    //MoveTo(position);
+  }
+  else {
+    width_ = 0.0;
+    length_ = 0.0;    
+  }
   opening_data_ = openingData;
   opening_type_ = OPENING_SINGLE_DOOR;
 }
@@ -30,11 +39,20 @@ SingleDoorGeometry::~SingleDoorGeometry(){
 }
 
 SingleDoorGeometry::SingleDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
-  //width_ = width;
-  //length_ = length;
+  
+  if (openingData != NULL) {
+    width_ = openingData->width();
+    length_ = openingData->length();
+    
+  } 
+
   opening_data_ = openingData;
   opening_type_ = OPENING_SINGLE_DOOR;
   build_geometry(width, length);
+  if (openingData != NULL) {
+    QPointF position = QPointF(openingData->position().x(), openingData->position().y());
+    MoveTo(position);
+  }
 }
 
 void SingleDoorGeometry::build_geometry(float width, float length) {

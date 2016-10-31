@@ -12,9 +12,11 @@ class BaseData {
     BaseData() {
       name_ = "";
     }
+
     BaseData(std::string name) {
       name_ = name;
     }
+
     void set_name(std::string name){
       name_ = name;
     }
@@ -37,6 +39,7 @@ class BaseData {
         name_ = "";
       }
     }
+
   private:
     std::string name_;
 };

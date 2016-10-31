@@ -12,9 +12,12 @@
 #include "Geometry/WallGeometry.h"
 #include <QVector2d>
 
+
 #include <vector>
 #include <map>
 #include <set>
+
+class InnerWallGeometry;
 //const int MAX_WALL_NUM = 10000;
 //const int MAX_CORNER_NUM = 10000;
 //const int MAX_ROOM_NUM = 1000;
@@ -36,6 +39,8 @@ class DesignData :public BaseData {
     RoomData* AddRoom();
 
     std::vector<WallGeometry> ComputeWallGeometrys();
+
+    std::vector<InnerWallGeometry*> GetInnerWallGeometry();
 
     bool FindConnectedPoints(QPointF currentPoint, std::string wallName,std::vector<QPointF>& points);
 
