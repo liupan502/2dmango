@@ -6,6 +6,10 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
+#include <iostream>  
+#include <iomanip>  
+#include <fstream>  
+
 DesignDataWrapper* DesignDataWrapper::instance = 0;
 
 DesignDataWrapper::DesignDataWrapper(){
@@ -222,5 +226,9 @@ std::string DesignDataWrapper::GetDesignData() {
   QJsonObject object = design_data_->ToJson();
   QJsonDocument doc(object);
   std::string result =  doc.toJson().toStdString();
+
+  //std::ofstream outfile("d://b.txt");
+  //outfile << result << std::endl;
+  //outfile.close();
   return result;
 }

@@ -56,10 +56,10 @@ void DesignUpdater::UpdateDesignData() {
     
     std::string buffer_name = "";
     if (info->index == 1) {
-      buffer_name = SHARE_BUFFER_1;
+      buffer_name = SHARE_BUFFER_2;
     }
     else {
-      buffer_name = SHARE_BUFFER_2;
+      buffer_name = SHARE_BUFFER_1;
     }
 
     wchar_t tmp[256];
