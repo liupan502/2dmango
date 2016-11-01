@@ -227,8 +227,8 @@ std::string DesignDataWrapper::GetDesignData() {
   QJsonDocument doc(object);
   std::string result =  doc.toJson().toStdString();
 
-  //std::ofstream outfile("d://b.txt");
-  //outfile << result << std::endl;
-  //outfile.close();
+  std::ofstream outfile("d://b.txt");
+  outfile << result << std::endl;
+  outfile.close();
   return result;
 }

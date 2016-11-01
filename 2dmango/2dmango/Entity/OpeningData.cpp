@@ -4,6 +4,7 @@
 #include "Geometry/MoveDoorGeometry.h"
 #include "Geometry/WindowGeometry.h"
 #include "Geometry/BaseGeometry.h"
+#include "const.h"
 
 OpeningData::OpeningData(std::string name):BaseGeometryData(){
   set_name(name);
@@ -13,24 +14,30 @@ OpeningData::OpeningData(SingleDoorGeometry geometry,std::string name): BaseGeom
   set_name(name);
   opening_type_ = OPENING_SINGLE_DOOR;
   init_geometry(geometry);
+  set_height(DEFAULT_DOOR_HEIGHT);
+  //position_.setZ(50);
 }
 
 OpeningData::OpeningData(DoubleDoorGeometry geometry, std::string name) :BaseGeometryData() {
   set_name(name);
   opening_type_ = OPENING_DOUBLE_DOOR;
   init_geometry(geometry);
+  set_height(DEFAULT_DOOR_HEIGHT);
 }
 
 OpeningData::OpeningData(MoveDoorGeometry geometry, std::string name) :BaseGeometryData() {
   set_name(name);
   opening_type_ = OPENING_MOVE_DOOR;
   init_geometry(geometry);
+  set_height(DEFAULT_DOOR_HEIGHT);
 }
 
 OpeningData::OpeningData(WindowGeometry geometry, std::string name) :BaseGeometryData() {
   set_name(name);
   opening_type_ = OPENING_WINDOW;
   init_geometry(geometry);
+  set_height(DEFAULT_WINDOW_HEIGHT);
+  position_.setZ(DEFAULT_WINDOW_Z);
 }
 
 BaseGeometry* OpeningData::GetGeometry() {
