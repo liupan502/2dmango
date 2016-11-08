@@ -9,3 +9,6 @@ std::vector<std::string> GetModelIds(std::map<std::string, std::string> paramete
 QImage GetModelIconImage(std::string modelId);
 
 ModelData* GetModelInfo(const std::string& modelId = "desk");
+
+QImage GetModelImage(std::string modelId);
+

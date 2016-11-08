@@ -69,6 +69,8 @@ class DesignDataWrapper {
 
     BaseGeometry* current_selected_geometry();
 
+    //void set_current_s
+
     bool GetClosestWall(QPointF position,qreal& distance,WallGeometry& wallGeometry);
 
     static DesignDataWrapper* GetInstance();

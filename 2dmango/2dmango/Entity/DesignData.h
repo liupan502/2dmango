@@ -8,6 +8,7 @@
 #include "RoomData.h"
 #include "WallPath.h"
 #include "OpeningData.h"
+#include "ModelData.h"
 
 #include "Geometry/WallGeometry.h"
 #include <QVector2d>
@@ -126,6 +127,8 @@ class DesignData :public BaseData {
     std::map<std::string,RoomData*> room_data_map_;
 
     std::map<std::string, OpeningData*> opening_data_map_;
+
+    std::map<std::string, ModelData*> model_data_map_;
 };
 #endif // !MANGO_2D_DESIGN_DATA_H_
 

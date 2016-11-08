@@ -22,8 +22,10 @@ QImage GetModelIconImage(std::string modelId) {
 ModelData* GetModelInfo(const std::string& modelId) {
   
   ModelData* model_data = new ModelData();
+  model_data->set_name(modelId);
   std::string info_file_path = "d:\\model\\" + modelId + "\\info";
   std::ifstream file(info_file_path);
+
   std::string model_name;
   file >> model_name;
   model_data->set_model_name(model_name);
@@ -36,4 +38,11 @@ ModelData* GetModelInfo(const std::string& modelId) {
   model_data->set_model_type(model_type);
   file.close();
   return model_data;
+}
+
+QImage GetModelImage(std::string modelId) {
+  std::string image_path = "d:\\model\\"+modelId+"\\model.png";
+  QString q_image_path(image_path.c_str());
+  QImage img(q_image_path);
+  return img;
 }

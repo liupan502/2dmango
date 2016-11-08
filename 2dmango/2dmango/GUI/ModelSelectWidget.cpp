@@ -1,6 +1,11 @@
 #include "ModelSelectWidget.h"
 #include "Util/LoadFileUtil.h"
 #include <QTextEdit>
+#include "Entity/ModelData.h"
+#include "Entity/DesignDataWrapper.h"
+#include "Geometry/ModelGeometry.h"
+
+
 ModelSelectWidget::ModelSelectWidget(QWidget * parent) : BaseDetailActionWidget(parent) {
   models_table_ = NULL;
 }
@@ -47,7 +52,10 @@ void ModelSelectWidget::model_selected(const QModelIndex &index) {
   int row = index.row();
   int col = index.column();
   QString model_id = index.model()->data(index, Qt::DisplayRole).toString();
-  GetModelInfo();
+  ModelData* model_data = GetModelInfo();
+  ModelGeometry* model_geometry = new ModelGeometry(model_data);
+  DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  instance->AddGeometry(model_geometry);
 }
 
 void ModelSelectWidget::test_slots() {
