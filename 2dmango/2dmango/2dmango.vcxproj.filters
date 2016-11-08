@@ -248,6 +248,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ModelSelectWidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GUI\GUISingleton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\ModelGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -386,6 +392,12 @@
     </ClInclude>
     <ClInclude Include="Util\LoadFileUtil.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GUISingleton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\ModelGeometry.h">
+      <Filter>Geometry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -167,6 +167,7 @@
     <ClCompile Include="Geometry\DoubleDoorGeometry.cpp" />
     <ClCompile Include="Geometry\HotRegionGeometry.cpp" />
     <ClCompile Include="Geometry\InnerWallGeometry.cpp" />
+    <ClCompile Include="Geometry\ModelGeometry.cpp" />
     <ClCompile Include="Geometry\MoveDoorGeometry.cpp" />
     <ClCompile Include="Geometry\PenFactory.cpp" />
     <ClCompile Include="Geometry\RoomGeometry.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="GUI\actionnavgationwidget.cpp" />
     <ClCompile Include="GUI\BaseDetailActionWidget.cpp" />
     <ClCompile Include="GUI\DrawHouseDetailActionWidget.cpp" />
+    <ClCompile Include="GUI\GUISingleton.cpp" />
     <ClCompile Include="GUI\ModelSelectItemDelegate.cpp" />
     <ClCompile Include="GUI\ModelSelectItemModel.cpp" />
     <ClCompile Include="GUI\ModelSelectWidget.cpp" />
@@ -249,6 +251,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I.\GUI"</Command>
     </CustomBuild>
+    <ClInclude Include="Geometry\ModelGeometry.h" />
+    <ClInclude Include="GUI\GUISingleton.h" />
     <ClInclude Include="Util\CharUtil.h" />
     <ClInclude Include="Util\JsonUtil.h" />
     <CustomBuild Include="Util\ShareMemoryUtil.h">

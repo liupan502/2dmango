@@ -47,6 +47,7 @@ void ModelSelectWidget::model_selected(const QModelIndex &index) {
   int row = index.row();
   int col = index.column();
   QString model_id = index.model()->data(index, Qt::DisplayRole).toString();
+  GetModelInfo();
 }
 
 void ModelSelectWidget::test_slots() {
