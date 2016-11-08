@@ -77,3 +77,5 @@ void WorkSpaceWidget::BeginDrawWall(){
 void WorkSpaceWidget::EndDrawWall() {
   mouse_adapter_ = default_action_adapter_;
 }
+
+

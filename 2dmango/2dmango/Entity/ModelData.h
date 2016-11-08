@@ -8,6 +8,7 @@ public:
   ModelData(std::string name = "");
 
 private:
-
+  int model_type_;
+  std::string model_name_;
 };
 #endif

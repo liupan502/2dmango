@@ -58,6 +58,10 @@ class BaseGeometryData:public BaseData{
       rotation_z_ = 0.0;
     }
 
+    BaseGeometryData(std::string name) {
+      
+    };
+
     void set_length(float length){
       length_ = length;
     }
