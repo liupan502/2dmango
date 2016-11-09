@@ -2,6 +2,7 @@
 #include "mango2d.h"
 #include "WorkSpaceWidget.hpp"
 #include "Entity/DesignDataWrapper.h"
+#include "Entity/OpeningData.h"
 #include "Geometry/SingleDoorGeometry.h"
 #include "Geometry/DoubleDoorGeometry.h"
 #include "Geometry/MoveDoorGeometry.h"

@@ -8,8 +8,8 @@ class OpeningData;
 
 class DoubleDoorGeometry : public InnerWallGeometry{
 public:
-  DoubleDoorGeometry(OpeningData* data = NULL);
-  DoubleDoorGeometry(float width, float length,OpeningData* data = NULL);
+  DoubleDoorGeometry(OpeningData* data );
+  //DoubleDoorGeometry(float width, float length,OpeningData* data = NULL);
   virtual ~DoubleDoorGeometry();
   
 

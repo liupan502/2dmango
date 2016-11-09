@@ -77,7 +77,7 @@ void DesignData::InitWithObject(QJsonObject& jsonObject) {
     QJsonArray opening_data_array = jsonObject["openings"].toArray();
     for (int i = 0; i < opening_data_array.size(); i++) {
       QJsonObject opening_object = opening_data_array[i].toObject();
-      OpeningData* opening_data = new OpeningData();
+      OpeningData* opening_data = new OpeningData(OPENING_NONE);
       opening_data->InitWithObject(opening_object);
       opening_data_map_.insert(make_pair(opening_data->name(), opening_data));
     }
@@ -523,12 +523,16 @@ WallData* DesignData::find_start_wall(std::set<WallData*> excludeWalls) {
 }
 
 void DesignData::AddOpening(OpeningData* openingData) {
-  std::map<std::string, OpeningData*>::iterator it = opening_data_map_.find(openingData->name());
-  assert(it == opening_data_map_.end());
+  if (openingData == NULL || openingData->name() != "")
+    return;
+  //std::map<std::string, OpeningData*>::iterator it = opening_data_map_.find(openingData->name());
+  //assert(it == opening_data_map_.end());
+  std::string opening_name = generate_opening_name();
+  openingData->set_name(opening_name);
   opening_data_map_.insert(make_pair(openingData->name(),openingData));
 }
 
-std::string DesignData::GenerateOpeningName() {
+std::string DesignData::generate_opening_name() {
   std::vector<std::string> names;
   std::map<std::string, OpeningData*>::iterator it;
   for (it = opening_data_map_.begin(); it != opening_data_map_.end(); it++) {
@@ -573,16 +577,16 @@ std::vector<InnerWallGeometry*> DesignData::GetInnerWallGeometry() {
     InnerWallGeometry* geo = NULL;
     switch (opening->type()){
       case OPENING_SINGLE_DOOR:
-        geo = new SingleDoorGeometry(width, length,opening);
+        geo = new SingleDoorGeometry(opening);
         break;
       case OPENING_DOUBLE_DOOR:
-        geo = new DoubleDoorGeometry(width, length, opening);
+        geo = new DoubleDoorGeometry(opening);
         break;
       case OPENING_MOVE_DOOR:
-        geo = new MoveDoorGeometry(width, length, opening);
+        geo = new MoveDoorGeometry(opening);
         break;
       case OPENING_WINDOW:
-        geo = new WindowGeometry(width, length, opening);
+        geo = new WindowGeometry(opening);
         break;
       default:
         break;     

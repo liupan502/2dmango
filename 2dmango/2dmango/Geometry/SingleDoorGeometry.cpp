@@ -2,9 +2,9 @@
 #include "PenFactory.h"
 #include "Entity/OpeningData.h"
 
-SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*)openingData) {
+SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeometry(openingData) {
   
-  if (openingData != NULL) {
+  /*if (openingData != NULL) {
     width_ = openingData->width();
     length_ = openingData->length();
     //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
@@ -14,7 +14,7 @@ SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeome
     width_ = 0.0;
     length_ = 0.0;    
   }
-  opening_data_ = openingData;
+  opening_data_ = openingData;*/
   opening_type_ = OPENING_SINGLE_DOOR;
 }
 
@@ -38,7 +38,7 @@ SingleDoorGeometry::~SingleDoorGeometry(){
   path4_ = NULL;
 }
 
-SingleDoorGeometry::SingleDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
+/*SingleDoorGeometry::SingleDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
   
   if (openingData != NULL) {
     width_ = openingData->width();
@@ -53,7 +53,7 @@ SingleDoorGeometry::SingleDoorGeometry(float width, float length, OpeningData* o
     QPointF position = QPointF(openingData->position().x(), openingData->position().y());
     MoveTo(position);
   }
-}
+}*/
 
 void SingleDoorGeometry::build_geometry(float width, float length) {
   QPolygonF polygon1 = build_path1_polygon();
@@ -88,8 +88,8 @@ void SingleDoorGeometry::build_geometry(float width, float length) {
 }
 
 QPolygonF SingleDoorGeometry::build_path1_polygon() {
-  float width = width_;
-  float length = length_;
+  float width = this->width();
+  float length = this->length();
   QPolygonF polygon;
   QPointF point1 = QPointF(0.0, 0.0);
   polygon << point1;
@@ -107,8 +107,8 @@ QPolygonF SingleDoorGeometry::build_path1_polygon() {
 }
 
 QPolygonF SingleDoorGeometry::build_path2_polygon() {
-  float width = width_;
-  float length = length_;
+  float width = this->width();
+  float length = this->length();
   QPolygonF polygon;
   QPointF point1 = QPointF(0.0, width / 2.0);
   polygon << point1;
@@ -127,9 +127,9 @@ QPolygonF SingleDoorGeometry::build_path2_polygon() {
 
 void SingleDoorGeometry::build_path3(QRectF& rect, qreal& startAngle, qreal& sweepLength, QPointF& startPoint) {
   //QPointF offset = position_ - QPointF(length_ / 2, width_ / 2);
-  QPointF offset = - QPointF(length_ / 2, width_ / 2);
-  QPointF top_left_point(2*path2_width_-length_,-(length_-width_/2));
-  QPointF bottom_right_point(length_ , length_ - width_ / 2);
+  QPointF offset = - QPointF(length() / 2, width() / 2);
+  QPointF top_left_point(2*path2_width_-length(),-(length()-width()/2));
+  QPointF bottom_right_point(length() , length() - width() / 2);
   rect = QRectF(top_left_point, bottom_right_point);
   rect.translate(offset);
   startAngle = 0;
@@ -158,15 +158,15 @@ void SingleDoorGeometry::update_geometry() {
 std::vector<QPointF> SingleDoorGeometry::build_path4_points() {
   std::vector<QPointF> points;
   //QPointF offset = position_ - QPointF(length_ / 2, width_ / 2);
-  QPointF offset =  - QPointF(length_ / 2, width_ / 2);
-  QPointF point1(path2_width_, -(length_ - width_ / 2));
+  QPointF offset =  - QPointF(length() / 2, width() / 2);
+  QPointF point1(path2_width_, -(length() - width() / 2));
   points.push_back(point1+offset);
 
   
   QPointF point2(path2_width_, 0);
   points.push_back(point2 + offset);
 
-  QPointF point3(length_, 0);
+  QPointF point3(length(), 0);
   points.push_back(point3 + offset);
 
   return points;

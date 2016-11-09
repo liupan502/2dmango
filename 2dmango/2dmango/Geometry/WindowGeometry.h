@@ -7,13 +7,13 @@
 class OpeningData;
 class WindowGeometry :public InnerWallGeometry {
 public:
-  WindowGeometry(OpeningData* data = NULL);
-  WindowGeometry(float width, float length,OpeningData* data = NULL);
+  WindowGeometry(OpeningData* data );
+  //WindowGeometry(float width, float length,OpeningData* data = NULL);
   ~WindowGeometry();
   
 
 private:
-  float width_, length_;
+  //float width_, length_;
   PolygonPath* path1_;
   PolygonPath* path2_;
   QPolygonF build_path1_polygon();

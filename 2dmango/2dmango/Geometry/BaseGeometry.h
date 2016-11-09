@@ -43,15 +43,15 @@ class BaseGeometry {
 
  protected:
    std::vector<BasePath*> paths_;
-   bool is_visible_;
+   //bool is_visible_;
    int index_;
-   QPointF position_;
+   //QPointF position_;
    QTransform transform_;
-   float rotate_radian_;
+   //float rotate_radian_;
 
-   float width_;
+   /*float width_;
    float length_;
-   float height_;
+   float height_;*/
 
    BaseGeometryData* data_;
    GEOMETRY_TYPE geometry_type_;

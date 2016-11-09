@@ -1,8 +1,8 @@
 #include "MoveDoorGeometry.h"
 #include "PenFactory.h"
 #include "Entity/OpeningData.h"
-MoveDoorGeometry::MoveDoorGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*) openingData) {
-  if (openingData != NULL) {
+MoveDoorGeometry::MoveDoorGeometry(OpeningData* openingData) :InnerWallGeometry(openingData) {
+  /*if (openingData != NULL) {
     width_ = openingData->width();
     length_ = openingData->length();
     //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
@@ -14,11 +14,11 @@ MoveDoorGeometry::MoveDoorGeometry(OpeningData* openingData) :InnerWallGeometry(
   }
   
   
-  opening_data_ = openingData;
+  opening_data_ = openingData;*/
   opening_type_ = OPENING_MOVE_DOOR;
 }
 
-MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
+/*MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
 
   if (openingData != NULL) {
     width_ = openingData->width();
@@ -50,34 +50,34 @@ MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* openi
     MoveTo(position);
   }
   
-}
+}*/
 
 QPolygonF MoveDoorGeometry::build_path1_polygon() {
   QPolygonF polygon;
   QPointF point1(0.0, 0.0);
   polygon << point1;
 
-  QPointF point2(0.0, width_);
+  QPointF point2(0.0, width());
   polygon << point2;
 
-  QPointF point3(length_, width_);
+  QPointF point3(length(), width());
   polygon << point3;
 
-  QPointF point4(length_, 0.0);
+  QPointF point4(length(), 0.0);
   polygon << point4;
   polygon << point1;
 
 
   //QPointF offset = position_ - QPointF(length_/2.0,width_/2.0);
-  QPointF offset =  - QPointF(length_ / 2.0, width_ / 2.0);
+  QPointF offset =  - QPointF(length() / 2.0, width() / 2.0);
   polygon.translate(offset);
   return polygon;
 }
 
 QPolygonF MoveDoorGeometry::build_path2_polygon() {
   QPolygonF polygon;
-  qreal quarter_width = width_ /4.0;
-  qreal path_length = length_*0.7;
+  qreal quarter_width = width() /4.0;
+  qreal path_length = length()*0.7;
   QPointF point1(path2_offset, quarter_width);
   polygon << point1;
 
@@ -92,30 +92,30 @@ QPolygonF MoveDoorGeometry::build_path2_polygon() {
 
   polygon << point1;
   //QPointF offset = position_ - QPointF(length_ / 2.0, width_ / 2.0);
-  QPointF offset =  - QPointF(length_ / 2.0, width_ / 2.0);
+  QPointF offset =  - QPointF(length() / 2.0, width() / 2.0);
   polygon.translate(offset);
   return polygon;
 }
 
 QPolygonF MoveDoorGeometry::build_path3_polygon() {
   QPolygonF polygon;
-  qreal quarter_width = width_ /4.0;
-  qreal path_length = length_*0.7;
-  QPointF point1(length_-path2_offset, 2*quarter_width);
+  qreal quarter_width = width() /4.0;
+  qreal path_length = length()*0.7;
+  QPointF point1(length()-path2_offset, 2*quarter_width);
   polygon << point1;
 
-  QPointF point2(length_ - path2_offset - path_length, 2*quarter_width);
+  QPointF point2(length() - path2_offset - path_length, 2*quarter_width);
   polygon << point2;
 
-  QPointF point3(length_ - path2_offset - path_length, 3 * quarter_width);
+  QPointF point3(length() - path2_offset - path_length, 3 * quarter_width);
   polygon << point3;
 
-  QPointF point4(length_ - path2_offset, 3 * quarter_width);
+  QPointF point4(length() - path2_offset, 3 * quarter_width);
   polygon << point4;
 
   polygon << point1;
   //QPointF offset = position_ - QPointF(length_ / 2.0, width_ / 2.0);
-  QPointF offset =  - QPointF(length_ / 2.0, width_ / 2.0);
+  QPointF offset =  - QPointF(length() / 2.0, width() / 2.0);
   polygon.translate(offset);
   return polygon;
 }

@@ -6,8 +6,9 @@
 #include "Geometry/BaseGeometry.h"
 #include "const.h"
 
-OpeningData::OpeningData(std::string name):BaseGeometryData(){
+OpeningData::OpeningData(OPENING_TYPE openingType, std::string name ):BaseGeometryData(name){
   set_name(name);
+  opening_type_ = openingType;
 }
 
 OpeningData::OpeningData(SingleDoorGeometry geometry,std::string name): BaseGeometryData(){  
@@ -100,3 +101,4 @@ void OpeningData::InitWithObject(QJsonObject& jsonObject) {
 OPENING_TYPE OpeningData::type() {
   return opening_type_;
 }
+

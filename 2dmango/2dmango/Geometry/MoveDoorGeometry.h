@@ -6,8 +6,8 @@
 class OpeningData;
 class MoveDoorGeometry :public InnerWallGeometry {
 public:
-  MoveDoorGeometry(OpeningData* data = NULL);
-  MoveDoorGeometry(float width, float length, OpeningData* data = NULL);
+  MoveDoorGeometry(OpeningData* data );
+  //MoveDoorGeometry(float width, float length, OpeningData* data = NULL);
   ~MoveDoorGeometry();  
   
 

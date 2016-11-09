@@ -64,7 +64,7 @@ class DesignData :public BaseData {
 
     void AddOpening(OpeningData* openingData);
 
-    std::string GenerateOpeningName();
+    //std::string GenerateOpeningName();
 
   private:
 
@@ -99,6 +99,8 @@ class DesignData :public BaseData {
     std::string generate_line_name();
 
     std::string generate_point_name();
+
+    std::string generate_opening_name();
 
     std::string generate_name(std::vector<std::string> used_names);
 

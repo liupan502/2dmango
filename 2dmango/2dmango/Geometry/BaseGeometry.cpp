@@ -3,12 +3,12 @@
 #include <math.h>
 
 BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
-  is_visible_ = true;
+  //is_visible_ = true;
   index_ = 0;
   transform_ = QTransform();
   data_ = data;
   geometry_type_ = GEOMETRY_NONE;
-  if (data != NULL) {
+  /*if (data != NULL) {
     set_width(data->width());
     set_height(data->height());
     set_length(data->length());
@@ -23,13 +23,16 @@ BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
 
     set_rotation(0.0);
     set_position(QPointF(0.0,0.0));
-  }
+  }*/
 }
 
 void BaseGeometry::Draw(QPainter* painter) {
-  if (!is_visible_) {
+
+  if (data_ == NULL || is_visible())
     return;
-  }
+  /*if (!is_visible_) {
+    return;
+  }*/
  
   for(int i=0;i<paths_.size();i++){    
     QPen pen = paths_[i]->pen();
@@ -45,11 +48,13 @@ void BaseGeometry::Draw(QPainter* painter) {
 }
 
 void BaseGeometry::set_is_visible(bool is_visible) {
-  is_visible_ = is_visible;
+  if (data_ == NULL)
+    return;
+  data_->set_is_visible(is_visible);
 }
 
 bool BaseGeometry::is_visible() {
-  return is_visible_;
+  return data_== NULL?false:data_->is_visible();
 }
 
 bool BaseGeometry::IsPointIn(QPointF point) {
@@ -65,12 +70,20 @@ bool BaseGeometry::IsPointIn(QPointF point) {
 }
 
 void BaseGeometry::MoveTo(QPointF position) { 
-  position_ = position;
+  if (data_ == NULL)
+    return;
+  //position_ = position;
+  data_->set_position(QVector3D(position.x(),position.y(),0.0f));
   this->update_geometry();
 }
 
-void BaseGeometry::Translate(QPointF offset) {  
-  position_ += offset;
+void BaseGeometry::Translate(QPointF offset) {
+
+  if (data_ == NULL) {
+    return;
+  }
+  QVector3D tmp = QVector3D(offset.x(), offset.y(), 0.0);
+  data_->set_position(data_->position() + tmp);
   this->update_geometry();
 }
 
@@ -84,49 +97,65 @@ QRectF BaseGeometry::Rect() {
 
 void BaseGeometry::update_transform() {
   QTransform transform;  
-  transform.translate(position_.x(),position_.y());
-  transform.rotateRadians(rotate_radian_);
+  transform.translate(position().x(),position().y());
+  transform.rotateRadians(rotation());
   transform_ = transform;
 }
 
 void BaseGeometry::set_height(float height) {
-  height_ = height;
+  if (data_ == NULL) {
+    return;
+  }
+  data_->set_height(height);  
 }
 
 void BaseGeometry::set_width(float width) {
-  width_ = width;
+  if (data_ == NULL) {
+    return;
+  }
+  data_->set_width(width);
 }
 
 void BaseGeometry::set_length(float length) {
-  length_ = length;
+  if (data_ == NULL) {
+    return;
+  }
+  data_->set_length(length);  
 }
 
 float BaseGeometry::width() {
-  return width_;
+  return data_==NULL?0.0:data_->width();
 }
 
 float BaseGeometry::height() {
-  return height_;
+  return data_==NULL?0.0:data_->height();
 }
 
 float BaseGeometry::length() {
-  return length_;
+  return data_==NULL?0.0:data_->length();
 }
 
 QPointF  BaseGeometry::position() {
-  return position_;
+  if (data_ == NULL)
+    return QPointF();
+  QVector3D position = data_->position();
+  return QPointF(position.x,position.y);
 }
 
 void BaseGeometry::set_position(QPointF position) {
-  position_ = position;
+  if (data_ == NULL)
+    return;
+  data_->set_position(QVector3D(position.x(), position.y(), 0.0f));
 }
 
 void BaseGeometry::set_rotation(float radian) {
-  rotate_radian_ = radian;
+  if (data_ == NULL)
+    return;
+  data_->set_rotation_z(radian);
 }
 
 float BaseGeometry::rotation() {
-  return rotate_radian_;
+  return data_ == NULL?0.0:data_->rotation_z();
 }
 
 GEOMETRY_TYPE BaseGeometry::geometry_type() {

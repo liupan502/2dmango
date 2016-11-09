@@ -8,8 +8,8 @@
 class OpeningData;
 class SingleDoorGeometry : public InnerWallGeometry {
 public:
-  SingleDoorGeometry(OpeningData* openningData = NULL);
-  SingleDoorGeometry(float width, float length,OpeningData* openningData = NULL);
+  SingleDoorGeometry(OpeningData* openningData );
+  //SingleDoorGeometry(float width, float length,OpeningData* openningData = NULL);
   virtual ~SingleDoorGeometry();
   
 

@@ -15,7 +15,9 @@ ModelGeometry::ModelGeometry(std::string modelId) {
   set_width(tmp_model_data->width());
   set_height(tmp_model_data->height());
   set_length(tmp_model_data->length());
-
+  
+  delete tmp_model_data;
+  img = GetModelImage(modelId);
   model_id_ = modelId;
   
 }

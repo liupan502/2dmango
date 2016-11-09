@@ -9,12 +9,22 @@
 
 class BaseData {
   public:
-    BaseData() {
-      name_ = "";
+    BaseData(std::string name = "") {
+      name_ = name;
+      is_tmp_data_ = false;
+      is_visible_ = true;
     }
 
     BaseData(std::string name) {
       name_ = name;
+    }
+
+    bool is_visible() {
+      return is_visible_;
+    }
+
+    void set_is_visible(bool isVisible) {
+      is_visible_ = isVisible;
     }
 
     void set_name(std::string name){
@@ -23,6 +33,10 @@ class BaseData {
 
     std::string name() const {
       return name_;
+    }
+
+    bool is_tmp_data() {
+      return is_tmp_data_;
     }
 
     virtual QJsonObject ToJson() {
@@ -39,28 +53,32 @@ class BaseData {
         name_ = "";
       }
     }
+protected:
+  bool is_tmp_data_;
+  bool is_visible_;
 
-  private:
+private:
     std::string name_;
+    
 };
 
 class BaseGeometryData:public BaseData{
   public:
-    BaseGeometryData() {
+    BaseGeometryData(std::string name = ""):BaseData(name) {
       length_ = 0.0;
       width_ = 0.0;
       height_ = 0.0;
+
+
+      
+      is_tmp_data_ = true;
 
       position_ = QVector3D();
        
       rotation_x_ = 0.0;
       rotation_y_ = 0.0;
       rotation_z_ = 0.0;
-    }
-
-    BaseGeometryData(std::string name) {
-      
-    };
+    }    
 
     void set_length(float length){
       length_ = length;
@@ -138,6 +156,10 @@ class BaseGeometryData:public BaseData{
 
     virtual void InitWithObject(QJsonObject& jsonObject) {
       BaseData::InitWithObject(jsonObject);
+      
+      is_tmp_data_ = false;
+
+
       if (jsonObject.contains("length")) {
         length_ = jsonObject["length"].toDouble();
       }

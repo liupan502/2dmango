@@ -8,8 +8,8 @@ class OpeningData;
 class BaseGeometryData;
 class InnerWallGeometry :public BaseGeometry {
 public:
-  InnerWallGeometry(BaseGeometryData* data = NULL);
-  InnerWallGeometry(float width_, float length_, BaseGeometryData* data = NULL);
+  InnerWallGeometry(OpeningData* data );
+  //InnerWallGeometry(float width_, float length_, BaseGeometryData* data = NULL);
   virtual void MoveTo(QPointF position);
   virtual void Translate(QPointF offset);
   virtual QRectF Rect();
@@ -20,10 +20,10 @@ public:
 protected:
   //float width_;
   //float length_;
-  virtual void init_with_data(BaseGeometryData* data);
+  virtual void init_with_data(OpeningData* data);
   void compute_position(QPointF& currentPosition);
   OPENING_TYPE opening_type_;
-  OpeningData* opening_data_;
+  //OpeningData* opening_data_;
   //void virtual update_geometry();
 private:
   

@@ -21,7 +21,12 @@ typedef enum OPENING_TYPE {
 
 class OpeningData :public BaseGeometryData {
 public:
-  OpeningData(std::string name = "");
+
+  /*static OpeningData* CreateSingleDoorInstance(float width, float height);
+  static OpeningData* CreateDoubleDoorInstance(float width, float height);
+  static OpeningData* CreateMoveDoorInstance(float width, float height);
+  static OpeningData* CreateWindowInstance(float width, float height);*/
+  OpeningData(OPENING_TYPE openingType,std::string name = "");
   OpeningData(SingleDoorGeometry geometry,std::string name = "");
   OpeningData(DoubleDoorGeometry geometry, std::string name = "");
   OpeningData(MoveDoorGeometry geometry, std::string name = "");

@@ -6,23 +6,21 @@
 #include "Entity/BaseData.h"
 #include "Entity/OpeningData.h"
 
-InnerWallGeometry::InnerWallGeometry(BaseGeometryData* data):BaseGeometry(data) {
-  width_ = 0.0;
-  length_ = 0.0;
-  rotate_radian_ = 0.0;
-  init_with_data(data);
+InnerWallGeometry::InnerWallGeometry(OpeningData* data):BaseGeometry(data) {  
   geometry_type_ = GEOMETRY_OPENING;
   opening_type_ = OPENING_NONE;
+  //opening_data_ = NULL;
+  //init_with_data(data);
 }
 
-InnerWallGeometry::InnerWallGeometry(float width, float length, BaseGeometryData* data):BaseGeometry(data) {
+/*InnerWallGeometry::InnerWallGeometry(float width, float length, BaseGeometryData* data):BaseGeometry(data) {
   width_ = width;
   length_ = length;
   rotate_radian_ = 0.0;
   init_with_data(data);
   geometry_type_ = GEOMETRY_OPENING;
   opening_type_ = OPENING_NONE;
-}
+}*/
 
 void InnerWallGeometry::MoveTo(QPointF position) {
   compute_position(position);
@@ -30,7 +28,7 @@ void InnerWallGeometry::MoveTo(QPointF position) {
 }
 
 void InnerWallGeometry::Translate(QPointF offset) {
-  QPointF position = position_ + offset;
+  QPointF position = this->position() + offset;
   compute_position(position);
   BaseGeometry::MoveTo(position);
 }
@@ -60,7 +58,7 @@ void InnerWallGeometry::compute_position(QPointF& position) {
       //rotate_radian_ = acosf(wall_vector.x()/wall_vector.length());
       QVector2D vec(0, -1);
       QVector2D wall_normal_vector = wall_geometry.NormalVector();
-      rotate_radian_ = AngleWithVectors(wall_normal_vector,vec);
+      set_rotation(AngleWithVectors(wall_normal_vector, vec));      
       QPointF tmp_point1, tmp_point2;
       normal_line.intersect(line1, &tmp_point1);
       normal_line.intersect(line2, &tmp_point2);
@@ -75,16 +73,16 @@ void InnerWallGeometry::compute_position(QPointF& position) {
 
 QRectF InnerWallGeometry::Rect() {
   QRectF rect;
-  qreal half_width = width_ / 2.0;
-  qreal half_length = length_ / 2.0;
-  QPointF top_left_point = position_ - QPointF(half_length, half_width);
-  QPointF bottom_right_point = position_ + QPointF(half_length, half_width);
+  qreal half_width = width() / 2.0;
+  qreal half_length = length() / 2.0;
+  QPointF top_left_point = position() - QPointF(half_length, half_width);
+  QPointF bottom_right_point = position() + QPointF(half_length, half_width);
   rect = QRectF(top_left_point, bottom_right_point);
   
   return rect;
 }
 
-void InnerWallGeometry::init_with_data(BaseGeometryData* data) {
+/*void InnerWallGeometry::init_with_data(OpeningData* data) {
   if (data == NULL) {
     return;
   }
@@ -94,7 +92,9 @@ void InnerWallGeometry::init_with_data(BaseGeometryData* data) {
   QVector3D tmp_vec3d = data->position();
   QPointF tmp_point = QPointF(tmp_vec3d.x(), tmp_vec3d.y());
   set_position(tmp_point);
-}
+  opening_type_ = data->type();
+  opening_data_ = data;
+}*/
 
 OPENING_TYPE InnerWallGeometry::opening_type() {
   return opening_type_;

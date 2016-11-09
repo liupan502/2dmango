@@ -3,8 +3,8 @@
 #include "PenFactory.h"
 #include "Entity/OpeningData.h"
 
-DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* openingData) :InnerWallGeometry((BaseGeometryData*) openingData) {
-  if (openingData != NULL) {
+DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* openingData) :InnerWallGeometry( openingData) {
+  /*if (openingData != NULL) {
     width_ = openingData->width();
     length_ = openingData->length();
     //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
@@ -17,11 +17,11 @@ DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* openingData) :InnerWallGeome
 
 
   
-  opening_data_ = openingData;
+  opening_data_ = openingData;*/
   opening_type_ = OPENING_DOUBLE_DOOR;
 };
 
-DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* openingData): InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
+/*DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* openingData): InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
   //width_ = width;
   //length_ = length;
 
@@ -85,20 +85,20 @@ DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* o
     MoveTo(position);
   }
 
-}
+}*/
 
 QPolygonF DoubleDoorGeometry::build_path1_polygon() {
   QPolygonF polygon;
-  qreal half_width = width_ / 2.0;
-  qreal half_length = length_ / 2.0;
+  qreal half_width = width() / 2.0;
+  qreal half_length = length() / 2.0;
 
   QPointF point1(-half_length, 0.0);
   polygon << point1;
 
-  QPointF point2(-half_length, width_);
+  QPointF point2(-half_length, width());
   polygon << point2;
 
-  QPointF point3(half_length, width_);
+  QPointF point3(half_length, width());
   polygon << point3;
 
   QPointF point4(half_length, 0.0);
@@ -113,8 +113,8 @@ QPolygonF DoubleDoorGeometry::build_path1_polygon() {
 
 QPolygonF DoubleDoorGeometry::build_path2_polygon() {
   QPolygonF polygon;
-  qreal half_width = width_ / 2.0;
-  qreal half_length = length_ / 2.0;
+  qreal half_width = width() / 2.0;
+  qreal half_length = length() / 2.0;
 
   QPointF point1(-half_length, half_width);
   polygon << point1;
@@ -139,8 +139,8 @@ QPolygonF DoubleDoorGeometry::build_path2_polygon() {
 
 std::vector<QPointF> DoubleDoorGeometry::build_path3_points() {
   
-  qreal half_width = width_ / 2.0;
-  qreal half_length = length_ / 2.0;
+  qreal half_width = width() / 2.0;
+  qreal half_length = length() / 2.0;
   //QPointF offset = position_ - QPointF(0.0, half_width);
   QPointF offset =  - QPointF(0.0, half_width);
   std::vector<QPointF> points;
@@ -161,8 +161,8 @@ std::vector<QPointF> DoubleDoorGeometry::build_path3_points() {
 
 void DoubleDoorGeometry::build_path4_params(QRectF& rect, qreal& startAngle, qreal& sweepLength,QPointF& startPoint) {
 
-  qreal half_width = width_ / 2.0;
-  qreal half_length = length_ / 2.0;
+  qreal half_width = width() / 2.0;
+  qreal half_length = length() / 2.0;
   qreal rect_width = 2 * abs(-half_length + path2_width_);
   qreal rect_height = 2 * abs(half_length - half_width);
   QPointF top_left_point(-rect_width,-rect_height/2.0);
@@ -179,8 +179,8 @@ void DoubleDoorGeometry::build_path4_params(QRectF& rect, qreal& startAngle, qre
 
 QPolygonF DoubleDoorGeometry::build_path6_polygon() {
   QPolygonF polygon;
-  qreal half_width = width_ / 2.0;
-  qreal half_length = length_ / 2.0;
+  qreal half_width = width() / 2.0;
+  qreal half_length = length() / 2.0;
 
   QPointF point1(half_length-path2_width_,half_width);
   polygon << point1;
@@ -204,8 +204,8 @@ QPolygonF DoubleDoorGeometry::build_path6_polygon() {
 
 std::vector<QPointF> DoubleDoorGeometry::build_path7_points() {
 
-  qreal half_width = width_ / 2.0;
-  qreal half_length = length_ / 2.0;
+  qreal half_width = width() / 2.0;
+  qreal half_length = length() / 2.0;
   std::vector<QPointF> points;
   //QPointF offset = position_ - QPointF(0.0, half_width);
   QPointF offset =  - QPointF(0.0, half_width);
@@ -222,8 +222,8 @@ std::vector<QPointF> DoubleDoorGeometry::build_path7_points() {
 }
 
 void DoubleDoorGeometry::build_path8_params(QRectF& rect, qreal& startAngle, qreal& sweepLength,QPointF& startPoint) {
-  qreal half_width = width_ / 2.0;
-  qreal half_length = length_ / 2.0;
+  qreal half_width = width() / 2.0;
+  qreal half_length = length() / 2.0;
 
   qreal rect_width = 2 * abs(half_length - path2_width_);
   qreal rect_height = 2 * abs(half_length - half_width);
