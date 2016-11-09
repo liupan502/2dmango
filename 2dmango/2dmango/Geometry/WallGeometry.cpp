@@ -13,7 +13,7 @@ WallGeometry::WallGeometry(QPolygonF polygon) {
 }
 
 WallGeometry::WallGeometry(std::vector<QPointF> points,WallData* wallData) {
-  wall_data_ = wallData;
+  data_ = wallData;
   int size = points.size();
   if(size == 2){
     LinesPath* lines_path = new LinesPath(points);
@@ -39,7 +39,7 @@ WallGeometry::WallGeometry(std::vector<QPointF> points,WallData* wallData) {
 }
 
 bool WallGeometry::PointDistanceToGeometry(QPointF position, qreal& distance) {
-  assert(wall_data_->status() != DRAWING_WALL_DATA);
+  assert(((WallData*)data_)->status() != DRAWING_WALL_DATA);
   if (polygon_.containsPoint(position, Qt::OddEvenFill)) {
     distance = 0;
     return true;
@@ -74,15 +74,15 @@ QLineF WallGeometry::Line2() {
 }
 
 QVector2D WallGeometry::WallVector() {
-  return wall_data_->WallVector();
+  return ((WallData*)data_)->WallVector();
 }
 
 QVector2D WallGeometry::NormalVector() {
-  QVector2D result =  wall_data_->normal_vector();
+  QVector2D result =  wall_data()->normal_vector();
   result.normalize();
   return result;
 }
 
 WallData* WallGeometry::wall_data() {
-  return wall_data_;
+  return ((WallData*)data_);
 }

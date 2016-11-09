@@ -28,7 +28,7 @@ BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
 
 void BaseGeometry::Draw(QPainter* painter) {
 
-  if (data_ == NULL || is_visible())
+  if (data_ == NULL ||  !is_visible())
     return;
   /*if (!is_visible_) {
     return;
@@ -139,7 +139,7 @@ QPointF  BaseGeometry::position() {
   if (data_ == NULL)
     return QPointF();
   QVector3D position = data_->position();
-  return QPointF(position.x,position.y);
+  return QPointF(position.x(),position.y());
 }
 
 void BaseGeometry::set_position(QPointF position) {

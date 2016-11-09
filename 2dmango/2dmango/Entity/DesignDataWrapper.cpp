@@ -14,14 +14,15 @@ DesignDataWrapper* DesignDataWrapper::instance = 0;
 
 DesignDataWrapper::DesignDataWrapper(){
   design_data_ = new DesignData();
-  hot_region_ = HotRegionGeometry(QPointF(100.0,100.0),50,50);
+   
+  hot_region_ = new HotRegionGeometry(QPointF(100.0, 100.0), 50, 50);
   current_selected_geometry_ = NULL;
   design_data_id_ = 0;
 }
 
 void DesignDataWrapper::Draw(QPainter* painter){
-  hot_region_.Draw(painter);
-  for (int i = 0; i < auxiliary_lines_.size(); i++) {
+  hot_region_->Draw(painter);
+  for (int i = 0; i < auxiliary_lines_.size(); i++) {    
     auxiliary_lines_[i].Draw(painter);
   }
   for(int i=0;i<wall_geometrys_.size();i++){
@@ -173,21 +174,21 @@ void DesignDataWrapper::insert_opening_data(InnerWallGeometry* geometry) {
   if (wall_data == NULL) {
     return;
   }
-  std::string opening_name = design_data_->GenerateOpeningName();
+  //std::string opening_name = design_data_->GenerateOpeningName();
   OpeningData* data = NULL;
 
   switch (opening_type) {
     case OPENING_SINGLE_DOOR:
-      data = new OpeningData(*(SingleDoorGeometry*)geometry, opening_name);
+      data = new OpeningData(*(SingleDoorGeometry*)geometry);
       break;
     case OPENING_MOVE_DOOR:
-      data = new OpeningData(*((MoveDoorGeometry*)geometry), opening_name);
+      data = new OpeningData(*((MoveDoorGeometry*)geometry));
       break;
     case OPENING_DOUBLE_DOOR:
-      data = new OpeningData(*(DoubleDoorGeometry*)geometry, opening_name);
+      data = new OpeningData(*(DoubleDoorGeometry*)geometry);
       break;
     case OPENING_WINDOW:
-      data = new OpeningData(*(WindowGeometry*)geometry, opening_name);
+      data = new OpeningData(*(WindowGeometry*)geometry);
       break;
     default:
       break;
@@ -197,7 +198,7 @@ void DesignDataWrapper::insert_opening_data(InnerWallGeometry* geometry) {
 
   if (data != NULL) {
     design_data_->AddOpening(data);
-    wall_data->AddOpening(opening_name);
+    wall_data->AddOpening(data->name());
   }  
 }
 

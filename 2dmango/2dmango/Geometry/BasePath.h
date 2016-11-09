@@ -53,6 +53,10 @@ class EllipsePath :public BasePath{
     void set_center(QPointF center);
     void set_rx(qreal rx);
     void set_ry(qreal ry);
+    qreal rx();
+    qreal ry();
+    QPointF center();
+
 
   private:
     QPointF center_;

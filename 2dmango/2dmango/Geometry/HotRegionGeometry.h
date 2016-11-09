@@ -5,7 +5,10 @@ class HotRegionGeometry :public BaseGeometry {
 
   public:   
     HotRegionGeometry(QPointF center,qreal x,qreal y);
+    HotRegionGeometry(const HotRegionGeometry& value);
     HotRegionGeometry();
+    virtual ~HotRegionGeometry();
+    
     void MoveTo(QPointF position);
     void Resize(qreal rx,qreal ry);
     bool ContainsPoint(QPointF point);

@@ -21,6 +21,13 @@ class DesignDataWrapper {
     virtual ~DesignDataWrapper()
     {
       delete_current_selected_geometry();
+      if (hot_region_ != NULL) {
+        delete hot_region_;
+      }
+
+      if (design_data_ != NULL) {
+        delete design_data_;
+      }
     }
     void Draw(QPainter* painter);
     WallData* AddWall();
@@ -87,7 +94,7 @@ class DesignDataWrapper {
    int design_data_id_;
    std::vector<WallGeometry> wall_geometrys_;
    std::vector<InnerWallGeometry*> inner_wall_geometrys_;
-   HotRegionGeometry hot_region_;
+   HotRegionGeometry* hot_region_;
 
    std::vector<AuxiliaryLineGeometry> auxiliary_lines_;
 

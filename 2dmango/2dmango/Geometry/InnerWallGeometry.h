@@ -20,7 +20,7 @@ public:
 protected:
   //float width_;
   //float length_;
-  virtual void init_with_data(OpeningData* data);
+  //virtual void init_with_data(OpeningData* data);
   void compute_position(QPointF& currentPosition);
   OPENING_TYPE opening_type_;
   //OpeningData* opening_data_;

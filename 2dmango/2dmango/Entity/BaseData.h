@@ -15,9 +15,9 @@ class BaseData {
       is_visible_ = true;
     }
 
-    BaseData(std::string name) {
+    /*BaseData(std::string name) {
       name_ = name;
-    }
+    }*/
 
     bool is_visible() {
       return is_visible_;

@@ -31,7 +31,7 @@ void ModelGeometry::Draw(QPainter* painter) {
   qreal half_width = img_size.width() / 2.0f;
   qreal half_height = img_size.height() / 2.0f;
   QPointF offset(half_width, half_height);
-  QPointF left_top_point = position_ - offset;  
+  QPointF left_top_point = position() - offset;  
   QRectF target_rectf(left_top_point, img_size);
   QRect target_rect = target_rectf.toRect();
   QRect img_rect = QRect(0,0,img_size.width(),img_size.height());

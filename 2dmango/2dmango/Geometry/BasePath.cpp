@@ -75,6 +75,18 @@ EllipsePath::EllipsePath(QPointF center, qreal rx, qreal ry) {
   ry_ = ry;
 }
 
+qreal EllipsePath::rx() {
+  return rx_;
+}
+
+qreal EllipsePath::ry() {
+  return ry_;
+}
+
+QPointF EllipsePath::center() {
+  return center_;
+}
+
 QPainterPath EllipsePath::GetPainterPath(){
   QPainterPath painter_path;
   painter_path.addEllipse(center_,rx_,ry_);

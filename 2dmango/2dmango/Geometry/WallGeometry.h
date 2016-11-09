@@ -18,6 +18,6 @@ class WallGeometry :public BaseGeometry {
     WallData* wall_data();
   private:   
    QPolygonF polygon_;
-   WallData* wall_data_;
+   //WallData* wall_data_;
 };
 #endif

@@ -5,6 +5,8 @@
 class AuxiliaryLineGeometry :public BaseGeometry {
   public:
     AuxiliaryLineGeometry();
+    AuxiliaryLineGeometry(const AuxiliaryLineGeometry& value);
+    ~AuxiliaryLineGeometry();
     AuxiliaryLineGeometry(QPointF point1,QPointF point2);
     void SetLineGeometry(QPointF point1, QPointF point2);
 
