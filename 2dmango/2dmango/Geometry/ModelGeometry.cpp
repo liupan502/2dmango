@@ -9,6 +9,17 @@ ModelGeometry::ModelGeometry(ModelData* data) :BaseGeometry(data) {
   int a = 0;
 }
 
+ModelGeometry::ModelGeometry(std::string modelId) {
+  ModelData* tmp_model_data = GetModelInfo(modelId);
+  model_name_ = tmp_model_data->model_name();
+  set_width(tmp_model_data->width());
+  set_height(tmp_model_data->height());
+  set_length(tmp_model_data->length());
+
+  model_id_ = modelId;
+  
+}
+
 void ModelGeometry::Draw(QPainter* painter) {
   if (img.isNull()) {
     return;
