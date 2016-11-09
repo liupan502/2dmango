@@ -10,6 +10,7 @@
 #include "Geometry/DoubleDoorGeometry.h"
 #include "Geometry/MoveDoorGeometry.h"
 #include "Geometry/WindowGeometry.h"
+#include "Geometry/ModelGeometry.h"
 QJsonObject DesignData::ToJson(){
   QJsonObject object;
   QJsonObject parent_object = BaseData::ToJson();
@@ -112,6 +113,7 @@ WallData* DesignData::AddWall(){
   std::string new_wall_name = generte_wall_name();
   WallData* new_wall = new WallData() ;
   new_wall->set_name(new_wall_name);
+  new_wall->set_is_tmp_data(false);
   wall_data_map_.insert(make_pair(new_wall_name,new_wall));
   return new_wall;
 }
@@ -120,6 +122,7 @@ CornerData* DesignData::AddCorner(){
   std::string corner_name = generate_corner_name();
   CornerData* new_corner_data = new CornerData();
   new_corner_data->set_name(corner_name);
+  new_corner_data->set_is_tmp_data(false);
   corner_data_map_.insert(make_pair(corner_name,new_corner_data));
   return new_corner_data;
 }
@@ -128,6 +131,7 @@ RoomData* DesignData::AddRoom(){
   RoomData* new_room_data = new RoomData();
   std::string new_room_name = generate_room_name();
   new_room_data->set_name(new_room_name);
+  new_room_data->set_is_tmp_data(false);
   room_data_map_.insert(make_pair(new_room_name,new_room_data));
   return new_room_data;
 }
@@ -525,11 +529,23 @@ WallData* DesignData::find_start_wall(std::set<WallData*> excludeWalls) {
 void DesignData::AddOpening(OpeningData* openingData) {
   if (openingData == NULL || openingData->name() != "")
     return;
-  //std::map<std::string, OpeningData*>::iterator it = opening_data_map_.find(openingData->name());
-  //assert(it == opening_data_map_.end());
+  std::map<std::string, OpeningData*>::iterator it = opening_data_map_.find(openingData->name());
+  assert(it == opening_data_map_.end());
   std::string opening_name = generate_opening_name();
   openingData->set_name(opening_name);
+  openingData->set_is_tmp_data(false);
   opening_data_map_.insert(make_pair(openingData->name(),openingData));
+}
+
+void DesignData::AddModel(ModelData* modelData) {
+  if (modelData == NULL) {
+    return;
+  }
+  if (model_data_map_.find(modelData->name()) != model_data_map_.end()) {
+    return;
+  }
+  modelData->set_is_tmp_data(false);
+  model_data_map_.insert(make_pair(modelData->name(), modelData));
 }
 
 std::string DesignData::generate_opening_name() {
@@ -597,6 +613,17 @@ std::vector<InnerWallGeometry*> DesignData::GetInnerWallGeometry() {
   }
 
   return result;
+}
+
+std::vector<ModelGeometry> DesignData::GetModelGeometry() {
+  std::vector<ModelGeometry> model_geometrys;
+  std::map<std::string, ModelData*>::iterator it;
+  for (it = model_data_map_.begin(); it != model_data_map_.end(); it++) {
+    ModelData* model_data = it->second;
+    ModelGeometry model_geometry(model_data);
+    model_geometrys.push_back(model_geometry);
+  }
+  return model_geometrys;
 }
 
 

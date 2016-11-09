@@ -26,6 +26,13 @@ BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
   }*/
 }
 
+BaseGeometry::~BaseGeometry(){
+  if(data_ != NULL && data_->is_tmp_data()) {
+    delete data_;
+    data_ = NULL;
+  }
+}
+
 void BaseGeometry::Draw(QPainter* painter) {
 
   if (data_ == NULL ||  !is_visible())
@@ -121,6 +128,10 @@ void BaseGeometry::set_length(float length) {
     return;
   }
   data_->set_length(length);  
+}
+
+BaseGeometryData* BaseGeometry::data() {
+  return data_;
 }
 
 float BaseGeometry::width() {

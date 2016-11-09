@@ -24,6 +24,7 @@ class InnerWallGeometry;
 //const int MAX_ROOM_NUM = 1000;
 
 class InnerWallGeometry;
+class ModelGeometry;
 class DesignData :public BaseData {
   public:
     
@@ -42,6 +43,8 @@ class DesignData :public BaseData {
     std::vector<WallGeometry> ComputeWallGeometrys();
 
     std::vector<InnerWallGeometry*> GetInnerWallGeometry();
+
+    std::vector<ModelGeometry> GetModelGeometry();
 
     bool FindConnectedPoints(QPointF currentPoint, std::string wallName,std::vector<QPointF>& points);
 
@@ -64,6 +67,8 @@ class DesignData :public BaseData {
 
     void AddOpening(OpeningData* openingData);
 
+
+    void AddModel(ModelData* data);
     //std::string GenerateOpeningName();
 
   private:

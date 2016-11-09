@@ -5,7 +5,7 @@ HotRegionGeometry::HotRegionGeometry(QPointF center, qreal x,qreal y):BaseGeomet
   ellipse_path->set_brush(QBrush(QColor(255,123,0,50)));  
   paths_.push_back(ellipse_path);
   //is_visible_ = false;
-  data_ = NULL;
+  data_ = new BaseGeometryData();
   set_is_visible(false);
   
 }
@@ -26,7 +26,7 @@ HotRegionGeometry::HotRegionGeometry(const HotRegionGeometry& value) {
 }
 
 HotRegionGeometry::HotRegionGeometry() {
-  data_ = new BaseGeometryData();
+  data_ = NULL;
   set_is_visible(false);
 }
 

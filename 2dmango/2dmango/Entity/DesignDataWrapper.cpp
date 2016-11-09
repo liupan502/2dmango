@@ -3,6 +3,7 @@
 #include "Geometry/SingleDoorGeometry.h"
 #include "Geometry/MoveDoorGeometry.h"
 #include "Geometry/WindowGeometry.h"
+#include "Geometry/ModelGeometry.h"
 #include <QJsonObject>
 #include <QJsonDocument>
 
@@ -31,6 +32,10 @@ void DesignDataWrapper::Draw(QPainter* painter){
 
   for (int i = 0; i < inner_wall_geometrys_.size(); i++) {
     inner_wall_geometrys_[i]->Draw(painter);
+  }
+
+  for (int i = 0; i < model_geometrys_.size(); i++) {
+    model_geometrys_[i].Draw(painter);
   }
 
   if (current_selected_geometry_ != NULL) {
@@ -71,6 +76,8 @@ void DesignDataWrapper::UpdateGeometry() {
   }
   inner_wall_geometrys_.clear();
   inner_wall_geometrys_ = design_data_->GetInnerWallGeometry();
+  
+  model_geometrys_ = design_data_->GetModelGeometry();
 }
 
 bool DesignDataWrapper::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& points) {
@@ -163,21 +170,24 @@ void DesignDataWrapper::AddCurrentData() {
     case GEOMETRY_OPENING:
       insert_opening_data((InnerWallGeometry*)current_selected_geometry_);
       break;
+    case GEOMETRY_MODEL:
+      insert_model_data((ModelData*)current_selected_geometry_->data());
+      break;
     default:
       break;
   }
 }
 
 void DesignDataWrapper::insert_opening_data(InnerWallGeometry* geometry) {
-  OPENING_TYPE opening_type = geometry->opening_type();
+  //OPENING_TYPE opening_type = geometry->opening_type();
   WallData* wall_data = FindWallWithInnerWallGeometry(geometry);
   if (wall_data == NULL) {
     return;
   }
   //std::string opening_name = design_data_->GenerateOpeningName();
-  OpeningData* data = NULL;
+  OpeningData* data = (OpeningData*)(geometry->data());
 
-  switch (opening_type) {
+  /*switch (opening_type) {
     case OPENING_SINGLE_DOOR:
       data = new OpeningData(*(SingleDoorGeometry*)geometry);
       break;
@@ -192,7 +202,7 @@ void DesignDataWrapper::insert_opening_data(InnerWallGeometry* geometry) {
       break;
     default:
       break;
-  }
+  }*/
 
   
 
@@ -232,4 +242,8 @@ std::string DesignDataWrapper::GetDesignData() {
   //outfile << result << std::endl;
   //outfile.close();
   return result;
+}
+
+void DesignDataWrapper::insert_model_data(ModelData* data) {
+  design_data_->AddModel(data);
 }

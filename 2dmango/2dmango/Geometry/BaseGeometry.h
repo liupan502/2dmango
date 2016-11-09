@@ -18,6 +18,7 @@ typedef enum GEOMETRY_TYPE {
 class BaseGeometry {
   public:
    BaseGeometry(BaseGeometryData* data = NULL);
+   virtual ~BaseGeometry();
    virtual void Draw(QPainter* painter);
    virtual void MoveTo(QPointF position);
    virtual void Translate(QPointF offset);
@@ -39,6 +40,7 @@ class BaseGeometry {
    float length();
    QPointF position();
    float rotation();
+   BaseGeometryData* data();
    GEOMETRY_TYPE geometry_type();
 
  protected:

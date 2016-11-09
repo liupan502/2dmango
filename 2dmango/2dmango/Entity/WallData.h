@@ -54,6 +54,7 @@ class WallData :public BaseGeometryData{
      set_width(DEFAULT_WALL_WIDTH);
 	   status_ = NONE_STAUS_WALL_DATA;
      data_type_ = WALL_INSIDE_DATA;
+     //is_tmp_data_ = false;
    }
 
     void AddOpening(std::string opening_name);

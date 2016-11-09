@@ -35,6 +35,10 @@ class BaseData {
       return name_;
     }
 
+    void set_is_tmp_data(bool is_tmp_data) {
+      is_tmp_data_ = is_tmp_data;
+    }
+
     bool is_tmp_data() {
       return is_tmp_data_;
     }

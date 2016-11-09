@@ -5,15 +5,18 @@
 #include "CornerData.h"
 #include "WallData.h"
 #include "RoomData.h"
+#include "OpeningData.h"
+#include "ModelData.h"
 #include <QPainter>
 #include "Geometry/HotRegionGeometry.h"
 #include "Geometry/AuxiliaryLineGeometry.h"
+#include "Geometry/ModelGeometry.h"
 
 #include <string>
 #include <vector>
 
 class InnerWallGeometry;
-
+//class ModelGeometry;
 class DesignDataWrapper {
 
   public:
@@ -94,15 +97,20 @@ class DesignDataWrapper {
    int design_data_id_;
    std::vector<WallGeometry> wall_geometrys_;
    std::vector<InnerWallGeometry*> inner_wall_geometrys_;
+
    HotRegionGeometry* hot_region_;
 
    std::vector<AuxiliaryLineGeometry> auxiliary_lines_;
+
+   std::vector<ModelGeometry> model_geometrys_;
 
    BaseGeometry* current_selected_geometry_;
 
    void delete_current_selected_geometry();
    
-   void insert_opening_data(InnerWallGeometry* innerWallGeometry);
+   void insert_opening_data(InnerWallGeometry* geometry);
+
+   void insert_model_data(ModelData* data);
 
    WallData* FindWallWithInnerWallGeometry(InnerWallGeometry* innerWallGeometry);
 
