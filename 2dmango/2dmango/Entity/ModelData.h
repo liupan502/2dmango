@@ -10,6 +10,8 @@ public:
   void set_model_name(std::string name);
   int model_type();
   void set_model_type(int modelType);
+  virtual QJsonObject ToJson();
+  virtual void InitWithObject(QJsonObject& jsonObject);
 private:
   int model_type_;
   std::string model_name_;

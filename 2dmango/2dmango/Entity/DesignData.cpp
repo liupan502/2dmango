@@ -47,6 +47,15 @@ QJsonObject DesignData::ToJson(){
   }
   object.insert("rooms", QJsonValue(room_data_array));
 
+  QJsonArray model_data_array;
+  for (std::map<std::string, ModelData*>::iterator it = model_data_map_.begin();
+    it != model_data_map_.end(); it++) {
+    ModelData* model_data = it->second;
+    QJsonObject model_data_value = model_data->ToJson();
+    model_data_array.append(model_data_value);
+  }
+  object.insert("models", QJsonValue(model_data_array));
+
 
   return object;
 }
@@ -82,17 +91,28 @@ void DesignData::InitWithObject(QJsonObject& jsonObject) {
       opening_data->InitWithObject(opening_object);
       opening_data_map_.insert(make_pair(opening_data->name(), opening_data));
     }
+  }
 
-    if (jsonObject.contains("rooms")) {
-      QJsonArray room_data_array = jsonObject["rooms"].toArray();
-      for (int i = 0; i < room_data_array.size(); i++) {
-        QJsonObject room_object = room_data_array[i].toObject();
-        RoomData* room_data = new RoomData();
-        room_data->InitWithObject(room_object);
-        room_data_map_.insert(make_pair(room_data->name(), room_data));
-      }
+  if(jsonObject.contains("rooms")) {
+    QJsonArray room_data_array = jsonObject["rooms"].toArray();
+    for (int i = 0; i < room_data_array.size(); i++) {
+      QJsonObject room_object = room_data_array[i].toObject();
+      RoomData* room_data = new RoomData();
+      room_data->InitWithObject(room_object);
+      room_data_map_.insert(make_pair(room_data->name(), room_data));
     }
   }
+  
+  if (jsonObject.contains("models")) {
+    QJsonArray model_data_array = jsonObject["models"].toArray();
+    for (int i = 0; i < model_data_array.size(); i++) {
+      QJsonObject model_object = model_data_array[i].toObject();
+      ModelData* model_data = new ModelData();
+      model_data->InitWithObject(model_object);
+      model_data_map_.insert(make_pair(model_data->name(),model_data));
+    }
+  }
+  
 }
 
 void DesignData::update_design_data() {
