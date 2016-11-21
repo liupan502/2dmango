@@ -9,7 +9,9 @@ public:
   MoveDoorGeometry(OpeningData* data );
   //MoveDoorGeometry(float width, float length, OpeningData* data = NULL);
   ~MoveDoorGeometry();  
-  
+
+protected:
+  void build_geometry();
 
 private:
   //float width_;

@@ -23,6 +23,7 @@ protected:
   //virtual void init_with_data(OpeningData* data);
   void compute_position(QPointF& currentPosition);
   OPENING_TYPE opening_type_;
+  virtual void build_geometry();
   //OpeningData* opening_data_;
   //void virtual update_geometry();
 private:

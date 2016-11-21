@@ -11,7 +11,8 @@ public:
   //WindowGeometry(float width, float length,OpeningData* data = NULL);
   ~WindowGeometry();
   
-
+protected:
+  virtual void build_geometry();
 private:
   //float width_, length_;
   PolygonPath* path1_;

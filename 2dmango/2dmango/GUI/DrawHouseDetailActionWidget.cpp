@@ -56,7 +56,7 @@ void DrawHouseDetailActionWidget::OnDoubleDoorBtnClicked() {
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
   OpeningData* opening_data = new OpeningData(OPENING_DOUBLE_DOOR);
   opening_data->set_width(DEFAULT_WALL_WIDTH);
-  opening_data->set_height(2 * DEFAULT_SINGLE_DOOR_LENGTH);
+  opening_data->set_length(2 * DEFAULT_SINGLE_DOOR_LENGTH);
   DoubleDoorGeometry* double_door_geometry = new DoubleDoorGeometry(opening_data);
   instance->AddGeometry(double_door_geometry);
 }
@@ -65,7 +65,7 @@ void DrawHouseDetailActionWidget::OnMoveDoorBtnClicked() {
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
   OpeningData* opening_data = new OpeningData(OPENING_MOVE_DOOR);
   opening_data->set_width(DEFAULT_WALL_WIDTH);
-  opening_data->set_height(1.5 * DEFAULT_SINGLE_DOOR_LENGTH);
+  opening_data->set_length(1.5 * DEFAULT_SINGLE_DOOR_LENGTH);
   MoveDoorGeometry* move_door_geometry = new MoveDoorGeometry(opening_data);
   instance->AddGeometry(move_door_geometry);
 }
@@ -74,7 +74,7 @@ void DrawHouseDetailActionWidget::OnSingleDoorBtnClicked() {
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
   OpeningData* opening_data = new OpeningData(OPENING_SINGLE_DOOR);
   opening_data->set_width(DEFAULT_WALL_WIDTH);
-  opening_data->set_height(DEFAULT_SINGLE_DOOR_LENGTH);
+  opening_data->set_length(DEFAULT_SINGLE_DOOR_LENGTH);
   SingleDoorGeometry* single_door_geometry = new SingleDoorGeometry(opening_data);
   instance->AddGeometry(single_door_geometry);
 }
@@ -83,7 +83,7 @@ void DrawHouseDetailActionWidget::OnWindowBtnClicked() {
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
   OpeningData* opening_data = new OpeningData(OPENING_WINDOW);
   opening_data->set_width(DEFAULT_WALL_WIDTH);
-  opening_data->set_height(DEFAULT_SINGLE_DOOR_LENGTH);
+  opening_data->set_length(DEFAULT_SINGLE_DOOR_LENGTH);
   WindowGeometry* window_geometry = new WindowGeometry(opening_data);
   instance->AddGeometry(window_geometry);
 }

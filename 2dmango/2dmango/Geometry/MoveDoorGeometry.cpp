@@ -16,6 +16,7 @@ MoveDoorGeometry::MoveDoorGeometry(OpeningData* openingData) :InnerWallGeometry(
   
   opening_data_ = openingData;*/
   opening_type_ = OPENING_MOVE_DOOR;
+  build_geometry();
 }
 
 /*MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
@@ -51,6 +52,23 @@ MoveDoorGeometry::MoveDoorGeometry(OpeningData* openingData) :InnerWallGeometry(
   }
   
 }*/
+
+void MoveDoorGeometry::build_geometry() {
+  QPolygonF path1_polygon = build_path1_polygon();
+  path1_ = new PolygonPath(path1_polygon);
+  path1_->set_pen(PenFactory::pen1());
+  paths_.push_back(path1_);
+
+  QPolygonF path2_polygon = build_path2_polygon();
+  path2_ = new PolygonPath(path2_polygon);
+  path2_->set_pen(PenFactory::pen1());
+  paths_.push_back(path2_);
+
+  QPolygonF path3_polygon = build_path3_polygon();
+  path3_ = new PolygonPath(path3_polygon);
+  path3_->set_pen(PenFactory::pen1());
+  paths_.push_back(path3_);
+}
 
 QPolygonF MoveDoorGeometry::build_path1_polygon() {
   QPolygonF polygon;

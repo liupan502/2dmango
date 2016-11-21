@@ -12,7 +12,8 @@ public:
   //DoubleDoorGeometry(float width, float length,OpeningData* data = NULL);
   virtual ~DoubleDoorGeometry();
   
-
+protected:
+  virtual void build_geometry();
 private:
   //float width_;
   //float length_;

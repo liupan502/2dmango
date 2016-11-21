@@ -16,7 +16,10 @@ SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeome
   }
   opening_data_ = openingData;*/
   opening_type_ = OPENING_SINGLE_DOOR;
+  build_geometry();
 }
+
+
 
 SingleDoorGeometry::~SingleDoorGeometry(){
   if (path1_ != NULL) {
@@ -55,7 +58,7 @@ SingleDoorGeometry::~SingleDoorGeometry(){
   }
 }*/
 
-void SingleDoorGeometry::build_geometry(float width, float length) {
+void SingleDoorGeometry::build_geometry() {
   QPolygonF polygon1 = build_path1_polygon();
   path1_ = new PolygonPath(polygon1);
   path1_->set_pen(PenFactory::pen1());

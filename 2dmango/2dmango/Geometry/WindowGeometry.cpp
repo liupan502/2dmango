@@ -4,18 +4,10 @@
 #include "Entity/OpeningData.h"
 
 WindowGeometry::WindowGeometry(OpeningData* openingData) :InnerWallGeometry(openingData) {
-  /*if (openingData != NULL) {
-    width_ = openingData->width();
-    length_ = openingData->length();
-    //QPointF position = QPointF(openingData->position().x(), openingData->position().y());
-    //MoveTo(position);
-  }
-  else {
-    width_ = 0.0;
-    length_ = 0.0;
-  }*/
-  //opening_data_ = openingData;
+  
   opening_type_ = OPENING_WINDOW;
+  QPolygonF path1_polygon = build_path1_polygon();
+  build_geometry(); 
 }
 
 /*WindowGeometry::WindowGeometry(float width, float length,OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
@@ -52,6 +44,18 @@ WindowGeometry::WindowGeometry(OpeningData* openingData) :InnerWallGeometry(open
   }
   
 }*/
+
+void WindowGeometry::build_geometry() {
+  QPolygonF path1_polygon = build_path1_polygon();
+  path1_ = new PolygonPath(path1_polygon);
+  path1_->set_pen(PenFactory::pen1());
+  paths_.push_back(path1_);
+
+  QPolygonF path2_polygon = build_path2_polygon();
+  path2_ = new PolygonPath(path2_polygon);
+  path2_->set_pen(PenFactory::pen1());
+  paths_.push_back(path2_);
+}
 
 WindowGeometry::~WindowGeometry() {
   if (path1_ != NULL) {

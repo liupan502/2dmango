@@ -19,6 +19,7 @@ DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* openingData) :InnerWallGeome
   
   opening_data_ = openingData;*/
   opening_type_ = OPENING_DOUBLE_DOOR;
+  build_geometry();
 };
 
 /*DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* openingData): InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {
@@ -86,6 +87,53 @@ DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* openingData) :InnerWallGeome
   }
 
 }*/
+
+void DoubleDoorGeometry::build_geometry() {
+  QPolygonF path1_polygon = build_path1_polygon();
+  path1_ = new PolygonPath(path1_polygon);
+  path1_->set_pen(PenFactory::pen1());
+  paths_.push_back(path1_);
+
+  QPolygonF path2_polygon = build_path2_polygon();
+  path2_ = new PolygonPath(path2_polygon);
+  path2_->set_pen(PenFactory::pen1());
+  paths_.push_back(path2_);
+
+  contianer_path1_ = new ContianerPath();
+
+  std::vector<QPointF> path3_points = build_path3_points();
+  path3_ = new LinesPath(path3_points);
+  contianer_path1_->AddSubPath(path3_);
+
+  QRectF rect1;
+  qreal start_angle1, sweep_length1;
+  QPointF start_point1;
+  build_path4_params(rect1, start_angle1, sweep_length1, start_point1);
+  path4_ = new ArcPath(rect1, start_angle1, sweep_length1, start_point1);
+  contianer_path1_->AddSubPath(path4_);
+  contianer_path1_->set_pen(PenFactory::pen1());
+  paths_.push_back(contianer_path1_);
+
+  QPolygonF path6_polygon = build_path6_polygon();
+  path6_ = new PolygonPath(path6_polygon);
+  path6_->set_pen(PenFactory::pen1());
+  paths_.push_back(path6_);
+
+  contianer_path2_ = new ContianerPath();
+
+  std::vector<QPointF> path7_points = build_path7_points();
+  path7_ = new LinesPath(path7_points);
+  contianer_path2_->AddSubPath(path7_);
+
+  QRectF rect2;
+  qreal start_angle2, sweep_length2;
+  QPointF start_point2;
+  build_path8_params(rect2, start_angle2, sweep_length2, start_point2);
+  path8_ = new ArcPath(rect2, start_angle2, sweep_length2, start_point2);
+  contianer_path2_->AddSubPath(path8_);
+  contianer_path2_->set_pen(PenFactory::pen1());
+  paths_.push_back(contianer_path2_);
+}
 
 QPolygonF DoubleDoorGeometry::build_path1_polygon() {
   QPolygonF polygon;

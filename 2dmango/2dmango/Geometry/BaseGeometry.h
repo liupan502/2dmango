@@ -59,7 +59,7 @@ class BaseGeometry {
    GEOMETRY_TYPE geometry_type_;
    
    virtual void update_transform();
-   virtual void update_geometry();
+   virtual void update_geometry();   
  private:  
    
    

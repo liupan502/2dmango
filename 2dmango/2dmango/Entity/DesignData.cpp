@@ -546,6 +546,7 @@ WallData* DesignData::find_start_wall(std::set<WallData*> excludeWalls) {
   return start_wall;
 }
 
+// 添加墙洞
 void DesignData::AddOpening(OpeningData* openingData) {
   if (openingData == NULL || openingData->name() != "")
     return;
@@ -557,6 +558,7 @@ void DesignData::AddOpening(OpeningData* openingData) {
   opening_data_map_.insert(make_pair(openingData->name(),openingData));
 }
 
+// 添加模型
 void DesignData::AddModel(ModelData* modelData) {
   if (modelData == NULL) {
     return;
@@ -568,6 +570,7 @@ void DesignData::AddModel(ModelData* modelData) {
   model_data_map_.insert(make_pair(modelData->name(), modelData));
 }
 
+// 生成墙洞的名称
 std::string DesignData::generate_opening_name() {
   std::vector<std::string> names;
   std::map<std::string, OpeningData*>::iterator it;
@@ -602,6 +605,7 @@ DesignData::~DesignData() {
 
 }
 
+// 获取墙内物体的几何数据
 std::vector<InnerWallGeometry*> DesignData::GetInnerWallGeometry() {
   
   std::vector<InnerWallGeometry*> result;
@@ -635,6 +639,7 @@ std::vector<InnerWallGeometry*> DesignData::GetInnerWallGeometry() {
   return result;
 }
 
+// 获取场景中模型的几何数据
 std::vector<ModelGeometry> DesignData::GetModelGeometry() {
   std::vector<ModelGeometry> model_geometrys;
   std::map<std::string, ModelData*>::iterator it;

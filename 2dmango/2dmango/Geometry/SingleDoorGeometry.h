@@ -15,7 +15,7 @@ public:
 
 protected:
   virtual void update_geometry();
-
+  virtual void build_geometry();
 private:
   //float width_;
   //float length_;
@@ -29,7 +29,7 @@ private:
   
 
 
-  void build_geometry(float width, float length);
+  
   QPolygonF build_path1_polygon();
   QPolygonF build_path2_polygon();
   void build_path3(QRectF& rect,qreal& startAngle,qreal& sweepLength,QPointF& startPoint);

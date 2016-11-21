@@ -8,6 +8,7 @@ BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
   transform_ = QTransform();
   data_ = data;
   geometry_type_ = GEOMETRY_NONE;
+  
   /*if (data != NULL) {
     set_width(data->width());
     set_height(data->height());
@@ -25,6 +26,8 @@ BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
     set_position(QPointF(0.0,0.0));
   }*/
 }
+
+
 
 BaseGeometry::~BaseGeometry(){
   if(data_ != NULL && data_->is_tmp_data()) {
