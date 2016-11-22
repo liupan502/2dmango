@@ -25,7 +25,7 @@ class BaseGeometry {
    //virtual QTransform ()
    void set_is_visible(bool is_visible);
    bool is_visible();
-   virtual bool IsPointIn(QPointF point);
+   virtual bool IsPointIn(const QPointF& point);
    virtual QRectF Rect();
    //BaseGeometry();
 

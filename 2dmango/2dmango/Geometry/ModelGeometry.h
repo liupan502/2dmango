@@ -12,6 +12,7 @@ public:
   ModelGeometry(ModelData* data = NULL);
   ModelGeometry(std::string modelId);
   virtual void Draw(QPainter* painter);
+  virtual bool IsPointIn(const QPointF& point);
 
 protected:
   QImage img;

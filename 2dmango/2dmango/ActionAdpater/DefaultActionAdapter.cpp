@@ -25,7 +25,12 @@ void DefaultActionAdapter::OnMouseRelease(QMouseEvent* event) {
 
 void DefaultActionAdapter::OnMousePress(QMouseEvent* event) {
   left_mouse_down_ = true;
-  
+  QPointF point = QPointF(event->pos());
+  DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
+  bool is_selected_geometry = instance->TrySelecteGeometry(point);
+  if (is_selected_geometry) {
+    BaseGeometry* selected_geometry = instance->current_selected_geometry();
+  }
 }
 
 void DefaultActionAdapter::OnMouseMove(QMouseEvent* event) {

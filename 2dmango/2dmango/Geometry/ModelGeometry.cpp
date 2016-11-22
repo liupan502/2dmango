@@ -38,3 +38,7 @@ void ModelGeometry::Draw(QPainter* painter) {
   painter->drawImage(target_rect, img, img_rect);
   painter->restore();
 }
+
+bool ModelGeometry::IsPointIn(const QPointF& point) {
+  return false;
+}

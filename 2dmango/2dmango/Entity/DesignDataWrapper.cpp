@@ -38,7 +38,7 @@ void DesignDataWrapper::Draw(QPainter* painter){
     model_geometrys_[i].Draw(painter);
   }
 
-  if (current_selected_geometry_ != NULL) {
+  if (current_selected_geometry_ != NULL && current_selected_geometry_->data()->is_tmp_data()) {
     current_selected_geometry_->Draw(painter);
   }
 
@@ -246,4 +246,39 @@ std::string DesignDataWrapper::GetDesignData() {
 
 void DesignDataWrapper::insert_model_data(ModelData* data) {
   design_data_->AddModel(data);
+}
+
+bool DesignDataWrapper::TrySelecteGeometry(const QPointF& point) {
+  bool result = false;
+
+  for (int i = 0; i < model_geometrys_.size(); i++) {
+    if (model_geometrys_[i].IsPointIn(point)) {
+      current_selected_geometry_ = (BaseGeometry*)(&(model_geometrys_[i]));
+      result = true;
+      break;
+    }
+  }
+  if (result) {
+    return result;
+  }
+
+  for (int i = 0; i < inner_wall_geometrys_.size(); i++) {
+    if (inner_wall_geometrys_[i]->IsPointIn(point)) {
+      current_selected_geometry_ = (BaseGeometry*)(inner_wall_geometrys_[i]);
+      result = true;
+      break;
+    }
+  }
+  if (result) {
+    return result;
+  }
+
+  for (int i = 0; i < wall_geometrys_.size(); i++) {
+    if (wall_geometrys_[i].IsPointIn(point)) {
+      current_selected_geometry_ = (BaseGeometry*)(&(wall_geometrys_[i]));
+      result = true;
+      break;
+    }
+  }
+  return result;
 }

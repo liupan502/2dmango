@@ -67,7 +67,7 @@ bool BaseGeometry::is_visible() {
   return data_== NULL?false:data_->is_visible();
 }
 
-bool BaseGeometry::IsPointIn(QPointF point) {
+bool BaseGeometry::IsPointIn(const QPointF& point) {
   bool result = false;
   for (int i = 0; i < paths_.size(); i++) {
     QPainterPath path = paths_[i]->GetPainterPath();
