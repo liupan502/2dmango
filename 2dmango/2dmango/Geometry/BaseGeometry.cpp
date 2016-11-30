@@ -2,29 +2,11 @@
 #include "Entity/BaseData.h"
 #include <math.h>
 
-BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
-  //is_visible_ = true;
+BaseGeometry::BaseGeometry(BaseGeometryData* data ) {  
   index_ = 0;
   transform_ = QTransform();
   data_ = data;
   geometry_type_ = GEOMETRY_NONE;
-  
-  /*if (data != NULL) {
-    set_width(data->width());
-    set_height(data->height());
-    set_length(data->length());
-
-    set_rotation(data->rotation_z());
-    set_position(QPointF(data->position().x(), data->position().y()));
-  }
-  else {
-    set_width(0.0);
-    set_height(0.0);
-    set_length(0.0);
-
-    set_rotation(0.0);
-    set_position(QPointF(0.0,0.0));
-  }*/
 }
 
 
@@ -39,10 +21,7 @@ BaseGeometry::~BaseGeometry(){
 void BaseGeometry::Draw(QPainter* painter) {
 
   if (data_ == NULL ||  !is_visible())
-    return;
-  /*if (!is_visible_) {
-    return;
-  }*/
+    return; 
  
   for(int i=0;i<paths_.size();i++){    
     QPen pen = paths_[i]->pen();

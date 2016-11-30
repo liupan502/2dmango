@@ -17,6 +17,7 @@ SingleDoorGeometry::SingleDoorGeometry(OpeningData* openingData) :InnerWallGeome
   opening_data_ = openingData;*/
   opening_type_ = OPENING_SINGLE_DOOR;
   build_geometry();
+  update_geometry();
 }
 
 

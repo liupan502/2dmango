@@ -6,8 +6,10 @@
 WindowGeometry::WindowGeometry(OpeningData* openingData) :InnerWallGeometry(openingData) {
   
   opening_type_ = OPENING_WINDOW;
-  QPolygonF path1_polygon = build_path1_polygon();
+  //QPolygonF path1_polygon = build_path1_polygon();
   build_geometry(); 
+  
+  update_geometry();
 }
 
 /*WindowGeometry::WindowGeometry(float width, float length,OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {

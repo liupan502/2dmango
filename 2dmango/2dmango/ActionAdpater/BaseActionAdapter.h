@@ -3,9 +3,17 @@
 #include <QMouseEvent>
 #include <QEvent>
 #include "Entity/DesignDataWrapper.h"
+
+
+enum MOVESTATUS {
+  NO_MOVE,
+  DOWN_MOVE,
+  UP_MOVE
+};
 class BaseActionAdapter:public QObject {
   public:
-    //BaseMouseAdapter();
+    BaseActionAdapter();
+
     virtual void OnMouseMove(QMouseEvent* event);
 
     virtual void OnMousePress(QMouseEvent* event);
@@ -13,6 +21,10 @@ class BaseActionAdapter:public QObject {
     virtual void OnMouseRelease(QMouseEvent* event);
 
     virtual void OnMouseLeave(QEvent* event);
+
+protected:
+  bool is_left_mouse_down_;
+  MOVESTATUS move_status_;
   private:
     
 };

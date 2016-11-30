@@ -67,7 +67,8 @@ class DesignDataWrapper {
 
     void UpdateRoomInfo();
 
-    void AddGeometry(BaseGeometry* selected);
+    //void AddGeometry(BaseGeometry* selected);
+    void set_current_selected_geometry(BaseGeometry* selected);
 
     void AddCurrentData();
 

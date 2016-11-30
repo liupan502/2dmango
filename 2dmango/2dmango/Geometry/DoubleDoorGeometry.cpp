@@ -20,6 +20,7 @@ DoubleDoorGeometry::DoubleDoorGeometry(OpeningData* openingData) :InnerWallGeome
   opening_data_ = openingData;*/
   opening_type_ = OPENING_DOUBLE_DOOR;
   build_geometry();
+  update_geometry();
 };
 
 /*DoubleDoorGeometry::DoubleDoorGeometry(float width, float length, OpeningData* openingData): InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {

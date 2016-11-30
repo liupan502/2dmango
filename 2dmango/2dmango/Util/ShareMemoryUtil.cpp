@@ -87,7 +87,6 @@ void DesignUpdater::UpdateDesignData() {
 
   }
   else {
-
   }
 }
 

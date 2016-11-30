@@ -8,6 +8,7 @@
 
 OpeningData::OpeningData(OPENING_TYPE openingType, std::string name ):BaseGeometryData(name){
   set_name(name);
+  
   opening_type_ = openingType;
 }
 

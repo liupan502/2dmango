@@ -17,6 +17,7 @@ MoveDoorGeometry::MoveDoorGeometry(OpeningData* openingData) :InnerWallGeometry(
   opening_data_ = openingData;*/
   opening_type_ = OPENING_MOVE_DOOR;
   build_geometry();
+  update_geometry();
 }
 
 /*MoveDoorGeometry::MoveDoorGeometry(float width, float length, OpeningData* openingData) : InnerWallGeometry(width,length, (BaseGeometryData*)openingData) {

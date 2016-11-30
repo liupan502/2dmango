@@ -3,6 +3,8 @@
 
 #include "BaseActionAdapter.h"
 #include "Geometry/BaseGeometry.h"
+
+
 class DefaultActionAdapter : public BaseActionAdapter {
   public:
     DefaultActionAdapter();

@@ -21,10 +21,8 @@ void ModelSelectWidget::Init(std::map<std::string, std::string> parameters) {
   models_table_->setItemDelegate(item_delegate);
 
   ModelSelectItemModel* item_model = new ModelSelectItemModel(this);
-  std::vector<std::string> model_ids;
-  model_ids.push_back("desk.png");
-  model_ids.push_back("desk.png");
-  model_ids.push_back("desk.png");
+  std::map<std::string, std::string> params;
+  std::vector<std::string> model_ids = GetModelIds(params);  
   item_model->set_data(model_ids);
   
   
@@ -52,10 +50,10 @@ void ModelSelectWidget::model_selected(const QModelIndex &index) {
   int row = index.row();
   int col = index.column();
   QString model_id = index.model()->data(index, Qt::DisplayRole).toString();
-  ModelData* model_data = GetModelInfo();
+  ModelData* model_data = GetModelInfo(model_id.toStdString());
   ModelGeometry* model_geometry = new ModelGeometry(model_data);
   DesignDataWrapper* instance = DesignDataWrapper::GetInstance();
-  instance->AddGeometry(model_geometry);
+  instance->set_current_selected_geometry(model_geometry);
 }
 
 void ModelSelectWidget::test_slots() {

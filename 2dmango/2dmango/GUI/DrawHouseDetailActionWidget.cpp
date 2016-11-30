@@ -57,8 +57,9 @@ void DrawHouseDetailActionWidget::OnDoubleDoorBtnClicked() {
   OpeningData* opening_data = new OpeningData(OPENING_DOUBLE_DOOR);
   opening_data->set_width(DEFAULT_WALL_WIDTH);
   opening_data->set_length(2 * DEFAULT_SINGLE_DOOR_LENGTH);
+  opening_data->set_height(180);
   DoubleDoorGeometry* double_door_geometry = new DoubleDoorGeometry(opening_data);
-  instance->AddGeometry(double_door_geometry);
+  instance->set_current_selected_geometry(double_door_geometry);
 }
 
 void DrawHouseDetailActionWidget::OnMoveDoorBtnClicked() {
@@ -66,8 +67,9 @@ void DrawHouseDetailActionWidget::OnMoveDoorBtnClicked() {
   OpeningData* opening_data = new OpeningData(OPENING_MOVE_DOOR);
   opening_data->set_width(DEFAULT_WALL_WIDTH);
   opening_data->set_length(1.5 * DEFAULT_SINGLE_DOOR_LENGTH);
+  opening_data->set_height(180);
   MoveDoorGeometry* move_door_geometry = new MoveDoorGeometry(opening_data);
-  instance->AddGeometry(move_door_geometry);
+  instance->set_current_selected_geometry(move_door_geometry);
 }
 
 void DrawHouseDetailActionWidget::OnSingleDoorBtnClicked() {
@@ -75,8 +77,9 @@ void DrawHouseDetailActionWidget::OnSingleDoorBtnClicked() {
   OpeningData* opening_data = new OpeningData(OPENING_SINGLE_DOOR);
   opening_data->set_width(DEFAULT_WALL_WIDTH);
   opening_data->set_length(DEFAULT_SINGLE_DOOR_LENGTH);
+  opening_data->set_height(180);
   SingleDoorGeometry* single_door_geometry = new SingleDoorGeometry(opening_data);
-  instance->AddGeometry(single_door_geometry);
+  instance->set_current_selected_geometry(single_door_geometry);
 }
 
 void DrawHouseDetailActionWidget::OnWindowBtnClicked() {
@@ -84,6 +87,8 @@ void DrawHouseDetailActionWidget::OnWindowBtnClicked() {
   OpeningData* opening_data = new OpeningData(OPENING_WINDOW);
   opening_data->set_width(DEFAULT_WALL_WIDTH);
   opening_data->set_length(DEFAULT_SINGLE_DOOR_LENGTH);
+  opening_data->set_height(80);
+  
   WindowGeometry* window_geometry = new WindowGeometry(opening_data);
-  instance->AddGeometry(window_geometry);
+  instance->set_current_selected_geometry(window_geometry);
 }

@@ -122,8 +122,10 @@ bool DesignDataWrapper::FindEndPoint(WallData* wall_data, CornerData* corner, QP
   return design_data_->FindEndPoint(wall_data,corner, currentPoint, endPoint);
 }
 
-void DesignDataWrapper::AddGeometry(BaseGeometry* geometry) {
-  delete_current_selected_geometry();
+void DesignDataWrapper::set_current_selected_geometry(BaseGeometry* geometry) {
+  if (current_selected_geometry_ != NULL && current_selected_geometry_->data()->is_tmp_data()) {
+    delete_current_selected_geometry();
+  }  
   current_selected_geometry_ = geometry;
 }
 
@@ -253,7 +255,8 @@ bool DesignDataWrapper::TrySelecteGeometry(const QPointF& point) {
 
   for (int i = 0; i < model_geometrys_.size(); i++) {
     if (model_geometrys_[i].IsPointIn(point)) {
-      current_selected_geometry_ = (BaseGeometry*)(&(model_geometrys_[i]));
+      //current_selected_geometry_ = (BaseGeometry*)(&(model_geometrys_[i]));
+      set_current_selected_geometry((BaseGeometry*)(&(model_geometrys_[i])));
       result = true;
       break;
     }
@@ -264,7 +267,8 @@ bool DesignDataWrapper::TrySelecteGeometry(const QPointF& point) {
 
   for (int i = 0; i < inner_wall_geometrys_.size(); i++) {
     if (inner_wall_geometrys_[i]->IsPointIn(point)) {
-      current_selected_geometry_ = (BaseGeometry*)(inner_wall_geometrys_[i]);
+      //current_selected_geometry_ = (BaseGeometry*)(inner_wall_geometrys_[i]);
+      set_current_selected_geometry((BaseGeometry*)(inner_wall_geometrys_[i]));
       result = true;
       break;
     }
@@ -275,7 +279,8 @@ bool DesignDataWrapper::TrySelecteGeometry(const QPointF& point) {
 
   for (int i = 0; i < wall_geometrys_.size(); i++) {
     if (wall_geometrys_[i].IsPointIn(point)) {
-      current_selected_geometry_ = (BaseGeometry*)(&(wall_geometrys_[i]));
+      //current_selected_geometry_ = (BaseGeometry*)(&(wall_geometrys_[i]));
+      set_current_selected_geometry((BaseGeometry*)(&wall_geometrys_[i]));
       result = true;
       break;
     }
