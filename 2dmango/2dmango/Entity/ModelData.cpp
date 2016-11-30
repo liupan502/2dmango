@@ -5,6 +5,7 @@ ModelData::ModelData(std::string name) {
   set_name(name);
   model_name_ = "";
   model_type_ = 0;
+  geometry_type_ = GEOMETRY_MODEL;
 }
 
 std::string ModelData::model_name() {

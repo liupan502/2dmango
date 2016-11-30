@@ -7,7 +7,7 @@
 #include "Entity/OpeningData.h"
 
 InnerWallGeometry::InnerWallGeometry(OpeningData* data):BaseGeometry(data) {  
-  geometry_type_ = GEOMETRY_OPENING;
+  //geometry_type_ = GEOMETRY_OPENING;
   opening_type_ = OPENING_NONE;
   //this->build_geometry();
   //opening_data_ = NULL;

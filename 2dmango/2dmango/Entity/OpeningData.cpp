@@ -8,7 +8,7 @@
 
 OpeningData::OpeningData(OPENING_TYPE openingType, std::string name ):BaseGeometryData(name){
   set_name(name);
-  
+  geometry_type_ = GEOMETRY_OPENING;
   opening_type_ = openingType;
 }
 
@@ -17,6 +17,7 @@ OpeningData::OpeningData(SingleDoorGeometry geometry,std::string name): BaseGeom
   opening_type_ = OPENING_SINGLE_DOOR;
   init_geometry(geometry);
   set_height(DEFAULT_DOOR_HEIGHT);
+  geometry_type_ = GEOMETRY_OPENING;
   //position_.setZ(50);
 }
 
@@ -25,6 +26,7 @@ OpeningData::OpeningData(DoubleDoorGeometry geometry, std::string name) :BaseGeo
   opening_type_ = OPENING_DOUBLE_DOOR;
   init_geometry(geometry);
   set_height(DEFAULT_DOOR_HEIGHT);
+  geometry_type_ = GEOMETRY_OPENING;
 }
 
 OpeningData::OpeningData(MoveDoorGeometry geometry, std::string name) :BaseGeometryData() {
@@ -32,6 +34,7 @@ OpeningData::OpeningData(MoveDoorGeometry geometry, std::string name) :BaseGeome
   opening_type_ = OPENING_MOVE_DOOR;
   init_geometry(geometry);
   set_height(DEFAULT_DOOR_HEIGHT);
+  geometry_type_ = GEOMETRY_OPENING;
 }
 
 OpeningData::OpeningData(WindowGeometry geometry, std::string name) :BaseGeometryData() {
@@ -40,6 +43,7 @@ OpeningData::OpeningData(WindowGeometry geometry, std::string name) :BaseGeometr
   init_geometry(geometry);
   set_height(DEFAULT_WINDOW_HEIGHT);
   position_.setZ(DEFAULT_WINDOW_Z);
+  geometry_type_ = GEOMETRY_OPENING;
 }
 
 BaseGeometry* OpeningData::GetGeometry() {

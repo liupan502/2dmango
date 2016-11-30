@@ -4,12 +4,12 @@
 #include "Util/LineUtil.h"
 
 WallGeometry::WallGeometry():BaseGeometry() {
-  geometry_type_ = GEOMETRY_WALL;
+  //geometry_type_ = GEOMETRY_WALL;
 }
 
 WallGeometry::WallGeometry(QPolygonF polygon) {
   polygon_ = polygon;
-  geometry_type_ = GEOMETRY_WALL;
+  //geometry_type_ = GEOMETRY_WALL;
 }
 
 WallGeometry::WallGeometry(std::vector<QPointF> points,WallData* wallData) {
@@ -35,7 +35,7 @@ WallGeometry::WallGeometry(std::vector<QPointF> points,WallData* wallData) {
 	  paths_.push_back(polygon_path);
   }
 
-  geometry_type_ = GEOMETRY_WALL;
+  //geometry_type_ = GEOMETRY_WALL;
 }
 
 bool WallGeometry::PointDistanceToGeometry(QPointF position, qreal& distance) {

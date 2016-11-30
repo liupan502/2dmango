@@ -4,7 +4,7 @@
 #include "Util/LoadFileUtil.h"
 #include <QSize>
 ModelGeometry::ModelGeometry(ModelData* data) :BaseGeometry(data) {
-  geometry_type_ = GEOMETRY_MODEL;
+  //geometry_type_ = GEOMETRY_MODEL;
   img = GetModelImage(data->name());
   int a = 0;
 }

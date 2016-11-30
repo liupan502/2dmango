@@ -6,7 +6,7 @@ BaseGeometry::BaseGeometry(BaseGeometryData* data ) {
   index_ = 0;
   transform_ = QTransform();
   data_ = data;
-  geometry_type_ = GEOMETRY_NONE;
+  //geometry_type_ = GEOMETRY_NONE;
 }
 
 
@@ -152,6 +152,7 @@ float BaseGeometry::rotation() {
 }
 
 GEOMETRY_TYPE BaseGeometry::geometry_type() {
-  return geometry_type_;
+  
+  return data_?data_->geometry_type(): GEOMETRY_NONE;
 }
 

@@ -254,6 +254,15 @@
     <ClCompile Include="Geometry\ModelGeometry.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="GUI\ItemPropertyWidget.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ItemPropertyWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ItemPropertyWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -290,6 +299,9 @@
       <Filter>GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="GUI\ModelSelectWidget.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GUI\ItemPropertyWidget.h">
       <Filter>GUI</Filter>
     </CustomBuild>
   </ItemGroup>

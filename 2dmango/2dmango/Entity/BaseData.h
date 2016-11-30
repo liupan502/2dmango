@@ -66,6 +66,13 @@ private:
     
 };
 
+enum GEOMETRY_TYPE {
+  GEOMETRY_NONE,
+  GEOMETRY_WALL,
+  GEOMETRY_OPENING,
+  GEOMETRY_MODEL,
+} ;
+
 class BaseGeometryData:public BaseData{
   public:
     BaseGeometryData(std::string name = ""):BaseData(name) {
@@ -139,6 +146,10 @@ class BaseGeometryData:public BaseData{
 
     QVector3D position(){
       return position_;
+    }
+
+    GEOMETRY_TYPE geometry_type() {
+      return geometry_type_;
     }
 
     virtual QJsonObject ToJson() {
@@ -225,6 +236,7 @@ class BaseGeometryData:public BaseData{
     float rotation_z_;
 
     QVector3D position_;
+    GEOMETRY_TYPE geometry_type_;
 
 };
 #endif // !MANGO_2D_Base_DATA_H_

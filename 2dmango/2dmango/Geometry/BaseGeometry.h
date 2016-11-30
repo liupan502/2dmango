@@ -9,12 +9,7 @@
 
 class BaseGeometryData;
 
-typedef enum GEOMETRY_TYPE {
-  GEOMETRY_NONE,
-  GEOMETRY_WALL,
-  GEOMETRY_OPENING,
-  GEOMETRY_MODEL,
-} GEOMETRY_TYPE;
+enum GEOMETRY_TYPE;
 class BaseGeometry {
   public:
    BaseGeometry(BaseGeometryData* data = NULL);
@@ -41,23 +36,14 @@ class BaseGeometry {
    QPointF position();
    float rotation();
    BaseGeometryData* data();
+   //int geometry_type();
    GEOMETRY_TYPE geometry_type();
 
  protected:
-   std::vector<BasePath*> paths_;
-   //bool is_visible_;
-   int index_;
-   //QPointF position_;
+   std::vector<BasePath*> paths_;   
+   int index_;   
    QTransform transform_;
-   //float rotate_radian_;
-
-   /*float width_;
-   float length_;
-   float height_;*/
-
-   BaseGeometryData* data_;
-   GEOMETRY_TYPE geometry_type_;
-   
+   BaseGeometryData* data_;   
    virtual void update_transform();
    virtual void update_geometry();   
  private:  
