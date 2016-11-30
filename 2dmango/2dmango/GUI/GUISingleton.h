@@ -6,6 +6,7 @@ class BaseDetailActionWidget;
 class DrawHouseDetailActionWidget;
 class ModelSelectWidget;
 class WorkSpaceWidget;
+class ItemPropertyWidget;
 
 
 class GUISingleton :public QObject {
@@ -24,6 +25,9 @@ public:
 
   void set_work_space_widget(WorkSpaceWidget* widget);
   WorkSpaceWidget* work_space_widget();
+
+  void set_item_property_widget(ItemPropertyWidget* widget);
+  ItemPropertyWidget* item_property_widget();
 private:
   static GUISingleton* instance;
 
@@ -31,4 +35,5 @@ private:
   DrawHouseDetailActionWidget* draw_house_detail_action_widget_;
   ModelSelectWidget* model_selected_widget_;
   WorkSpaceWidget* work_space_widget_;
+  ItemPropertyWidget* item_property_widget_;
 };

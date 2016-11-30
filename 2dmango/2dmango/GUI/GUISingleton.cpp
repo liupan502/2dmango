@@ -52,3 +52,11 @@ void GUISingleton::set_work_space_widget(WorkSpaceWidget* widget) {
 WorkSpaceWidget* GUISingleton::work_space_widget() {
   return work_space_widget_;
 }
+
+void GUISingleton::set_item_property_widget(ItemPropertyWidget* widget) {
+  item_property_widget_ = widget;
+}
+
+ItemPropertyWidget* GUISingleton::item_property_widget(){
+  return item_property_widget_;
+}

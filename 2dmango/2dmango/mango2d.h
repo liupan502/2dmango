@@ -4,6 +4,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_mango2d.h"
 #include "GUI/actionnavgationwidget.h"
+#include "GUI/ItemPropertyWidget.h"
 #include "GUI/WorkSpaceWidget.hpp"
 
 class Mango2d : public QMainWindow
@@ -20,6 +21,7 @@ private:
 	Ui::Mango2dClass ui;
   ActionNavigationWidget* action_navi_widget_;
   WorkSpaceWidget* work_space_widget_;
+  ItemPropertyWidget* item_property_widget_;
 };
 
 #endif // MANGO2D_H
