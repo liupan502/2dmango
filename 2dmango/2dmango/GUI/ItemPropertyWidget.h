@@ -1,17 +1,18 @@
 #pragma once
-
+#include <QSpinBox>
 #include <QWidget>
 #include "Entity\BaseData.h"
+
 
 
 class BaseItemPropertyDetailWidget : public QWidget {
   Q_OBJECT
 public:
-  //BaseItemPropertyDetailWidget(QWidget * parent = Q_NULLPTR);
-  //virtual ~BaseItemPropertyDetailWidget();
-  virtual void set_data(BaseGeometryData* data) = 0;
-  virtual void UpdateContent(bool isViewToData) = 0;
-
+  BaseItemPropertyDetailWidget(QWidget * parent = Q_NULLPTR);
+  virtual ~BaseItemPropertyDetailWidget();
+  virtual void set_data(BaseGeometryData* data) {} ;
+  virtual void UpdateContent(bool isViewToData) {} ;
+  void init();
 protected:
   BaseGeometryData* data_;
   
@@ -25,8 +26,14 @@ public:
   virtual void set_data(BaseGeometryData* data);
   virtual void UpdateContent(bool isViewToData);
 
+  protected slots:
+  void OnOffsetZChanged(int value);
+  void OnRotationChanged(int value);
+
 protected:
   void init();
+  QSpinBox* spin_box_offset_z_;
+  QSpinBox* spin_box_rotation_;
 };
 
 class OpeningPropertyDetailWidget :public BaseItemPropertyDetailWidget {
@@ -36,9 +43,15 @@ public:
   virtual ~OpeningPropertyDetailWidget();
   virtual void set_data(BaseGeometryData* data);
   virtual void UpdateContent(bool isViewToData);
-
+  protected slots:
+    void OnOffsetZChanged(int value);
+    void OnLengthChanged(int value);
+    void OnWidthChanged(int value);
 protected:
   void init();
+  QSpinBox* spin_box_offset_z_;
+  QSpinBox* spin_box_length_;
+  QSpinBox* spin_box_width_;
 };
 
 
