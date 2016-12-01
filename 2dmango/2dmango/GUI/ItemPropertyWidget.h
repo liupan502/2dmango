@@ -13,6 +13,7 @@ public:
   virtual void set_data(BaseGeometryData* data) {} ;
   virtual void UpdateContent(bool isViewToData) {} ;
   void init();
+  void update_view();
 protected:
   BaseGeometryData* data_;
   
@@ -29,6 +30,7 @@ public:
   protected slots:
   void OnOffsetZChanged(int value);
   void OnRotationChanged(int value);
+  
 
 protected:
   void init();
@@ -68,5 +70,7 @@ protected:
   BaseItemPropertyDetailWidget* detail_widget_;
   ModelPropertyDetailWidget* model_detail_widget_;
   OpeningPropertyDetailWidget* opening_detail_widget_;
+
+  void set_detail_data(BaseItemPropertyDetailWidget* detailWidget, BaseGeometryData* data);
   void init(QWidget * parent);
 };

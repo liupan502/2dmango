@@ -1,5 +1,6 @@
 #include "DefaultActionAdapter.h"
-
+#include "GUI\GUISingleton.h"
+#include "GUI\ItemPropertyWidget.h"
 DefaultActionAdapter::DefaultActionAdapter() :BaseActionAdapter() {
  
   left_mouse_down_ = false;
@@ -35,7 +36,11 @@ void DefaultActionAdapter::OnMouseRelease(QMouseEvent* event) {
   else {
     bool is_selected_geometry = instance->TrySelecteGeometry(position);
     if (!is_selected_geometry) {
-      instance->set_current_selected_geometry(NULL);
+      instance->set_current_selected_geometry(NULL);      
+    }
+    else {
+      GUISingleton::Instance()->item_property_widget()->
+        SetGetmetryData(instance->current_selected_geometry()->data());
     }
   }
 

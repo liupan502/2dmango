@@ -1,6 +1,9 @@
 #include "ItemPropertyWidget.h"
 #include <QPushButton>
 #include <QLabel>
+#include "Entity\DesignDataWrapper.h"
+#include "GUISingleton.h"
+#include "WorkSpaceWidget.hpp"
 ItemPropertyWidget::ItemPropertyWidget(QWidget * parent ) : QWidget(parent) {
   init(parent);
 }
@@ -10,9 +13,26 @@ ItemPropertyWidget::~ItemPropertyWidget() {
 }
 
 void ItemPropertyWidget::SetGetmetryData(BaseGeometryData* data) {
-  if (detail_widget_ != NULL) {
-    detail_widget_->set_data(data);
+  
+  if (data == NULL) {
+    if (detail_widget_ != NULL)
+      detail_widget_->setVisible(false);
+    detail_widget_ = NULL;
+    return;
   }
+  switch (data->geometry_type()) {
+  case GEOMETRY_MODEL: {
+    set_detail_data(model_detail_widget_, data);
+    break;
+  }
+  case GEOMETRY_OPENING: {
+    set_detail_data(opening_detail_widget_, data);
+    break;
+  }
+  default:
+    break;    
+  }
+  
 }
 
 void ItemPropertyWidget::init(QWidget * parent) {
@@ -33,6 +53,14 @@ void ItemPropertyWidget::init(QWidget * parent) {
   detail_widget_->setVisible(true);
 }
 
+void ItemPropertyWidget::set_detail_data(BaseItemPropertyDetailWidget* detailWidget, BaseGeometryData* data) {
+  if(detail_widget_ != NULL)
+    detail_widget_->setVisible(false);
+  detail_widget_ = detailWidget;
+  detail_widget_->setVisible(true);
+  detail_widget_->set_data(data);
+}
+
 BaseItemPropertyDetailWidget::BaseItemPropertyDetailWidget(QWidget * parent ):QWidget(parent) {
   init();
 }
@@ -49,6 +77,13 @@ void BaseItemPropertyDetailWidget::init() {
   setWindowFlags(Qt::FramelessWindowHint);
 }
 
+void BaseItemPropertyDetailWidget::update_view() {
+  DesignDataWrapper::GetInstance()->UpdateGeometry();
+  GUISingleton* gui_instance = GUISingleton::Instance();
+  WorkSpaceWidget* ws_widget = gui_instance->work_space_widget();
+  ws_widget->repaint(ws_widget->rect());
+}
+
 OpeningPropertyDetailWidget::OpeningPropertyDetailWidget(QWidget * parent ): BaseItemPropertyDetailWidget(parent){
   init();
   connect(spin_box_offset_z_, SIGNAL(valueChanged(int)), this, SLOT(OnOffsetZChanged(int)));
@@ -62,18 +97,21 @@ void OpeningPropertyDetailWidget::OnOffsetZChanged(int value) {
   QVector3D tmp_position = data_->position();
   tmp_position.setZ(value);
   data_->set_position(tmp_position);
+  update_view();
 }
 
 void OpeningPropertyDetailWidget::OnLengthChanged(int value) {
   if (!data_)
     return;  
   data_->set_length(value);
+  update_view();
 }
 
 void OpeningPropertyDetailWidget::OnWidthChanged(int value) {
   if (!data_)
     return;  
   data_->set_width(value);
+  update_view();
 }
 
 OpeningPropertyDetailWidget::~OpeningPropertyDetailWidget() {
@@ -81,7 +119,7 @@ OpeningPropertyDetailWidget::~OpeningPropertyDetailWidget() {
 }
 
 void OpeningPropertyDetailWidget::set_data(BaseGeometryData* data) {
-  if (!data||data_->geometry_type() != GEOMETRY_OPENING)
+  if (!data||data->geometry_type() != GEOMETRY_OPENING)
     return;
   data_ = data;
   spin_box_offset_z_->setValue(data_->position().z());
@@ -134,7 +172,10 @@ void ModelPropertyDetailWidget::set_data(BaseGeometryData* data) {
     return;
   data_ = data;
   spin_box_offset_z_->setValue(data_->position().z());
-  spin_box_rotation_->setValue(data_->rotation_z());
+  float radian = data_->rotation_z();
+  int angle = (int)(radian * 180 / M_PI);
+
+  spin_box_rotation_->setValue(angle);
 }
 
 void ModelPropertyDetailWidget::UpdateContent(bool isViewToData) {
@@ -166,12 +207,14 @@ void ModelPropertyDetailWidget::OnOffsetZChanged(int value) {
   QVector3D tmp_position = data_->position();
   tmp_position.setZ(value);
   data_->set_position(tmp_position);
+  update_view();
 }
 
 void ModelPropertyDetailWidget::OnRotationChanged(int value) {
-  if (data_)
+  if (!data_)
     return;
-  //float radian = M_2_PI*((float)value) / 360.0;
-  data_->set_rotation_z(value);
+  float radian = M_PI*((float)value) / 180.0;
+  data_->set_rotation_z(radian);
+  update_view();
 }
 
