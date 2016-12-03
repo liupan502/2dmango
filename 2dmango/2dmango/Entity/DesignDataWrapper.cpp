@@ -70,14 +70,44 @@ WallData* DesignDataWrapper::AddWall(){
 }
 
 void DesignDataWrapper::UpdateGeometry() {
+  BaseGeometryData* tmp_data = NULL;
+  if (current_selected_geometry_ != NULL) {
+    tmp_data = current_selected_geometry_->data();
+  }
   wall_geometrys_ = design_data_->ComputeWallGeometrys();
+  if (tmp_data != NULL) {
+    for(int i=0;i<wall_geometrys_.size();i++){
+      if (tmp_data == wall_geometrys_[i].data()) {
+        current_selected_geometry_ = (&wall_geometrys_[i]);
+        break;
+      }
+        
+    }
+  }
+  
   for (int i = 0; i < inner_wall_geometrys_.size(); i++) {
     delete inner_wall_geometrys_[i];
   }
   inner_wall_geometrys_.clear();
   inner_wall_geometrys_ = design_data_->GetInnerWallGeometry();
+  if (tmp_data != NULL) {
+    for (int i = 0; i < inner_wall_geometrys_.size(); i++) {
+      if (inner_wall_geometrys_[i]->data() == tmp_data) {
+        current_selected_geometry_ = inner_wall_geometrys_[i];
+        break;
+      }
+    }
+  }
   
   model_geometrys_ = design_data_->GetModelGeometry();
+  if (tmp_data != NULL) {
+    for(int i=0;i<model_geometrys_.size();i++){
+      if (model_geometrys_[i].data() == tmp_data) {
+        current_selected_geometry_ = (&model_geometrys_[i]);
+        break;
+      }
+    }
+  }
 }
 
 bool DesignDataWrapper::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& points) {
