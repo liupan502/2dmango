@@ -48,9 +48,12 @@ bool BaseGeometry::is_visible() {
 
 bool BaseGeometry::IsPointIn(const QPointF& point) {
   bool result = false;
+  update_transform();
+  QTransform invert_transform = transform_.inverted();  
+  QPointF test_point = invert_transform.map(point);
   for (int i = 0; i < paths_.size(); i++) {
     QPainterPath path = paths_[i]->GetPainterPath();
-    if (path.contains(point)) {
+    if (path.contains(test_point)) {
       result = true;
       break;
     }

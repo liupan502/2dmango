@@ -18,8 +18,10 @@ void ItemPropertyWidget::SetGetmetryData(BaseGeometryData* data) {
     if (detail_widget_ != NULL)
       detail_widget_->setVisible(false);
     detail_widget_ = NULL;
+    this->setVisible(false);
     return;
   }
+  this->setVisible(true);
   switch (data->geometry_type()) {
   case GEOMETRY_MODEL: {
     set_detail_data(model_detail_widget_, data);

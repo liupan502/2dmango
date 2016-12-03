@@ -15,7 +15,7 @@ void BaseActionAdapter::OnMousePress(QMouseEvent* event){
 }
 
 void BaseActionAdapter::OnMouseRelease(QMouseEvent* event){
-  is_left_mouse_down_ = true;
+  is_left_mouse_down_ = false;
   move_status_ = NO_MOVE;
 }
 

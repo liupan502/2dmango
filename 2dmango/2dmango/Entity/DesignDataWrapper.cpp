@@ -278,8 +278,7 @@ bool DesignDataWrapper::TrySelecteGeometry(const QPointF& point) {
   }
 
   for (int i = 0; i < wall_geometrys_.size(); i++) {
-    if (wall_geometrys_[i].IsPointIn(point)) {
-      //current_selected_geometry_ = (BaseGeometry*)(&(wall_geometrys_[i]));
+    if (wall_geometrys_[i].IsPointIn(point)) {      
       set_current_selected_geometry((BaseGeometry*)(&wall_geometrys_[i]));
       result = true;
       break;

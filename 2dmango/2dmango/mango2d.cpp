@@ -16,6 +16,7 @@ Mango2d::Mango2d(QWidget *parent)
   work_space_widget_->SwitchWorkMode(BASE_HOUSE_WORK_MODE);
   gui_instance->set_work_space_widget(work_space_widget_);
   item_property_widget_ = new ItemPropertyWidget(parent_widget);
+  item_property_widget_->setVisible(false);
   gui_instance->set_item_property_widget(item_property_widget_);
 }
 
