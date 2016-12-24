@@ -8,7 +8,7 @@
 
 QJsonObject WallData::ToJson() {
   QJsonObject object;
-  QJsonObject parent_object = BaseData::ToJson();
+  QJsonObject parent_object = BaseGeometryData::ToJson();
   AttachJsonObject(object, parent_object);
   object.insert("wall_data_type", QJsonValue((int)(data_type_)));
   object.insert("wall_data_status", QJsonValue((int)(status_)));
