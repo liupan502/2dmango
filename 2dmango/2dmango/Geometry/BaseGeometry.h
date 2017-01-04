@@ -17,6 +17,7 @@ class BaseGeometry {
    virtual void Draw(QPainter* painter);
    virtual void MoveTo(QPointF position);
    virtual void Translate(QPointF offset);
+   virtual void AddToDesign();
    //virtual QTransform ()
    void set_is_visible(bool is_visible);
    bool is_visible();

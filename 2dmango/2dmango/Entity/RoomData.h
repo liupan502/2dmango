@@ -14,6 +14,8 @@ class RoomData :public BaseData {
 
     bool IsIncludedIn(RoomData otherRoom);
 
+    bool IsPointIn(QPointF point);
+
     RoomData();
 
     RoomData(std::string name,std::vector<WallData*> walls);
@@ -25,6 +27,9 @@ class RoomData :public BaseData {
     std::string func_name(){
       return func_name_;
     }
+
+    void AddCeiling(const std::string& ceilingName);
+    void RemoveCeiling(const std::string& ceilingName);
 
     /*void set_wall_names(std::vector<std::string> wall_names){
       wall_names_ = wall_names;
@@ -69,6 +74,8 @@ class RoomData :public BaseData {
     QVector2D WallOutsideDirection(WallData* wallData);
 
     void UpdateWallDatas(std::map<std::string, WallData*>& wallDataMap);
+
+    std::vector<QPointF> InnerWallPoints();
   private:
     std::string func_name_;
 
@@ -85,6 +92,8 @@ class RoomData :public BaseData {
     //std::vector<std::string> extra_corner_names_;
 
     std::vector<WallData*> walls_;
+
+    std::vector<std::string> ceiling_names_;
 
     CornerData* find_previous_corner(int current_index);    
 

@@ -5,6 +5,7 @@
 #include "PointData.h"
 #include <assert.h>
 #include <QJsonArray>
+#include <QPolygonF>
 QJsonObject RoomData::ToJson() {
   QJsonObject object;
   QJsonObject parent_object = BaseData::ToJson();
@@ -18,6 +19,13 @@ QJsonObject RoomData::ToJson() {
     wall_name_array.append(wall_data_value);
   }
   object.insert("wall_names", QJsonValue(wall_name_array));
+
+  QJsonArray ceiling_name_array;
+  for (int i = 0; i < ceiling_names_.size(); i++) {
+    QJsonValue ceiling_name_value(QString::fromStdString(ceiling_names_[i]));
+    ceiling_name_array.append(ceiling_name_value);
+  }
+  object.insert("ceiling_names", ceiling_name_array);
   return object;
 }
 
@@ -38,6 +46,15 @@ void RoomData::InitWithObject(QJsonObject& jsonObject) {
       WallData* wall_data = new WallData();
       wall_data->set_name(wall_name_value);
       walls_.push_back(wall_data);
+    }
+  }
+
+  ceiling_names_.clear();
+  if (jsonObject.contains("ceiling_names")) {
+    QJsonArray ceiling_name_array = jsonObject["ceilings"].toArray();
+    for (int i = 0; i < ceiling_name_array.size(); i++) {
+      std::string ceiling_name = ceiling_name_array[i].toString().toStdString();
+      ceiling_names_.push_back(ceiling_name);
     }
   }
 }
@@ -281,5 +298,53 @@ QVector2D RoomData::WallOutsideDirection(WallData* wallData) {
   CornerData* corner = wallData->GetConnectedCorner(next_wall);*/
 
   return outside_direction;
+}
+
+std::vector<QPointF> RoomData::InnerWallPoints() {
+  std::vector<QPointF> result;
+  std::vector<PointData*> room_polygon = polygon();
+  int size = room_polygon.size();
+  std::vector<QPointF> points;
+  for (int i = 0; i < size; i++) {
+    points.push_back(room_polygon[i]->point());
+  }
+  PolygonFlipY(points);
+  bool is_counterclockwise = IsCounterclockwisePolygon(points);
+
+  for (int i = 0; i < walls_.size(); i++) {
+    WallData* wall_data = walls_[i];
+    QVector2D vec1 (wall_data->start_corner_position() - wall_data->end_corner_position());
+    QVector2D vec2 = wall_data->normal_vector();
+    float val = vec1.x()*vec2.y() - vec1.y()*vec2.x();
+    val = val*(is_counterclockwise ? 1 : -1);
+    LineData tmp_line = (val > 0) ? wall_data->line() : wall_data->generate_line();
+    CornerData* tmp_corner = is_counterclockwise ? wall_data->end_corner() : wall_data->start_corner();
+    std::string point_name = is_counterclockwise ? tmp_line.end_point_name() :tmp_line.start_point_name();
+    QPointF point = tmp_corner->GetPoint(point_name)->point();
+    result.push_back(point);
+  }
+
+  return result;
+}
+
+bool RoomData::IsPointIn(QPointF point) {
+  std::vector<QPointF> inner_wall_points = InnerWallPoints();
+  QPolygonF tmp_polygon;
+  for (int i = 0; i < inner_wall_points.size(); i++) {
+    tmp_polygon << inner_wall_points[i];
+  }
+
+  return tmp_polygon.containsPoint(point, Qt::OddEvenFill);
+}
+
+void RoomData::AddCeiling(const std::string& ceilingName) {
+  ceiling_names_.push_back(ceilingName);
+}
+
+void RoomData::RemoveCeiling(const std::string& ceilingName) {
+  std::vector<std::string>::iterator it = find(ceiling_names_.begin(), ceiling_names_.end(),ceilingName);
+  if (it != ceiling_names_.end()) {
+    ceiling_names_.erase(it);
+  }
 }
 

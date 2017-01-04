@@ -28,11 +28,8 @@ void ActionNavigationWidget::Init() {
   base_draw_house_btn_  = new QPushButton(this);
   base_draw_house_btn_->setGeometry(0,0,100,50);
   base_draw_house_btn_->setText(QString::fromLocal8Bit("画户型")); 
-  QFile style_sheet(":/file/qss_file/common.qss");
-  if (style_sheet.open(QIODevice::ReadOnly)) {
-    QString style_sheet_str = style_sheet.readAll();
-    base_draw_house_btn_->setStyleSheet(style_sheet_str);
-  }
+  
+  
   connect(base_draw_house_btn_, SIGNAL(clicked()), this, SLOT(OnDrawHouseClicked()));
   draw_house_detail_action_widget_ = new DrawHouseDetailActionWidget(this);
   draw_house_detail_action_widget_->setVisible(false);
@@ -41,18 +38,31 @@ void ActionNavigationWidget::Init() {
   select_model_btn_ = new QPushButton(this);
   select_model_btn_->setGeometry(0, 50, 100, 50);
   select_model_btn_->setText(QString::fromLocal8Bit("挑家具"));
-  if (style_sheet.open(QIODevice::ReadOnly)) {
-    QString style_sheet_str = style_sheet.readAll();
-    select_model_btn_->setStyleSheet(style_sheet_str);
-  }
+  
   connect(select_model_btn_, SIGNAL(clicked()), this, SLOT(OnSelectModelClicked()));
   model_select_widget_ = new ModelSelectWidget(this);
   model_select_widget_->Init(std::map<std::string, std::string>());
   model_select_widget_->setVisible(false);
   gui_instance->set_model_selected_widget(model_select_widget_);
   
-  
-  
+  ceiling_btn_ = new QPushButton(this);
+  ceiling_btn_->setGeometry(0, 100, 100, 50);
+  ceiling_btn_->setText(QString::fromLocal8Bit("吊顶"));
+  connect(ceiling_btn_, SIGNAL(clicked()), this, SLOT(OnCeilingClicked()));
+  ceiling_detail_action_widget_ = new CeilingDetailActionWidget(this);
+  ceiling_detail_action_widget_->Init();
+  ceiling_detail_action_widget_->setVisible(false);
+
+
+  QFile style_sheet(":/file/qss_file/common.qss");
+  if (style_sheet.open(QIODevice::ReadOnly)) {
+    QString style_sheet_str = style_sheet.readAll();
+    base_draw_house_btn_->setStyleSheet(style_sheet_str);
+    select_model_btn_->setStyleSheet(style_sheet_str);
+    ceiling_btn_->setStyleSheet(style_sheet_str);
+  }
+  style_sheet.close();
+
   set_detail_action_widget(draw_house_detail_action_widget_);
   action_type_ = DRAW_WALL;
 }
@@ -69,6 +79,13 @@ void ActionNavigationWidget::OnSelectModelClicked() {
     return;
   action_type_ = SELECT_MODEL;
   set_detail_action_widget(model_select_widget_);
+}
+
+void ActionNavigationWidget::OnCeilingClicked() {
+  if (action_type_ == CEILING)
+    return;
+  action_type_ = CEILING;
+  set_detail_action_widget(ceiling_detail_action_widget_);
 }
 
 void ActionNavigationWidget::set_detail_action_widget(BaseDetailActionWidget* widget) {

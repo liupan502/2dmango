@@ -11,12 +11,15 @@
 #include "Geometry/HotRegionGeometry.h"
 #include "Geometry/AuxiliaryLineGeometry.h"
 #include "Geometry/ModelGeometry.h"
+#include "Geometry/CeilingGeometry.h"
+
 
 #include <string>
 #include <vector>
 
 class InnerWallGeometry;
-//class ModelGeometry;
+
+
 class DesignDataWrapper {
 
   public:
@@ -100,6 +103,7 @@ class DesignDataWrapper {
    int design_data_id_;
    std::vector<WallGeometry> wall_geometrys_;
    std::vector<InnerWallGeometry*> inner_wall_geometrys_;
+   std::vector<CeilingGeometry> ceiling_geometrys_;
 
    HotRegionGeometry* hot_region_;
 
@@ -114,6 +118,8 @@ class DesignDataWrapper {
    void insert_opening_data(InnerWallGeometry* geometry);
 
    void insert_model_data(ModelData* data);
+
+   void insert_ceiling_data(CeilingGeometry* geometry);
 
    WallData* FindWallWithInnerWallGeometry(InnerWallGeometry* innerWallGeometry);
 

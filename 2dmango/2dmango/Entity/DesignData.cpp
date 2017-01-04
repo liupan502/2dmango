@@ -11,6 +11,7 @@
 #include "Geometry/MoveDoorGeometry.h"
 #include "Geometry/WindowGeometry.h"
 #include "Geometry/ModelGeometry.h"
+#include "Geometry/CeilingGeometry.h"
 QJsonObject DesignData::ToJson(){
   QJsonObject object;
   QJsonObject parent_object = BaseData::ToJson();
@@ -55,6 +56,15 @@ QJsonObject DesignData::ToJson(){
     model_data_array.append(model_data_value);
   }
   object.insert("models", QJsonValue(model_data_array));
+
+  QJsonArray ceiling_data_array;
+  for (std::map<std::string, BaseCeilingData*>::iterator it = ceiling_data_map_.begin();
+    it != ceiling_data_map_.end(); it++) {
+    BaseCeilingData* ceiling_data = it->second;
+    QJsonObject ceiling_data_value = ceiling_data->ToJson();
+    ceiling_data_array.append(ceiling_data_value);
+  }
+  object.insert("ceilings", QJsonValue(ceiling_data_array));
 
 
   return object;
@@ -103,6 +113,7 @@ void DesignData::InitWithObject(QJsonObject& jsonObject) {
     }
   }
   
+  
   if (jsonObject.contains("models")) {
     QJsonArray model_data_array = jsonObject["models"].toArray();
     for (int i = 0; i < model_data_array.size(); i++) {
@@ -112,6 +123,14 @@ void DesignData::InitWithObject(QJsonObject& jsonObject) {
       model_data_map_.insert(make_pair(model_data->name(),model_data));
     }
   }
+
+  /*if (jsonObject.contains("ceilings")) {
+    QJsonArray ceiling_data_array = jsonObject["ceilings"].toArray();
+    for (int i = 0; i < ceiling_data_array.size(); i++) {
+      QJsonObject ceiling_object = ceiling_data_array[i].toObject();
+      BaseCeilingData* ceiling_data = new Ce
+    }
+  }*/
   
 }
 
@@ -649,6 +668,40 @@ std::vector<ModelGeometry> DesignData::GetModelGeometry() {
     model_geometrys.push_back(model_geometry);
   }
   return model_geometrys;
+}
+
+std::vector<CeilingGeometry> DesignData::GetCeilingGeometry() {
+  std::vector<CeilingGeometry> ceiling_geometrys;
+  for (std::map<std::string, BaseCeilingData*>::iterator it = ceiling_data_map_.begin();
+    it != ceiling_data_map_.end(); it++) {
+    BaseCeilingData* ceiling_data = it->second;
+    RoomData* room_data = room_data_map_[ceiling_data->room_name()];
+    CeilingGeometry ceiling_geometry(ceiling_data, room_data);
+    ceiling_geometrys.push_back(ceiling_geometry);
+  }
+  return ceiling_geometrys;
+}
+
+RoomData* DesignData::FindRoomWithPosition(QPointF pos) {
+  RoomData* result = NULL;
+  for (std::map<std::string, RoomData*>::iterator it = room_data_map_.begin();
+    it != room_data_map_.end(); it++) {
+    RoomData* room_data = it->second;
+    if (room_data->IsPointIn(pos)) {
+      result = room_data;
+      break;
+    }
+  }
+  return result;
+}
+
+void DesignData::AddCeiling(BaseCeilingData* data) {
+  if (data == NULL)
+    return;
+  std::map<std::string, BaseCeilingData*>::iterator it = ceiling_data_map_.find(data->name());
+  if (it == ceiling_data_map_.end()) {
+    ceiling_data_map_.insert(make_pair(data->name(), data));
+  }
 }
 
 

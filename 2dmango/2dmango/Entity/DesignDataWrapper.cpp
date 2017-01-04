@@ -4,6 +4,10 @@
 #include "Geometry/MoveDoorGeometry.h"
 #include "Geometry/WindowGeometry.h"
 #include "Geometry/ModelGeometry.h"
+#include "Geometry/CeilingGeometry.h"
+
+#include "CeilingData.h"
+
 #include <QJsonObject>
 #include <QJsonDocument>
 
@@ -38,8 +42,18 @@ void DesignDataWrapper::Draw(QPainter* painter){
     model_geometrys_[i].Draw(painter);
   }
 
-  if (current_selected_geometry_ != NULL && current_selected_geometry_->data()->is_tmp_data()) {
-    current_selected_geometry_->Draw(painter);
+  for (int i = 0; i < ceiling_geometrys_.size(); i++) {
+    ceiling_geometrys_[i].Draw(painter);
+  }
+
+  if (current_selected_geometry_ != NULL ) {
+    BaseGeometryData* geometry_data = current_selected_geometry_->data();
+    if (geometry_data == NULL) {
+      current_selected_geometry_->Draw(painter);
+    }
+    else if(geometry_data->is_tmp_data()){
+      current_selected_geometry_->Draw(painter);
+    }
   }
 
 
@@ -108,6 +122,8 @@ void DesignDataWrapper::UpdateGeometry() {
       }
     }
   }
+
+  ceiling_geometrys_ = design_data_->GetCeilingGeometry();
 }
 
 bool DesignDataWrapper::FindConnectedPoints(QPointF currentPoint, std::string wallName, std::vector<QPointF>& points) {
@@ -205,8 +221,23 @@ void DesignDataWrapper::AddCurrentData() {
     case GEOMETRY_MODEL:
       insert_model_data((ModelData*)current_selected_geometry_->data());
       break;
+    case GEOMETRY_CEILING:
+      insert_ceiling_data((CeilingGeometry*)current_selected_geometry_);
     default:
       break;
+  }
+}
+
+void DesignDataWrapper::insert_ceiling_data(CeilingGeometry* geometry) {
+  if (geometry == NULL)
+    return;
+  QPointF position = geometry->position();
+  RoomData* room_data = design_data_->FindRoomWithPosition(position);
+  if (room_data != NULL) {
+    BaseCeilingData* ceiling_data = (BaseCeilingData*)geometry->data();
+    ceiling_data->set_room_name(room_data->name());
+    ceiling_data->set_is_tmp_data(false);
+    design_data_->AddCeiling(ceiling_data);
   }
 }
 

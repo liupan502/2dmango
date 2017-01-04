@@ -9,6 +9,7 @@
 #include "WallPath.h"
 #include "OpeningData.h"
 #include "ModelData.h"
+#include "CeilingData.h"
 
 #include "Geometry/WallGeometry.h"
 #include <QVector2d>
@@ -23,7 +24,7 @@ class InnerWallGeometry;
 //const int MAX_CORNER_NUM = 10000;
 //const int MAX_ROOM_NUM = 1000;
 
-class InnerWallGeometry;
+class CeilingGeometry;
 class ModelGeometry;
 class DesignData :public BaseData {
   public:
@@ -45,6 +46,8 @@ class DesignData :public BaseData {
     std::vector<InnerWallGeometry*> GetInnerWallGeometry();
 
     std::vector<ModelGeometry> GetModelGeometry();
+
+    std::vector<CeilingGeometry> GetCeilingGeometry();
 
     bool FindConnectedPoints(QPointF currentPoint, std::string wallName,std::vector<QPointF>& points);
 
@@ -69,7 +72,11 @@ class DesignData :public BaseData {
 
 
     void AddModel(ModelData* data);
-    //std::string GenerateOpeningName();
+
+    void AddCeiling(BaseCeilingData* data);
+    
+    // 找到位置所处的房间
+    RoomData* FindRoomWithPosition(QPointF pos);
 
   private:
 
@@ -136,6 +143,8 @@ class DesignData :public BaseData {
     std::map<std::string, OpeningData*> opening_data_map_;
 
     std::map<std::string, ModelData*> model_data_map_;
+
+    std::map<std::string, BaseCeilingData*> ceiling_data_map_;
 };
 #endif // !MANGO_2D_DESIGN_DATA_H_
 

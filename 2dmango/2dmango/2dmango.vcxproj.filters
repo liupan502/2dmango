@@ -263,6 +263,21 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ItemPropertyWidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="Entity\CeilingData.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\CeilingDetailActionWidget.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CeilingDetailActionWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CeilingDetailActionWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\CeilingGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mango2d.h">
@@ -302,6 +317,9 @@
       <Filter>GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="GUI\ItemPropertyWidget.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GUI\CeilingDetailActionWidget.h">
       <Filter>GUI</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -409,6 +427,12 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\ModelGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\CeilingData.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\CeilingGeometry.h">
       <Filter>Geometry</Filter>
     </ClInclude>
   </ItemGroup>

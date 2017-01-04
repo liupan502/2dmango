@@ -71,6 +71,7 @@ enum GEOMETRY_TYPE {
   GEOMETRY_WALL,
   GEOMETRY_OPENING,
   GEOMETRY_MODEL,
+  GEOMETRY_CEILING,
 } ;
 
 class BaseGeometryData:public BaseData{
@@ -103,7 +104,7 @@ class BaseGeometryData:public BaseData{
       width_ = width;
     }
 
-    float width(){
+    virtual float width(){
       return width_;
     }
 

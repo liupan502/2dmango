@@ -6,10 +6,12 @@
 #include "BaseDetailActionWidget.hpp"
 #include "DrawHouseDetailActionWidget.hpp"
 #include "ModelSelectWidget.h"
+#include "CeilingDetailActionWidget.h"
 
 typedef enum ACTION_TYPE {
   DRAW_WALL,
   SELECT_MODEL,
+  CEILING,
 } ACTION_TYPE;
 
 class ActionNavigationWidget : public QWidget {
@@ -22,6 +24,7 @@ public:
 private slots:
   void OnDrawHouseClicked();
   void OnSelectModelClicked();
+  void OnCeilingClicked();
 private:
 	void Init();
   void set_detail_action_widget(BaseDetailActionWidget* widget);
@@ -32,5 +35,9 @@ private:
 
   QPushButton* select_model_btn_;
   ModelSelectWidget* model_select_widget_;
+
+  QPushButton* ceiling_btn_;
+  CeilingDetailActionWidget* ceiling_detail_action_widget_;
+
 };
 #endif

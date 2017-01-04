@@ -81,6 +81,7 @@
     <ClCompile Include="ActionAdpater\BaseActionAdapter.cpp" />
     <ClCompile Include="ActionAdpater\DefaultActionAdapter.cpp" />
     <ClCompile Include="ActionAdpater\DrawWallActionAdapter.cpp" />
+    <ClCompile Include="Entity\CeilingData.cpp" />
     <ClCompile Include="Entity\ComputeWallGeometry.cpp" />
     <ClCompile Include="Entity\CornerData.cpp" />
     <ClCompile Include="Entity\DesignData.cpp" />
@@ -99,6 +100,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_BaseDetailActionWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CeilingDetailActionWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_DrawHouseDetailActionWidget.cpp">
@@ -140,6 +144,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_BaseDetailActionWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CeilingDetailActionWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_DrawHouseDetailActionWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -170,6 +177,7 @@
     <ClCompile Include="Geometry\AuxiliaryLineGeometry.cpp" />
     <ClCompile Include="Geometry\BaseGeometry.cpp" />
     <ClCompile Include="Geometry\BasePath.cpp" />
+    <ClCompile Include="Geometry\CeilingGeometry.cpp" />
     <ClCompile Include="Geometry\DoubleDoorGeometry.cpp" />
     <ClCompile Include="Geometry\HotRegionGeometry.cpp" />
     <ClCompile Include="Geometry\InnerWallGeometry.cpp" />
@@ -182,6 +190,7 @@
     <ClCompile Include="Geometry\WindowGeometry.cpp" />
     <ClCompile Include="GUI\actionnavgationwidget.cpp" />
     <ClCompile Include="GUI\BaseDetailActionWidget.cpp" />
+    <ClCompile Include="GUI\CeilingDetailActionWidget.cpp" />
     <ClCompile Include="GUI\DrawHouseDetailActionWidget.cpp" />
     <ClCompile Include="GUI\GUISingleton.cpp" />
     <ClCompile Include="GUI\ItemPropertyWidget.cpp" />
@@ -226,6 +235,7 @@
   <ItemGroup>
     <ClInclude Include="ActionAdpater\BaseActionAdapter.h" />
     <ClInclude Include="ActionAdpater\DefaultActionAdapter.h" />
+    <ClInclude Include="Entity\CeilingData.h" />
     <ClInclude Include="Entity\ModelData.h" />
     <ClInclude Include="Entity\OpeningData.h" />
     <CustomBuild Include="GUI\ModelSelectItemDelegate.h">
@@ -258,7 +268,18 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I.\GUI"</Command>
     </CustomBuild>
+    <ClInclude Include="Geometry\CeilingGeometry.h" />
     <ClInclude Include="Geometry\ModelGeometry.h" />
+    <CustomBuild Include="GUI\CeilingDetailActionWidget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing CeilingDetailActionWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_USE_MATH_DEFINES -D_UNICODE "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I.\GUI"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing CeilingDetailActionWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I.\GUI"</Command>
+    </CustomBuild>
     <ClInclude Include="GUI\GUISingleton.h" />
     <CustomBuild Include="GUI\ItemPropertyWidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

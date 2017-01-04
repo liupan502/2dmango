@@ -159,3 +159,7 @@ GEOMETRY_TYPE BaseGeometry::geometry_type() {
   return data_?data_->geometry_type(): GEOMETRY_NONE;
 }
 
+void BaseGeometry::AddToDesign() {
+
+}
+
