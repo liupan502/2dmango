@@ -74,6 +74,8 @@ class DesignData :public BaseData {
     void AddModel(ModelData* data);
 
     void AddCeiling(BaseCeilingData* data);
+
+    
     
     // 找到位置所处的房间
     RoomData* FindRoomWithPosition(QPointF pos);
@@ -113,6 +115,8 @@ class DesignData :public BaseData {
     std::string generate_point_name();
 
     std::string generate_opening_name();
+
+    std::string generate_model_name();
 
     std::string generate_name(std::vector<std::string> used_names);
 

@@ -5,7 +5,7 @@
 #include <QSize>
 ModelGeometry::ModelGeometry(ModelData* data) :BaseGeometry(data) {
   //geometry_type_ = GEOMETRY_MODEL;
-  img = GetModelImage(data->name());
+  img = GetModelImage(data->model_name());
   int a = 0;
 }
 

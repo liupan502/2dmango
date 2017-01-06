@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 
+
 std::vector<std::string> GetModelIds(std::map<std::string, std::string> parameters) {
   std::vector<std::string> model_ids;
   const std::string file_name = DEFAULT_MODEL_DIR + "//models";
@@ -31,13 +32,13 @@ QImage GetModelIconImage(std::string modelId) {
 ModelData* GetModelInfo(const std::string& modelId) {
   
   ModelData* model_data = new ModelData();
-  model_data->set_name(modelId);
+  //model_data->set_name(modelId);
   std::string info_file_path = DEFAULT_MODEL_DIR +"\\"+ modelId + "\\info";
   std::ifstream file(info_file_path);
 
   std::string model_name;
   file >> model_name;
-  model_data->set_model_name(model_name);
+  model_data->set_model_name(modelId);
   float width, height, length;
   int model_type;
   file >> width >> height >> length >> model_type;

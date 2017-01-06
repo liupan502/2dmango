@@ -586,6 +586,8 @@ void DesignData::AddModel(ModelData* modelData) {
     return;
   }
   modelData->set_is_tmp_data(false);
+  std::string model_name = generate_model_name();
+  modelData->set_name(model_name);
   model_data_map_.insert(make_pair(modelData->name(), modelData));
 }
 
@@ -594,6 +596,16 @@ std::string DesignData::generate_opening_name() {
   std::vector<std::string> names;
   std::map<std::string, OpeningData*>::iterator it;
   for (it = opening_data_map_.begin(); it != opening_data_map_.end(); it++) {
+    names.push_back(it->first);
+  }
+  std::string name = generate_name(names);
+  return name;
+}
+
+std::string DesignData::generate_model_name() {
+  std::vector<std::string> names;
+  std::map<std::string, ModelData*>::iterator it;
+  for (it = model_data_map_.begin(); it != model_data_map_.end(); it++) {
     names.push_back(it->first);
   }
   std::string name = generate_name(names);

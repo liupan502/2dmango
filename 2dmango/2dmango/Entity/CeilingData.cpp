@@ -26,13 +26,13 @@ CEILING_UNIT_TYPE BaseCeilingUnit::ceiling_unit_type() {
 
 QJsonObject BaseCeilingUnit::ToJson() {
   QJsonObject object;
-  object.insert("ceiling_type", QJsonValue((int)ceiling_unit_type()));
+  object.insert("ceiling_unit_type", QJsonValue((int)ceiling_unit_type()));
   return object;
 }
 
 void BaseCeilingUnit::InitWithObject(QJsonObject& jsonObject) {
-  if (jsonObject.contains("ceiling_type")) {
-    ceiling_unit_type_ = (CEILING_UNIT_TYPE)jsonObject["ceiling_type"].toInt();
+  if (jsonObject.contains("ceiling_unit_type")) {
+    ceiling_unit_type_ = (CEILING_UNIT_TYPE)jsonObject["ceiling_unit_type"].toInt();
   }
   else {
     ceiling_unit_type_ = CEILING_UNIT_NONE;
