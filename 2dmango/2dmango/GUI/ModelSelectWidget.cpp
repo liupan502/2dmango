@@ -48,7 +48,6 @@ void ModelSelectWidget::Init(std::map<std::string, std::string> parameters) {
 
 void ModelSelectWidget::model_selected(const QModelIndex &index) {
   int row = index.row();
-  int col = index.column();
   QString model_id = index.model()->data(index, Qt::DisplayRole).toString();
   ModelData* model_data = GetModelInfo(model_id.toStdString());
   ModelGeometry* model_geometry = new ModelGeometry(model_data);
