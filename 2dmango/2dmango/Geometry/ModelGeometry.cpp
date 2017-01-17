@@ -35,10 +35,13 @@ bool ModelGeometry::IsPointIn(const QPointF& point) {
   qreal half_width = data_->width() / 2.0f;
   qreal half_length = data_->length() / 2.0f;
   QPointF offset(half_length, half_width);
-  QPointF left_top_point = position() - offset;
+  //QPointF left_top_point = position() - offset;
+  QPointF left_top_point = QPointF(0.0, 0.0) - offset;
   QSize rect_size(half_length * 2, half_width * 2);
   QRectF rect(left_top_point, rect_size);
   path.addRect(rect);
-  return path.contains(point);
+  QTransform invert_transform = transform_.inverted();
+  QPointF test_point = invert_transform.map(point);
+  return path.contains(test_point);
   //return false;
 }
