@@ -13,6 +13,6 @@ void BaseDetailActionWidget::init(){
   setWindowFlags(Qt::FramelessWindowHint);
   setAutoFillBackground(true);
   QPalette palette;
-  palette.setColor(QPalette::Background, QColor(255, 0, 255));
+  palette.setColor(QPalette::Background, QColor("#cfcfcf"));
   setPalette(palette);
 }

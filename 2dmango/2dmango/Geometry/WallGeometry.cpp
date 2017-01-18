@@ -17,7 +17,8 @@ WallGeometry::WallGeometry(std::vector<QPointF> points,WallData* wallData) {
   int size = points.size();
   if(size == 2){
     LinesPath* lines_path = new LinesPath(points);
-    lines_path->set_pen(QPen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin));
+    //lines_path->set_pen(QPen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin));
+    lines_path->set_pen(QPen(QColor("#6b6b6b"), 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     paths_.push_back((BasePath*)lines_path);
   }
 
@@ -30,8 +31,8 @@ WallGeometry::WallGeometry(std::vector<QPointF> points,WallData* wallData) {
       polygon_ << point;
 	  }
 	  PolygonPath* polygon_path = new PolygonPath(polygon_);
-	  polygon_path->set_pen(QPen(Qt::black, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin));
-	  polygon_path->set_brush(QBrush(Qt::yellow));
+	  polygon_path->set_pen(QPen(QColor("#6b6b6b"), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    polygon_path->set_brush(QBrush(QColor("#949494")));
 	  paths_.push_back(polygon_path);
   }
 

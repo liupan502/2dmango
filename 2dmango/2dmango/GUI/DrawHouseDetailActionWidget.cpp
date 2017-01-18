@@ -19,22 +19,36 @@ DrawHouseDetailActionWidget::~DrawHouseDetailActionWidget() {
 }
 
 void DrawHouseDetailActionWidget::init() {
-  draw_wall_btn_ = new QPushButton(this);
-  draw_wall_btn_->setGeometry(30,30,100,50);
-  draw_wall_btn_->setText(QString::fromLocal8Bit("画墙"));
+
+  QPixmap draw_house_pixmap = QPixmap(80, 80);
+  draw_house_pixmap.load("./icon/drawhouse.png");
+  QIcon draw_house_icon = QIcon(draw_house_pixmap);
+  draw_wall_btn_ = new QPushButton(draw_house_pixmap,"",this);
+  draw_wall_btn_->setIconSize(QSize(80, 80));
+  draw_wall_btn_->setGeometry(20,20,80,80);
+  //draw_wall_btn_->setText(QString::fromLocal8Bit("画墙"));
   connect(draw_wall_btn_,SIGNAL(clicked()),this,SLOT(OnDrawWallBtnClicked()));
 
-  window_btn_ = new QPushButton(this);
-  window_btn_->setGeometry(30, 160, 100, 50);
-  window_btn_->setText(QString::fromLocal8Bit("窗"));
+
+  QPixmap window_pixmap = QPixmap(80, 80);
+  window_pixmap.load("./icon/window.png");
+  QIcon window_icon = QIcon(window_pixmap);
+  window_btn_ = new QPushButton(window_icon,"",this);
+  window_btn_->setGeometry(100, 20, 80, 80);
+  window_btn_->setIconSize(QSize(80, 80));
+  //window_btn_->setText(QString::fromLocal8Bit("窗"));
   connect(window_btn_, SIGNAL(clicked()), this, SLOT(OnWindowBtnClicked()));
 
-  single_door_btn_ = new QPushButton(this);
-  single_door_btn_->setGeometry(30, 290, 100, 50);
-  single_door_btn_->setText(QString::fromLocal8Bit("单开门"));
+  QPixmap single_door_pixmap = QPixmap(80, 80);
+  single_door_pixmap.load("./icon/singledoor.png");
+  QIcon single_door_icon = QIcon(single_door_pixmap);
+  single_door_btn_ = new QPushButton(single_door_icon,"",this);
+  single_door_btn_->setIconSize(QSize(80, 80));
+  single_door_btn_->setGeometry(20, 100, 80, 80);
+  //single_door_btn_->setText(QString::fromLocal8Bit("单开门"));
   connect(single_door_btn_, SIGNAL(clicked()), this, SLOT(OnSingleDoorBtnClicked()));
 
-  double_door_btn_ = new QPushButton(this);
+  /*double_door_btn_ = new QPushButton(this);
   double_door_btn_->setGeometry(30, 420, 100, 50);
   double_door_btn_->setText(QString::fromLocal8Bit("双开门"));
   connect(double_door_btn_, SIGNAL(clicked()), this, SLOT(OnDoubleDoorBtnClicked()));
@@ -43,6 +57,15 @@ void DrawHouseDetailActionWidget::init() {
   move_door_btn_->setGeometry(30, 550, 100, 50);
   move_door_btn_->setText(QString::fromLocal8Bit("移门"));
   connect(move_door_btn_, SIGNAL(clicked()), this, SLOT(OnMoveDoorBtnClicked()));
+  */
+  QFile style_sheet("./file/qss_file/detailaction.qss");
+  if (style_sheet.open(QIODevice::ReadOnly)) {
+    QString style_sheet_str = style_sheet.readAll();
+    draw_wall_btn_->setStyleSheet(style_sheet_str);
+    window_btn_->setStyleSheet(style_sheet_str);
+    single_door_btn_->setStyleSheet(style_sheet_str);
+  }
+  style_sheet.close();
 
 }
 

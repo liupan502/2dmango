@@ -10,7 +10,20 @@ int main(int argc, char *argv[])
 	Mango2d w;  
   w.setAutoFillBackground(true);
   QPalette palette;
-  palette.setColor(QPalette::Background, QColor(192, 253, 123));
+  //palette.setColor(QPalette::Background, QColor(0, 0, 0));
+  //QColor color;
+  //color.setNamedColor("#ededed");
+  palette.setColor(QPalette::Background, QColor("#ededed"));
+  QPixmap log_pixmap = QPixmap(241, 40);
+  log_pixmap.load("./icon/logo.png");
+  QIcon logo_icon = QIcon(log_pixmap);
+  QPushButton* logo_btn = new QPushButton(logo_icon,"",&w);
+  logo_btn->setIconSize(QSize(294, 50));
+  logo_btn->setGeometry(0, 0, 294, 50);
+  logo_btn->setPalette(palette);
+  logo_btn->setWindowFlags(Qt::FramelessWindowHint);//ÎÞ±ß¿ò
+  logo_btn->setAttribute(Qt::WA_TranslucentBackground);//±³¾°Í¸Ã÷
+
   w.setPalette(palette);
 	w.show();
   DesignUpdater* updater = new DesignUpdater();

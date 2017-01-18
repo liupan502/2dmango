@@ -26,6 +26,8 @@ DesignDataWrapper::DesignDataWrapper(){
 }
 
 void DesignDataWrapper::Draw(QPainter* painter){
+  painter->setRenderHint(QPainter::Antialiasing);
+  painter->setRenderHint(QPainter::SmoothPixmapTransform);
   hot_region_->Draw(painter);
   for (int i = 0; i < auxiliary_lines_.size(); i++) {    
     auxiliary_lines_[i].Draw(painter);

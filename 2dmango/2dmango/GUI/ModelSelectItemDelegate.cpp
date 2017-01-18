@@ -7,6 +7,10 @@ ModelSelectedItemDelegate::ModelSelectedItemDelegate(QObject* parent)
 
 void ModelSelectedItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
   const QModelIndex& index) const {
+
+  painter->setRenderHint(QPainter::Antialiasing);
+  painter->setRenderHint(QPainter::SmoothPixmapTransform);
+  
   if (option.state & QStyle::State_Selected) {
     painter->fillRect(option.rect, option.palette.highlight());
   }
